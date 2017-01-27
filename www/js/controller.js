@@ -14,6 +14,7 @@ var resultDataMulti2= []; //Third location result
 var selectedFlightMulti0; //Selected Flights for multi city
 var selectedFlightMulti1; //Selected Flights for multi city
 var selectedFlightMulti2; //Selected Flights for multi city
+var passengerDetail= [];
 app.controller('MenuController', function($scope, $ionicSideMenuDelegate) {
       $scope.toggleLeft = function() {
         $ionicSideMenuDelegate.toggleLeft();
@@ -154,8 +155,9 @@ app.controller('LoginController', function($scope, $ionicSideMenuDelegate, $stat
 }
 //Making AJAX Request for data of flights
 $.ajax(getFlightData).done(function(response){
-      var pricedItineraries = response.getElementsByTagName("PricedItineraries")[0].childNodes;
-
+  if(response.getElementsByTagName("PricedItineraries").length != 0){
+    var pricedItineraries = response.getElementsByTagName("PricedItineraries")[0].childNodes;
+      console.log(pricedItineraries);
         for (var i = 0; i < pricedItineraries.length; i++) {
           
           var totalFare = pricedItineraries[i].getElementsByTagName("ItinTotalFare")[0].getElementsByTagName("TotalFare")[0].getAttribute("Amount");
@@ -193,6 +195,11 @@ $.ajax(getFlightData).done(function(response){
           
         }
         $state.go('menu.flightdetails');
+  }
+  else {
+    alert("No flights found");
+  }
+      
     })
 
 
@@ -361,6 +368,8 @@ $.ajax(auth).done(function(response){
 }
 //Making AJAX Request for data of flights
 $.ajax(getFlightData).done(function(response){
+  resultData = [];
+      if(response.getElementsByTagName("PricedItineraries").length != 0){
       var pricedItineraries = response.getElementsByTagName("PricedItineraries")[0].childNodes;
 
         for (var i = 0; i < pricedItineraries.length; i++) {
@@ -402,6 +411,11 @@ $.ajax(getFlightData).done(function(response){
           
         }
         $state.go('menu.flightdetails');
+      }
+      else {
+        alert("No flights found");
+        console.log(response);
+      }
     })
 
 
@@ -610,6 +624,7 @@ app.controller('FlightConfirmationMultiController', function($scope, $ionicSideM
 
 //User Details Controller
 app.controller('UserDetailsController', function($scope, $ionicSideMenuDelegate, $state, $http) {
+      passengerDetail = [];
       $http({
         method: "GET",
         url: "js/countrycodes.json",
@@ -623,7 +638,7 @@ app.controller('UserDetailsController', function($scope, $ionicSideMenuDelegate,
       });
       $scope.toPayment = function(){
          
-          
+          passengerDetail = [];
           var fname = document.getElementById("fname").value;
           var mname = document.getElementById("mname").value;
           var lname = document.getElementById("lname").value;
@@ -631,6 +646,7 @@ app.controller('UserDetailsController', function($scope, $ionicSideMenuDelegate,
           var selectedCountryName = countrycode.options[countrycode.selectedIndex].value;
           var selectedCountryCode;
           var cnumber = document.getElementById("cnumber").value;
+          var email = document.getElementById("email").value;
           
           for (var i = 0; i < $scope.countryCodes.length; i++) {
             
@@ -638,6 +654,9 @@ app.controller('UserDetailsController', function($scope, $ionicSideMenuDelegate,
             selectedCountryCode = $scope.countryCodes[i].code;
            }
           }
+          passengerDetail.push(fname, mname, lname, selectedCountryCode, cnumber, email);
+          console.log(passengerDetail);
+          console.log(selectedFlight);
         //Getting user data
         var getUserData = {
             "async": true,
@@ -647,12 +666,12 @@ app.controller('UserDetailsController', function($scope, $ionicSideMenuDelegate,
             "headers": {
               "content-type": "text/xml",
               "cache-control": "no-cache",
-              "postman-token": "357213ea-f74f-69b4-7a04-9fc3beddd1f2"
             },
             "data": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n   <soapenv:Header>\r\n      <MessageHeader xmlns=\"http://www.ebxml.org/namespaces/messageHeader\">\r\n         <From>\r\n            <PartyId type=\"urn:x12.org:IO5:01\">CRS</PartyId>\r\n         </From>\r\n         <To>\r\n            <PartyId type=\"urn:x12.org:IO5:01\">Sabre</PartyId>\r\n         </To>\r\n         <CPAId>R7OI</CPAId>\r\n         <ConversationId>9999</ConversationId>\r\n         <Service type=\"string\">Cruise</Service>\r\n         <Action>PassengerDetailsRQ</Action>\r\n         <MessageData>\r\n            <MessageId>1426190858</MessageId>\r\n            <Timestamp>2015-03-12T02:07:38-06:00</Timestamp>\r\n            <TimeToLive>2015-03-12T03:07:38-06:00</TimeToLive>\r\n         </MessageData>\r\n      </MessageHeader>\r\n      <wsse:Security xmlns:wsse=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns:wsu=\"http://schemas.xmlsoap.org/ws/2002/12/utility\">\r\n           <wsse:BinarySecurityToken  valueType=\"String\" EncodingType=\"wsse:Base64Binary\">"+securityToken+"</wsse:BinarySecurityToken>\r\n      </wsse:Security>\r\n   </soapenv:Header>\r\n   <soapenv:Body>\r\n   \r\n   <PassengerDetailsRQ xmlns=\"http://services.sabre.com/sp/pd/v3_3\" version=\"3.3.0\" IgnoreOnError=\"false\" HaltOnError=\"false\">\r\n\t<MiscSegmentSellRQ>\r\n\t\t<MiscSegment DepartureDateTime=\"01-24\" InsertAfter=\"0\" NumberInParty=\"1\" Status=\"GK\" Type=\"OTH\">\r\n\t\t\t<OriginLocation LocationCode=\""+selectedFlight[0].departureAirport+"\"/>\r\n\t\t\t<Text>RETENTION SEGMENT</Text>\r\n\t\t\t<VendorPrefs>\r\n\t\t\t\t<Airline Code=\""+airlineCodeFinal+"\"/>\r\n\t\t\t</VendorPrefs>\r\n\t\t</MiscSegment>\r\n\t</MiscSegmentSellRQ>\r\n\t<PostProcessing IgnoreAfter=\"false\" RedisplayReservation=\"true\">\r\n\t\t<EndTransactionRQ>\r\n\t\t\t<EndTransaction Ind=\"true\">\r\n\t\t\t</EndTransaction>\r\n\t\t\t<Source ReceivedFrom=\"AMXTI\"/>\r\n\t\t</EndTransactionRQ>\r\n\t</PostProcessing>\r\n\t\r\n\t\r\n\t\t<TravelItineraryAddInfoRQ>\r\n\t\t\t<AgencyInfo>\r\n\t\t\t\t<Ticketing TicketType=\"7TAW/\"/>\r\n\t\t\t</AgencyInfo>\r\n\t\t\t<CustomerInfo>\r\n\t\t\t\t<ContactNumbers>\r\n\t\t\t\t\t  <ContactNumber NameNumber=\"1.1\" Phone=\""+selectedCountryCode+cnumber+"\" PhoneUseType=\"M\" />\r\n\t\t\t\t</ContactNumbers>\r\n\t\t\t\t<PersonName NameNumber=\"1.1\" PassengerType=\"ADT\">\r\n\t\t\t\t\t     <GivenName>"+fname + mname+"</GivenName>\r\n                <Surname>"+lname+"</Surname>\r\n\t\t\t\t</PersonName>\r\n\t\t\t</CustomerInfo>\r\n\t\t</TravelItineraryAddInfoRQ>\r\n\t    \r\n\t</PassengerDetailsRQ>\r\n\t\r\n\t\r\n\r\n    </soapenv:Body>\r\n</soapenv:Envelope>"
           }
 
           $.ajax(getUserData).done(function(response){
+            console.log(getUserData);
             passengerUniqueId = response.getElementsByTagName("ItineraryRef")[0].getAttribute("ID");
             
             var flightSegment = [];
@@ -715,10 +734,10 @@ app.controller('UserDetailsController', function($scope, $ionicSideMenuDelegate,
               
 
               $.ajax(flightBooking).done(function(response){
-              
+                $state.go('menu.paymentmethod');
               })
           })
-        // $state.go('menu.paymentmethod');
+        
       }
     })
 //User Details Controller End
@@ -927,6 +946,7 @@ $.ajax(auth).done(function(response){
 }
 //Making AJAX Request for data of flights
 $.ajax(getFlightData).done(function(response){
+  if(response.getElementsByTagName("PricedItineraries").length !=0){
       var pricedItineraries = response.getElementsByTagName("PricedItineraries")[0].childNodes;
 
         for (var i = 0; i < pricedItineraries.length; i++) {
@@ -968,7 +988,10 @@ $.ajax(getFlightData).done(function(response){
           resultDataMulti0.push(tempArray);
           
         }
-        
+      }
+      else {
+        alert('No flights found for the first trip');
+      }
     })
 
     }//Flight data ends
@@ -1035,6 +1058,7 @@ $.ajax(getFlightData).done(function(response){
 }
 //Making AJAX Request for data of flights
 $.ajax(getFlightData).done(function(response){
+  if(response.getElementsByTagName("PricedItineraries").length != 0){
       var pricedItineraries = response.getElementsByTagName("PricedItineraries")[0].childNodes;
 
         for (var i = 0; i < pricedItineraries.length; i++) {
@@ -1076,7 +1100,10 @@ $.ajax(getFlightData).done(function(response){
           resultDataMulti1.push(tempArray);
           
         }
-        
+       }
+       else {
+          alert("No flights found for second trip");
+        } 
     })
 
     }//Flight data ends
@@ -1143,6 +1170,7 @@ $.ajax(getFlightData).done(function(response){
 }
 //Making AJAX Request for data of flights
 $.ajax(getFlightData).done(function(response){
+  if(response.getElementsByTagName("PricedItineraries").length != 0){
       var pricedItineraries = response.getElementsByTagName("PricedItineraries")[0].childNodes;
 
         for (var i = 0; i < pricedItineraries.length; i++) {
@@ -1184,7 +1212,10 @@ $.ajax(getFlightData).done(function(response){
           resultDataMulti2.push(tempArray);
           
         }
-      
+      }
+      else {
+        alert("No flights found for third trip");
+      }
     })
 
     }//Flight data ends
