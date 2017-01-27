@@ -76,10 +76,13 @@ app.controller('LoginController', function($scope, $ionicSideMenuDelegate, $stat
 
 
 // Flights Controller RoundTrip
-.controller('RoundController', function($scope, $http, $state,$ionicSideMenuDelegate) {
+.controller('RoundController', function($scope, $http, $state,$ionicSideMenuDelegate, $ionicLoading) {
   var destinationName= [];
   var destinationIATA = [];
   resultData = [];
+
+  
+
   $scope.whichClassToUse = function(someValue){
     someValue = ionic.Platform.platform();
     if(someValue == "android"){
@@ -87,6 +90,11 @@ app.controller('LoginController', function($scope, $ionicSideMenuDelegate, $stat
     }
   }
     $scope.flightDetails = function(){
+          $ionicLoading.show({
+            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
+            duration: 3000
+          }).then(function(){});
+
       resultData = [];
       var from = document.getElementById("from").value;
       var to = document.getElementById("to").value;
@@ -113,8 +121,11 @@ app.controller('LoginController', function($scope, $ionicSideMenuDelegate, $stat
             
           }
       }
-      
-      for (var i = 0; i < airlineInfo.length; i++) {
+      if(fromIATA == toIATA){
+        alert("Please select a different departure or arrival airport to complete a journey!")
+      }
+      else {
+              for (var i = 0; i < airlineInfo.length; i++) {
 
         if(airlinesName == airlineInfo[i].AirlineName){
           
@@ -157,7 +168,7 @@ app.controller('LoginController', function($scope, $ionicSideMenuDelegate, $stat
 $.ajax(getFlightData).done(function(response){
   if(response.getElementsByTagName("PricedItineraries").length != 0){
     var pricedItineraries = response.getElementsByTagName("PricedItineraries")[0].childNodes;
-      console.log(pricedItineraries);
+      
         for (var i = 0; i < pricedItineraries.length; i++) {
           
           var totalFare = pricedItineraries[i].getElementsByTagName("ItinTotalFare")[0].getElementsByTagName("TotalFare")[0].getAttribute("Amount");
@@ -183,8 +194,20 @@ $.ajax(getFlightData).done(function(response){
               var res2 = arrivalDateTime.split("T");
               var arrivalDate = res2[0];
               var arrivalTime = res2[1];
+              var departureAirportName;
+              var arrivalAirportName;
+              for (var x = 0; x < result.length; x++) {
+                if(departureAirport == result[x].id){
+                  departureAirportName = result[x].label;
+                }
+              }
+              for (var y = 0; y < result.length; y++) {
+                if(arrivalAirport == result[y].id){
+                  arrivalAirportName = result[y].label;
+                }
+              }
 
-              var resultObj = {departureAirport, departureDate, departureTime, arrivalAirport, arrivalDate, arrivalTime, elapsedTime, totalFare, flightCode, flightNumber};
+              var resultObj = {departureAirport, departureDate, departureTime, departureAirportName, arrivalAirport, arrivalDate, arrivalTime, arrivalAirportName, elapsedTime, totalFare, flightCode, flightNumber};
               tempArray.push(resultObj);
               
             }
@@ -204,6 +227,8 @@ $.ajax(getFlightData).done(function(response){
 
 
        
+      }
+
   }
          
     
@@ -290,7 +315,7 @@ $.ajax(auth).done(function(response){
 
 
 // Single Trip Controller
-.controller('SingleController', function($scope, $http, $state,$ionicSideMenuDelegate) {
+.controller('SingleController', function($scope, $http, $state,$ionicSideMenuDelegate, $ionicLoading) {
   var destinationName= [];
   var destinationIATA = [];
   resultData= [];
@@ -302,6 +327,10 @@ $.ajax(auth).done(function(response){
  }
     $scope.flightDetails = function(){
       resultData = [];
+      $ionicLoading.show({
+            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
+            duration: 3000
+          }).then(function(){});
       var fromSingle = document.getElementById("fromSingle").value;
       var toSingle = document.getElementById("toSingle").value;
       var departDate = document.getElementById('departDate').value;
@@ -325,17 +354,22 @@ $.ajax(auth).done(function(response){
             toIATA = result[i].id;
             
           }
-          else {
-          airlineCodeFinal = "";
-        }
+      }
+
+      if(fromIATA == toIATA){
+        alert("Plese select different departure or arrival airport to complete the journey");
       }
       
-      for (var i = 0; i < airlineInfo.length; i++) {
+      else {
+        for (var i = 0; i < airlineInfo.length; i++) {
 
         if(airlinesName == airlineInfo[i].AirlineName){
           
           airlineCodeFinal = airlineInfo[i].AirlineCode;
           
+        }
+        else {
+          airlineCodeFinal = "";
         }
       }
      
@@ -368,10 +402,10 @@ $.ajax(auth).done(function(response){
 }
 //Making AJAX Request for data of flights
 $.ajax(getFlightData).done(function(response){
-  resultData = [];
+  console.log(response);
       if(response.getElementsByTagName("PricedItineraries").length != 0){
       var pricedItineraries = response.getElementsByTagName("PricedItineraries")[0].childNodes;
-
+        console.log(pricedItineraries.length);
         for (var i = 0; i < pricedItineraries.length; i++) {
           
           var totalFare = pricedItineraries[i].getElementsByTagName("ItinTotalFare")[0].getElementsByTagName("TotalFare")[0].getAttribute("Amount");
@@ -379,6 +413,7 @@ $.ajax(getFlightData).done(function(response){
           var originDestinationOptions = pricedItineraries[i].getElementsByTagName("AirItinerary")[0].getElementsByTagName("OriginDestinationOptions")[0];
           
           var tempArray = [];
+          console.log(originDestinationOptions.childNodes.length);
           for (var j = 0; j < originDestinationOptions.childNodes.length; j++) {
             var originDestinationOption = originDestinationOptions.childNodes[j].childNodes;
             
@@ -400,8 +435,19 @@ $.ajax(getFlightData).done(function(response){
               var res2 = arrivalDateTime.split("T");
               var arrivalDate = res2[0];
               var arrivalTime = res2[1];
-
-              var resultObj = {departureAirport, departureDate, departureTime, arrivalAirport, arrivalTime, arrivalDate, elapsedTime, totalFare, flightCode, flightNumber};
+              var departureAirportName;
+              var arrivalAirportName;
+              for (var x = 0; x < result.length; x++) {
+                if(departureAirport == result[x].id){
+                  departureAirportName = result[x].label;
+                }
+              }
+              for (var y = 0; y < result.length; y++) {
+                if(arrivalAirport == result[y].id){
+                  arrivalAirportName = result[y].label;
+                }
+              }
+              var resultObj = {departureAirport, departureDate, departureTime, departureAirportName, arrivalAirport, arrivalTime, arrivalDate, arrivalAirportName, elapsedTime, totalFare, flightCode, flightNumber};
               tempArray.push(resultObj);
               
             }
@@ -411,14 +457,15 @@ $.ajax(getFlightData).done(function(response){
           
         }
         $state.go('menu.flightdetails');
+        console.log(resultData);
       }
       else {
         alert("No flights found");
-        console.log(response);
       }
     })
 
 
+      }
        
   }
          
@@ -509,6 +556,7 @@ $.ajax(auth).done(function(response){
 app.controller('FlightDetailController', function($scope, $ionicSideMenuDelegate, $state) {
   
         $scope.finalData = resultData;
+        $scope.resultLength = resultData.length;
         $scope.toConfirm = function($index){
           selectedFlight = $scope.finalData[$index];
           $state.go('menu.flightconfirmation');
@@ -530,6 +578,7 @@ app.controller('FlightDetailController', function($scope, $ionicSideMenuDelegate
 app.controller('FlightDetailMultiController0', function($scope, $ionicSideMenuDelegate, $state) {
   
         $scope.finalData = resultDataMulti0;
+        $scope.resultLength = resultDataMulti0.length;
         $scope.toConfirm = function($index){
           selectedFlightMulti0 = $scope.finalData[$index];
           selectedFlightMulti.push(selectedFlightMulti0);
@@ -558,6 +607,7 @@ app.controller('FlightDetailMultiController0', function($scope, $ionicSideMenuDe
 app.controller('FlightDetailMultiController1', function($scope, $ionicSideMenuDelegate, $state) {
   
        $scope.finalData = resultDataMulti1;
+       $scope.resultLength = resultDataMulti1.length;
         $scope.toConfirm = function($index){
           selectedFlightMulti1 = $scope.finalData[$index];
           selectedFlightMulti.push(selectedFlightMulti1);
@@ -586,6 +636,7 @@ app.controller('FlightDetailMultiController1', function($scope, $ionicSideMenuDe
 app.controller('FlightDetailMultiController2', function($scope, $ionicSideMenuDelegate, $state) {
   
         $scope.finalData = resultDataMulti2;
+        $scope.resultLength = resultDataMulti2.length;
         $scope.toConfirm = function($index){
           selectedFlightMulti2 = $scope.finalData[$index];
           selectedFlightMulti.push(selectedFlightMulti2);
@@ -655,8 +706,6 @@ app.controller('UserDetailsController', function($scope, $ionicSideMenuDelegate,
            }
           }
           passengerDetail.push(fname, mname, lname, selectedCountryCode, cnumber, email);
-          console.log(passengerDetail);
-          console.log(selectedFlight);
         //Getting user data
         var getUserData = {
             "async": true,
@@ -671,7 +720,6 @@ app.controller('UserDetailsController', function($scope, $ionicSideMenuDelegate,
           }
 
           $.ajax(getUserData).done(function(response){
-            console.log(getUserData);
             passengerUniqueId = response.getElementsByTagName("ItineraryRef")[0].getAttribute("ID");
             
             var flightSegment = [];
@@ -759,12 +807,18 @@ app.controller('PaymentMethodController', function($scope, $ionicSideMenuDelegat
 //Payment Method Controller End
 
 //MultiCity Controller
-app.controller('MutliCityController', function($scope, $ionicSideMenuDelegate, $http, $state) {
+app.controller('MutliCityController', function($scope, $ionicSideMenuDelegate, $http, $state, $ionicLoading) {
   var destinationName= [];
   var destinationIATA = [];
   resultDataMulti0 = [];
   resultDataMulti1 = [];
   resultDataMulti2 = [];
+  var fromIATA0;
+  var fromIATA1;
+  var fromIATA2;
+  var toIATA0;
+  var toIATA1;
+  var toIATA2;
       $scope.whichClassToUse = function(someValue){
     someValue = ionic.Platform.platform();
     if(someValue == "android"){
@@ -882,6 +936,10 @@ $.ajax(auth).done(function(response){
   })
   
     $scope.getFirstValue = function(){
+      $ionicLoading.show({
+            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
+            duration: 3000
+          }).then(function(){});
       resultDataMulti0 = [];
       var firstLocationfrom = document.getElementById("from0").value;
       var firstLocationto = document.getElementById("to0").value;
@@ -889,8 +947,8 @@ $.ajax(auth).done(function(response){
       var airlineCode = document.getElementById("airlineCode");
       var airlinesName = airlineCode.options[airlineCode.selectedIndex].value;
        var adult = document.getElementById('adult').value;
-      var fromIATA0;
-      var toIATA0;
+      fromIATA0 ="";
+      toIATA0="";
 
       for (var i = 0; i < result.length; i++) {
         if(firstLocationfrom == result[i].label)
@@ -906,7 +964,11 @@ $.ajax(auth).done(function(response){
             
           }
       }
-      for (var i = 0; i < airlineInfo.length; i++) {
+      if(fromIATA0 == toIATA0){
+        alert("Please select different departure or arrival airport to complete a journey");
+      }
+      else {
+        for (var i = 0; i < airlineInfo.length; i++) {
 
             if(airlinesName == airlineInfo[i].AirlineName){
               
@@ -977,9 +1039,20 @@ $.ajax(getFlightData).done(function(response){
               var res2 = arrivalDateTime.split("T");
               var arrivalDate = res2[0];
               var arrivalTime = res2[1];
-              
+              var departureAirportName;
+              var arrivalAirportName;
+              for (var x = 0; x < result.length; x++) {
+                if(departureAirport == result[x].id){
+                  departureAirportName = result[x].label;
+                }
+              }
+              for (var y = 0; y < result.length; y++) {
+                if(arrivalAirport == result[y].id){
+                  arrivalAirportName = result[y].label;
+                }
+              }
 
-              var resultObj = {departureAirport, departureDate, departureTime, arrivalAirport, arrivalTime, arrivalDate, elapsedTime, totalFare, flightCode, flightNumber};
+              var resultObj = {departureAirport, departureDate, departureTime, departureAirportName, arrivalAirport, arrivalTime, arrivalDate, arrivalAirportName, elapsedTime, totalFare, flightCode, flightNumber};
               tempArray.push(resultObj);
               
             }
@@ -993,10 +1066,16 @@ $.ajax(getFlightData).done(function(response){
         alert('No flights found for the first trip');
       }
     })
+      }
+      
 
     }//Flight data ends
 
     $scope.getSecondValue = function(){
+      $ionicLoading.show({
+            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
+            duration: 3000
+          }).then(function(){});
       resultDataMulti1 = [];
       var secondLocationfrom = document.getElementById("from1").value;
       var secondLocationto = document.getElementById("to1").value;
@@ -1004,8 +1083,8 @@ $.ajax(getFlightData).done(function(response){
       var airlineCode = document.getElementById("airlineCode");
       var airlinesName = airlineCode.options[airlineCode.selectedIndex].value;
        var adult = document.getElementById('adult').value;
-      var fromIATA1;
-      var toIATA1;
+      fromIATA1 ="";
+      toIATA1="";
 
       for (var i = 0; i < result.length; i++) {
         if(secondLocationfrom == result[i].label)
@@ -1014,7 +1093,15 @@ $.ajax(getFlightData).done(function(response){
             
           }
       }
-      for (var i = 0; i < result.length; i++) {
+      if(fromIATA1 != toIATA0){
+        alert("Departure airport should be same as previous arrival airport!")
+      }
+      else {
+        if(fromIATA1 == toIATA1){
+          alert("Please select different departure or arrival airport to complete a journey");
+        }
+        else {
+          for (var i = 0; i < result.length; i++) {
         if(secondLocationto == result[i].label)
           {
             toIATA1 = result[i].id;
@@ -1089,9 +1176,20 @@ $.ajax(getFlightData).done(function(response){
               var res2 = arrivalDateTime.split("T");
               var arrivalDate = res2[0];
               var arrivalTime = res2[1];
-              
+              var departureAirportName;
+              var arrivalAirportName;
+              for (var x = 0; x < result.length; x++) {
+                if(departureAirport == result[x].id){
+                  departureAirportName = result[x].label;
+                }
+              }
+              for (var y = 0; y < result.length; y++) {
+                if(arrivalAirport == result[y].id){
+                  arrivalAirportName = result[y].label;
+                }
+              }
 
-              var resultObj = {departureAirport, departureDate, departureTime, arrivalAirport, arrivalDate, arrivalTime, elapsedTime, totalFare, flightCode, flightNumber};
+              var resultObj = {departureAirport, departureDate, departureTime, departureAirportName, arrivalAirport, arrivalDate, arrivalTime, arrivalAirportName, elapsedTime, totalFare, flightCode, flightNumber};
               tempArray.push(resultObj);
               
             }
@@ -1105,10 +1203,17 @@ $.ajax(getFlightData).done(function(response){
           alert("No flights found for second trip");
         } 
     })
+        }
+      }
+      
 
     }//Flight data ends
 
     $scope.getThirdValue = function(){
+      $ionicLoading.show({
+            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
+            duration: 3000
+          }).then(function(){});
       resultDataMulti2 = [];
       var thirdLocationfrom = document.getElementById("from2").value;
       var thirdLocationto = document.getElementById("to2").value;
@@ -1116,8 +1221,8 @@ $.ajax(getFlightData).done(function(response){
       var airlineCode = document.getElementById("airlineCode");
       var airlinesName = airlineCode.options[airlineCode.selectedIndex].value;
        var adult = document.getElementById('adult').value;
-      var fromIATA2;
-      var toIATA2;
+      fromIATA2;
+      toIATA2;
 
       for (var i = 0; i < result.length; i++) {
         if(thirdLocationfrom == result[i].label)
@@ -1126,7 +1231,15 @@ $.ajax(getFlightData).done(function(response){
             
           }
       }
-      for (var i = 0; i < result.length; i++) {
+      if(fromIATA2 != toIATA1){
+        alert("Departure airport should be same as previous arrival airport!");
+      }
+      else{
+        if(fromIATA2 == toIATA2){
+          alert("Please select different departure or arrival airport to complete a journey");
+        }
+        else {
+          for (var i = 0; i < result.length; i++) {
         if(thirdLocationto == result[i].label)
           {
             toIATA2 = result[i].id;
@@ -1201,9 +1314,20 @@ $.ajax(getFlightData).done(function(response){
               var res2 = arrivalDateTime.split("T");
               var arrivalDate = res2[0];
               var arrivalTime = res2[1];
-              
+              var departureAirportName;
+              var arrivalAirportName;
+              for (var x = 0; x < result.length; x++) {
+                if(departureAirport == result[x].id){
+                  departureAirportName = result[x].label;
+                }
+              }
+              for (var y = 0; y < result.length; y++) {
+                if(arrivalAirport == result[y].id){
+                  arrivalAirportName = result[y].label;
+                }
+              }
 
-              var resultObj = {departureAirport, departureDate, departureTime, arrivalAirport, arrivalTime, arrivalDate, elapsedTime, totalFare, flightCode, flightNumber};
+              var resultObj = {departureAirport, departureDate, departureTime, departureAirportName, arrivalAirport, arrivalTime, arrivalDate,arrivalAirportName, elapsedTime, totalFare, flightCode, flightNumber};
               tempArray.push(resultObj);
               
             }
@@ -1218,8 +1342,15 @@ $.ajax(getFlightData).done(function(response){
       }
     })
 
+        }
+      }
+      
     }//Flight data ends
     $scope.flightDetailsMulti = function(){
+       $ionicLoading.show({
+            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
+            duration: 3000
+          }).then(function(){});
      if(resultDataMulti0.length == 0){
       alert("Enter atleast one location to proceed");
      }
