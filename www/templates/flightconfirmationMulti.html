@@ -1,6 +1,37 @@
 <!-- Flight Confirmation for Multi City Page -->
 <ion-view view-title="Flight Confirmation">
-  <ion-content has-subheader="false">
+<div class="bar bar-subheader">
+  <h2 class="title">Please review the details carefully</h2>
+  
+  </div>
+<ion-content has-subheader="true" class="has-subheader">
+<h3>Total Fare: {{totalFareMulti | currency}}</h3>
+            <div ng-repeat="data in selectedFlight track by $index">
+            <div class="list" ng-repeat="item in data">
+              <div class="item-divider">
+                {{item.departureAirport}}-{{item.arrivalAirport}}<br>
+                Time elapsed: {{item.elapsedTime | time: 'mm'}}<br>
+                Total fare for full itinerary: {{item.totalFare | currency}}                                                 
+              </div>
+                <a class="item item-thumbnail-left item-button-right item-text-wrap">
+                  <img ng-src="http://pics.avs.io/200/200/{{item.flightCode}}.png">
+                  <h3>{{item.departureAirportName}}</h3>
+                  <p>({{item.departureAirport}}) {{item.departureDate}}</p>
+                  <h3>{{item.arrivalAirportName}}</h3>
+                  <p>({{item.arrivalAirport}}) {{item.arrivalDate}}</p>
+                  <h4>
+                Flight: {{item.flightCode}}{{item.flightNumber}}</h4>
+                </a>
+                            
+              </div>
+              </div>
+              <button class="button button-block button-assertive" ng-click="toConfirm($index)">
+                  Confirm
+                </button>        
+            </div>
+              
+            </ion-content>
+  <!-- <ion-content has-subheader="false">
     <div class="list" ng-repeat="data in selectedFlight track by $index">
     		<div class="list" ng-repeat="item in data">
                  <div class="item item-divider" ng-click="toggleGroup(data)" class="{active:isGroupShown(data)}">
@@ -35,5 +66,5 @@
                 </div>
           </div>
       <button class="button button-block button-balanced" ng-click="toUserDetails()">Confirm Flight</button>
-  </ion-content>
+  </ion-content> -->
 </ion-view>

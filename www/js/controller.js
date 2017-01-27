@@ -15,6 +15,7 @@ var selectedFlightMulti0; //Selected Flights for multi city
 var selectedFlightMulti1; //Selected Flights for multi city
 var selectedFlightMulti2; //Selected Flights for multi city
 var passengerDetail= [];
+var totalFareMulti = 0;
 app.controller('MenuController', function($scope, $ionicSideMenuDelegate) {
       $scope.toggleLeft = function() {
         $ionicSideMenuDelegate.toggleLeft();
@@ -553,13 +554,19 @@ $.ajax(auth).done(function(response){
 //Single Flights Controller End
 
 //Flight Detail Controller
-app.controller('FlightDetailController', function($scope, $ionicSideMenuDelegate, $state) {
+app.controller('FlightDetailController', function($scope, $ionicSideMenuDelegate, $state, $ionicLoading) {
   
         $scope.finalData = resultData;
         $scope.resultLength = resultData.length;
         $scope.toConfirm = function($index){
           selectedFlight = $scope.finalData[$index];
+          $ionicLoading.show({
+            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
+            duration: 3000
+          }).then(function(){
+            
           $state.go('menu.flightconfirmation');
+          });
         }
         $scope.toggleGroup = function(group) {
     if ($scope.isGroupShown(group)) {
@@ -575,14 +582,21 @@ app.controller('FlightDetailController', function($scope, $ionicSideMenuDelegate
 //FLight Detail Controller End
 
 //Flight Detail Multi Controller
-app.controller('FlightDetailMultiController0', function($scope, $ionicSideMenuDelegate, $state) {
+app.controller('FlightDetailMultiController0', function($scope, $ionicSideMenuDelegate, $state, $ionicLoading) {
   
         $scope.finalData = resultDataMulti0;
         $scope.resultLength = resultDataMulti0.length;
+
         $scope.toConfirm = function($index){
+          totalFareMulti = 0;
           selectedFlightMulti0 = $scope.finalData[$index];
           selectedFlightMulti.push(selectedFlightMulti0);
+          totalFareMulti = parseInt(selectedFlightMulti0[0].totalFare);
           // $state.go('menu.flightconfirmation');
+           $ionicLoading.show({
+            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
+            duration: 3000
+          }).then(function(){});
           if(resultDataMulti1.length != 0){
             $state.go('menu.flightdetailsmulti1');
           }
@@ -604,14 +618,19 @@ app.controller('FlightDetailMultiController0', function($scope, $ionicSideMenuDe
 //FLight Detail Multi Controller End
 
 //Flight Detail Multi Controller
-app.controller('FlightDetailMultiController1', function($scope, $ionicSideMenuDelegate, $state) {
+app.controller('FlightDetailMultiController1', function($scope, $ionicSideMenuDelegate, $state, $ionicLoading) {
   
        $scope.finalData = resultDataMulti1;
        $scope.resultLength = resultDataMulti1.length;
         $scope.toConfirm = function($index){
           selectedFlightMulti1 = $scope.finalData[$index];
           selectedFlightMulti.push(selectedFlightMulti1);
+          totalFareMulti = totalFareMulti + parseInt(selectedFlightMulti1[0].totalFare);
           // $state.go('menu.flightconfirmation');
+          $ionicLoading.show({
+            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
+            duration: 3000
+          }).then(function(){});
           if(resultDataMulti2.length != 0){
             $state.go('menu.flightdetailsmulti2')
           }
@@ -633,13 +652,18 @@ app.controller('FlightDetailMultiController1', function($scope, $ionicSideMenuDe
 //FLight Detail Multi Controller End
 
 //Flight Detail Multi Controller
-app.controller('FlightDetailMultiController2', function($scope, $ionicSideMenuDelegate, $state) {
+app.controller('FlightDetailMultiController2', function($scope, $ionicSideMenuDelegate, $state, $ionicLoading) {
   
         $scope.finalData = resultDataMulti2;
         $scope.resultLength = resultDataMulti2.length;
         $scope.toConfirm = function($index){
           selectedFlightMulti2 = $scope.finalData[$index];
           selectedFlightMulti.push(selectedFlightMulti2);
+          totalFareMulti = totalFareMulti + parseInt(selectedFlightMulti2[0].totalFare);
+          $ionicLoading.show({
+            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
+            duration: 3000
+          }).then(function(){});
           $state.go('menu.flightconfirmationMulti');
         }
         $scope.toggleGroup = function(group) {
@@ -666,7 +690,7 @@ app.controller('FlightConfirmationController', function($scope, $ionicSideMenuDe
 //Flight COnfrimation Multi Controller
 app.controller('FlightConfirmationMultiController', function($scope, $ionicSideMenuDelegate, $state) {
       $scope.selectedFlight = selectedFlightMulti;
-      
+      $scope.totalFareMulti = totalFareMulti;
       $scope.toUserDetails = function(){
         $state.go('menu.userdetails');
       }
@@ -813,6 +837,7 @@ app.controller('MutliCityController', function($scope, $ionicSideMenuDelegate, $
   resultDataMulti0 = [];
   resultDataMulti1 = [];
   resultDataMulti2 = [];
+  totalFareMulti = [];
   var fromIATA0;
   var fromIATA1;
   var fromIATA2;

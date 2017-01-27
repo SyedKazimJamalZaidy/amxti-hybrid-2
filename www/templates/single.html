@@ -49,7 +49,7 @@
                   </div>
                    <select id="airlineCode">
                     <option> </option>
-                    <option ng-repeat="names in airlineName" >{{names}}</option>
+                    <option ng-repeat="names in airlineName | orderBy" >{{names}}</option>
                   </select>
                 </label>
                <div class="linespace"></div>

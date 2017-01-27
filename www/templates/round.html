@@ -55,7 +55,7 @@
                   </div>
                   <select id="airlineCode">
                     <option>None</option>
-                    <option ng-repeat="names in airlineName" >{{names}}</option>
+                    <option ng-repeat="names in airlineName | orderBy" >{{names}}</option>
                   </select>
                 </label>
              

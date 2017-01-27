@@ -1,6 +1,33 @@
 <!-- Flight Confirmation Page -->
 <ion-view view-title="Flight Confirmation">
-  <ion-content has-subheader="false">
+<div class="bar bar-subheader">
+  <h2 class="title">Please review the details carefully</h2>
+  </div>
+<ion-content has-subheader="true" class="has-subheader">
+            <div class="list" ng-repeat="data in selectedFlight">
+              <div class="item-divider">
+                {{data.departureAirport}}-{{data.arrivalAirport}}<br>
+                Time elapsed: {{data.elapsedTime | time: 'mm'}}<br>
+                Total fare for full itinerary: {{data.totalFare | currency}}                                                 
+              </div>
+                <a class="item item-thumbnail-left item-button-right item-text-wrap">
+                  <img ng-src="http://pics.avs.io/200/200/{{data.flightCode}}.png">
+                  <h3>{{data.departureAirportName}}</h3>
+                  <p>({{data.departureAirport}}) {{data.departureDate}}</p>
+                  <h3>{{data.arrivalAirportName}}</h3>
+                  <p>({{data.arrivalAirport}}) {{data.arrivalDate}}</p>
+                  <h4>
+                Flight: {{data.flightCode}}{{data.flightNumber}}</h4>
+                </a>
+                            
+              </div>
+              <button class="button button-block button-assertive" ng-click="toUserDetails($index)">
+                  Confirm
+                </button>        
+            </div>
+              
+            </ion-content>
+  <!-- <ion-content has-subheader="false">
     <div class="list" ng-repeat="data in selectedFlight">
                 <div class="item item-divider" ng-click="toggleGroup(data)" class="{active:isGroupShown(data)}">
                  <i class="icon" ng-class="isGroupShown(data) ? 'ion-minus' : 'ion-plus'"></i> &nbsp;
@@ -32,5 +59,5 @@
                   </div>
           </div>
       <button class="button button-block button-balanced" ng-click="toUserDetails()">Confirm Flight</button>
-  </ion-content>
+  </ion-content> -->
 </ion-view>
