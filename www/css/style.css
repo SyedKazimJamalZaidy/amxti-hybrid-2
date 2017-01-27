@@ -46,7 +46,7 @@
 	background: #13314d!important
 }
 .list {
-	padding: 10px
+	padding: 10px;
 }
 .linespace {
 	padding: 10px
@@ -197,23 +197,163 @@
 	display: inline-block;
 	top: 30%
 }
-
-.bar-assertive{background:#13314d!important; text-align:center!important}
-.menubg{background:#13314d!important;}
-.menuitem ul{list-style:none!important}
-.menuitem ul li{padding:10px!important}
-.menuitem a{text-decoration:none!important; color:#fff!important; background:#13314d!important; border-radius:0px!important; border-color: #2b465f!important;}
-
-a.menuitem:hover{background:#ef0d16!important}
-
-.banner-1{background:url(../images/Banner.png) no-repeat center center; height:251px; }
-.banner-2{background:url(../images/hotel-banner.png) no-repeat center center; height:251px; }
-.banner-3{background:url(../images/car-banner.png) no-repeat center center; height:251px; }
-
-.paddingoff{padding:0px!important}
-
-.tab-item .icon{color:#d71d24}
-
-.tabs-striped .tab-item.tab-item-active{border-color:#d71d24!important}
-.home-icon{background:url(../images/home-icon.png) no-repeat; width:25px; height:21px; display:inline-block; float:left} 
-
+.bar-assertive {
+	background: #13314d!important;
+	text-align: center!important
+}
+.menubg {
+	background: #13314d!important;
+}
+.menuitem ul {
+	list-style: none!important
+}
+.menuitem ul li {
+	padding: 10px!important
+}
+.menuitem a {
+	text-decoration: none!important;
+	color: #fff!important;
+	background: #13314d!important;
+	border-radius: 0px!important;
+	border-color: #2b465f!important;
+}
+a.menuitem:hover {
+	background: #ef0d16!important
+}
+.banner-1 {
+	background: url(../images/Banner.png) no-repeat center center;
+	height: 251px;
+}
+.banner-2 {
+	background: url(../images/hotel-banner.png) no-repeat center center;
+	height: 251px;
+}
+.banner-3 {
+	background: url(../images/car-banner.png) no-repeat center center;
+	height: 251px;
+}
+.paddingoff {
+	padding: 0px!important
+}
+.tab-item .icon {
+	color: #d71d24
+}
+.tabs-striped .tab-item.tab-item-active {
+	border-color: #d71d24!important
+}
+.home-icon {
+	background: url(../images/home-icon.png) no-repeat 10% 100%;
+	width: 25px;
+	height: 21px;
+	display: inline-block;
+	padding-left: 35px;
+}
+.flight-icon {
+	background: url(../images/flight-icon.png) no-repeat 10% 100%;
+	width: 25px;
+	height: 21px;
+	display: inline-block;
+	padding-left: 35px;
+}
+.hotel-icon {
+	background: url(../images/Hotel-icon.png) no-repeat 10% 100%;
+	width: 25px;
+	height: 21px;
+	display: inline-block;
+	padding-left: 35px;
+}
+.car-icon {
+	background: url(../images/car-icon.png) no-repeat 10% 100%;
+	width: 25px;
+	height: 21px;
+	display: inline-block;
+	padding-left: 35px;
+}
+.profile-icon {
+	background: url(../images/profile-icon.png) no-repeat;
+	width: 25px;
+	height: 21px;
+	display: inline-block;
+	padding-left: 35px;
+}
+.about-icon {
+	background: url(../images/about-icon.png) no-repeat 10% 100%;
+	width: 25px;
+	height: 21px;
+	display: inline-block;
+	padding-left: 35px;
+}
+.logout-icon {
+	background: url(../images/logout-icon.png) no-repeat 15% 100%;
+	width: 25px;
+	height: 21px;
+	display: inline-block;
+	padding-left: 35px;
+}
+.detail-header {
+	border-radius: 0px;
+}
+.pkgcontainer {
+	width: 100%
+}
+.pkgheader {
+	background: #515050;
+	height: 20px;
+	color: #fff;
+	border-radius: 10px 10px 0px 0px;
+	padding: 10px;
+}
+.pkgrow {
+	background: #fff;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 20px
+}
+.pkgaltrow {
+	background: #f5f5f5;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 20px
+}
+.pkgdept {
+	display: inline-block;
+	float: left;
+	box-sizing: content-box;
+	padding-right: 20px;
+	text-align: center
+}
+.pkgdeptrgt {
+	display: inline-block;
+	float: right;
+	box-sizing: content-box;
+	padding-right: 20px;
+	text-align: center
+}
+.pkgdeptdate {
+	color: #a4a4a4;
+	font-size: 14px
+}
+.pkgtime {
+	color: #e52029;
+	display: block;
+	font-size: 32px
+}
+.flight-logo {
+	float: left;
+	padding-right: 20px;
+	text-align: center
+}
+.flight-name {
+	text-align: left;
+	padding: 30px 0px;
+	float: left;
+}
+.pkg-price {
+	text-align: right;
+	padding: 30px 0px;
+	float: right;
+	color: #e52029;
+	font-size: 32px;
+}
