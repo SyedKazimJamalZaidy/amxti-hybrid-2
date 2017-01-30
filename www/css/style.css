@@ -293,12 +293,23 @@ a.menuitem:hover {
 .detail-header {
 	border-radius: 0px;
 }
+.pkgcontainer:nth-child(1) {
+	width: 100%;
+	float: left;
+	box-sizing: border-box;
+	display: block;
+}
 .pkgcontainer {
-	width: 100%
+	display: none;
+}
+.pkgcontainerconfirm {
+	width: 100%;
+	float: left;
+	box-sizing: border-box;
 }
 .pkgheader {
 	background: #515050;
-	height: 20px;
+	height: 40px;
 	color: #fff;
 	border-radius: 10px 10px 0px 0px;
 	padding: 10px;
@@ -308,14 +319,19 @@ a.menuitem:hover {
 	float: left;
 	width: 100%;
 	box-sizing: border-box;
-	padding: 20px
+	padding: 20px;
+	border-left: 1px solid #efefef;
+	border-right: 1px solid #efefef;
+	border-top: 1px solid #efefef;
 }
 .pkgaltrow {
 	background: #f5f5f5;
 	float: left;
 	width: 100%;
 	box-sizing: border-box;
-	padding: 20px
+	padding: 20px;
+	border-left: 1px solid #efefef;
+	border-right: 1px solid #efefef;
 }
 .pkgdept {
 	display: inline-block;
@@ -338,21 +354,30 @@ a.menuitem:hover {
 .pkgtime {
 	color: #e52029;
 	display: block;
-	font-size: 32px
+	font-size: 32px;
+	padding-top: 15px;
 }
 .flight-logo {
 	float: left;
 	padding-right: 20px;
-	text-align: center
+	text-align: center;
+	display: block;
+}
+.flight-logo img {
+	width: 100px!important;
 }
 .flight-name {
 	text-align: left;
-	padding: 30px 0px;
+	padding: 15px 0px;
+}
+.flight-number {
+	text-align: left;
+	padding: 15px 0px;
 	float: left;
 }
 .pkg-price {
 	text-align: right;
-	padding: 30px 0px;
+	padding: 15px 0px;
 	float: right;
 	color: #e52029;
 	font-size: 32px;

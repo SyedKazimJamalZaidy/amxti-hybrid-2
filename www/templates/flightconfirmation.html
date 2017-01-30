@@ -5,22 +5,28 @@
   </div>
 <ion-content has-subheader="true" class="has-subheader">
             <div class="list" ng-repeat="data in selectedFlight">
-              <div class="item-divider">
-                {{data.departureAirport}}-{{data.arrivalAirport}}<br>
-                Time elapsed: {{data.elapsedTime | time: 'mm'}}<br>
-                Total fare for full itinerary: {{data.totalFare | currency}}                                                 
-              </div>
-                <a class="item item-thumbnail-left item-button-right item-text-wrap">
-                  <img ng-src="http://pics.avs.io/200/200/{{data.flightCode}}.png">
-                  <h3>{{data.departureAirportName}}</h3>
-                  <p>({{data.departureAirport}}) {{data.departureDate}}</p>
-                  <h3>{{data.arrivalAirportName}}</h3>
-                  <p>({{data.arrivalAirport}}) {{data.arrivalDate}}</p>
-                  <h4>
-                Flight: {{data.flightCode}}{{data.flightNumber}}</h4>
-                </a>
-                            
-              </div>
+            <div class="pkgcontainerconfirm">
+<div class="pkgheader">({{data.departureAirport}}) to ({{data.arrivalAirport}})</div>
+<div class="pkgrow">
+<div class="flight-logo"><img ng-src="http://pics.avs.io/200/200/{{data.flightCode}}.png" alt="" /></div>
+<div class="flight-name">{{data.departureAirportName}} <br /> <br /> 
+{{data.arrivalAirportName}}</div>
+</div>
+<div class="pkgaltrow">
+<div class="pkgdept">{{data.departureAirport}} <span class="pkgdeptdate">{{data.departureDate}}</span><br>
+<span class="pkgtime">{{data.arrivalTime}}</span>
+</div>
+<div class="pkgdeptrgt">{{data.arrivalAirport}} <span class="pkgdeptdate">{{data.arrivalDate}}</span><br>
+<span class="pkgtime">{{data.departureTime}}</span>
+</div>
+</div>
+<div class="pkgrow">
+<div class="flight-number">Flight No: {{data.flightCode}}{{data.flightNumber}}<br>
+Duration of Flight: {{data.elapsedTime | time: 'mm'}}</div>
+<div class="pkg-price">{{data.totalFare | currency}}</div>
+</div>
+</div>
+
               <button class="button button-block button-assertive" ng-click="toUserDetails($index)">
                   Confirm
                 </button>        
