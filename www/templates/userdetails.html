@@ -43,8 +43,8 @@
 	    <input type="number" placeholder="Contact #" id="cnumber" name="number" ng-model="number" required>
 	  </label>
 	</div>
-	<button class="button button-assertive button-block" ng-click="toPayment()" >Proceed to payment information <!-- ng-disabled="userdetails.$invalid" --></button>
-	<button class="button button-assertive button-block" >Pay later <!-- ng-disabled="userdetails.$invalid" --></button>
+	<button class="button button-assertive button-block" ng-click="toPayment()" ng-disabled="userdetails.$invalid">Proceed to payment information </button>
+	<button class="button button-assertive button-block" ng-disabled="userdetails.$invalid" ng-click="payLater()">Pay later </button>
 	<div class="padding">
 		<p ng-show="userdetails.fname.$error.required && userdetails.fname.$dirty && userdetails.fname.$touched">*First name is required</p>
 		<p ng-show="userdetails.fname.$error.minlength && userdetails.fname.$dirty && userdetails.fname.$touched">*First name must be longer than 4 characters</p>

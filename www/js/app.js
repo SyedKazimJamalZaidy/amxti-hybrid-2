@@ -179,39 +179,24 @@ var app = angular.module('demo', ['ionic', 'ngMessages'])
                     }
                 }
             })
-            .state('menu.chat-single', {
-                url: '/chat-single',
+            
+            //Hotels page
+            .state('menu.hotels', {
+                url: '/hotels',
                 views: {
                     'view-content': {
-                        templateUrl: 'templates/chat-single.html',
-                        controller : 'ChatSingleController'
-                  }
-                }
-            })
-            .state('menu.tab-1', {
-                url: '/tab-1',
-                views: {
-                    'view-content': {
-                        templateUrl: 'templates/tab-1.html',
-                        controller : 'TabOneController'
+                        templateUrl: 'templates/hotels.html',
+                        controller : 'HotelController'
                     }
                 }
             })
-            .state('menu.tab-2', {
-                url: '/tab-2',
+            //Hotels Details page
+            .state('menu.hoteldetails', {
+                url: '/hoteldetails',
                 views: {
                     'view-content': {
-                        templateUrl: 'templates/tab-2.html',
-                        controller : 'TabTwoController'
-                    }
-                }
-            })
-            .state('menu.tab-3', {
-                url: '/tab-3',
-                views: {
-                    'view-content': {
-                        templateUrl: 'templates/tab-3.html',
-                        controller : 'TabThreeController'
+                        templateUrl: 'templates/hoteldetails.html',
+                        controller : 'HotelDetailsController'
                     }
                 }
             })

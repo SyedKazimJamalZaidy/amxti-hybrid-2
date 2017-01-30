@@ -1,6 +1,5 @@
 var resultData = [];//result of flights coming from Sabre api
-// var destinationName = []; //destination name coming from solude.amxti server
-// var destinationIATA = []; //IATA name coming from solude.amxti server
+resultDataHotels = [];//result of hotels coming from Sabre api
 var result=[]; //Response result of Airports from solude amxti
 var airlineInfo; //Response result of Airlines
 var selectedFlightMulti =[]; //for multi city
@@ -42,8 +41,6 @@ app.controller('DrinkController', function($scope, $ionicSideMenuDelegate) {
     })
 
 
-app.controller('TabOneController', function($scope, $ionicSideMenuDelegate) {
-    })
 
 
 app.controller('TabTwoController', function($scope, $ionicSideMenuDelegate) {
@@ -698,7 +695,7 @@ app.controller('FlightConfirmationMultiController', function($scope, $ionicSideM
 //Flight Confirmation Multi Controller End
 
 //User Details Controller
-app.controller('UserDetailsController', function($scope, $ionicSideMenuDelegate, $state, $http) {
+app.controller('UserDetailsController', function($scope, $ionicSideMenuDelegate, $state, $http, $ionicLoading) {
       passengerDetail = [];
       $http({
         method: "GET",
@@ -711,6 +708,16 @@ app.controller('UserDetailsController', function($scope, $ionicSideMenuDelegate,
         $scope.countryCodes = response.data;
         
       });
+      //pay later function
+      $scope.payLater = function(){
+        $ionicLoading.show({
+            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
+            duration: 3000
+          }).then(function(){
+            alert("Please check your email for flight itinerary");
+          });
+      }
+
       $scope.toPayment = function(){
          
           passengerDetail = [];
@@ -1388,3 +1395,161 @@ $.ajax(getFlightData).done(function(response){
 
 
 });
+//Multi City Controller Ends
+
+//Hotel controller starts
+app.controller('HotelController', function($scope, $ionicSideMenuDelegate, $http) {
+  var destinationName = [];
+  var destinationIATA = [];
+  var availabilityOption;
+  $scope.getHotels = function(){
+    var destinationNameHotel = document.getElementById("destinationName").value;
+    var fromStay = document.getElementById("fromStay").value;
+    var toStay = document.getElementById("toStay").value;
+    var guests = document.getElementById("guests").value;
+    var rooms = document.getElementById("rooms").value;
+    var fromStay = fromStay.split("-");
+    fromStay = fromStay.splice(1,2);
+    var toStay = toStay.split("-");
+    toStay = toStay.splice(1,2);
+    var destinationNameHotelIATA;
+    for (var i = 0; i < result.length; i++) {
+      if (destinationNameHotel == result[i].label) {
+        destinationNameHotelIATA = result[i].id;
+      }
+    }
+
+    //Getting Hotel Data
+    var getHotelDetail = {
+      "async": true,
+      "crossDomain": true,
+      "url": "https://webservices-as.havail.sabre.com/",
+      "method": "POST",
+      "headers": {
+        "content-type": "text/xml",
+        "cache-control": "no-cache",
+        "postman-token": "81985fa3-39b2-33b5-67c4-ba4c58e7278c"
+      },
+      "data": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n        <SOAP-ENV:Header>\r\n            <eb:MessageHeader xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <eb:From>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">999999</eb:PartyId>\r\n                </eb:From>\r\n                <eb:To>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">123123</eb:PartyId>\r\n                </eb:To>\r\n                <eb:CPAId>R7OI</eb:CPAId>\r\n                 <eb:ConversationId>99999</eb:ConversationId>\r\n                <eb:Service eb:type=\"sabreXML\"></eb:Service>\r\n                <eb:Action>OTA_HotelAvailLLSRQ</eb:Action>\r\n            </eb:MessageHeader> <ns6:Security xmlns:ns6=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <ns6:BinarySecurityToken>"+securityToken+"</ns6:BinarySecurityToken>\r\n            </ns6:Security>\r\n        </SOAP-ENV:Header>\r\n        <SOAP-ENV:Body>\r\n\r\n\t<OTA_HotelAvailRQ xmlns=\"http://webservices.sabre.com/sabreXML/2011/10\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" Version=\"2.2.1\">\r\n    <AvailRequestSegment>\r\n        <Customer>\r\n            <Corporate>\r\n                <ID>R7OI</ID>\r\n            </Corporate>\r\n        </Customer>\r\n        <GuestCounts Count=\""+guests+"\" />\r\n        <HotelSearchCriteria>\r\n            <Criterion>\r\n                <HotelRef HotelCityCode=\""+destinationNameHotelIATA+"\" />\r\n            </Criterion>\r\n        </HotelSearchCriteria>\r\n        <TimeSpan End=\""+toStay[0]+"-"+toStay[1]+"\" Start=\""+fromStay[0]+"-"+fromStay[1]+"\" />\r\n    </AvailRequestSegment>\r\n</OTA_HotelAvailRQ>\r\n\t\r\n\t\r\n\t    </SOAP-ENV:Body>\r\n    </SOAP-ENV:Envelope>\r\n "
+    }
+
+$.ajax(getHotelDetail).done(function (response) {
+  console.log(response);
+  availabilityOption = response.getElementsByTagName("AvailabilityOption");
+  var tempArray=[];
+  for (var i = 0; i < availabilityOption.length; i++) {
+    var hotelCode = availabilityOption[i].getElementsByTagName("BasicPropertyInfo")[0].getAttribute("HotelCode");
+    var hotelName = availabilityOption[i].getElementsByTagName("BasicPropertyInfo")[0].getAttribute("HotelName");
+    var hotelLongitude = availabilityOption[i].getElementsByTagName("BasicPropertyInfo")[0].getAttribute("Longitude");
+    var hotelLatitude = availabilityOption[i].getElementsByTagName("BasicPropertyInfo")[0].getAttribute("Latitude");
+    var hotelAddress1 = availabilityOption[i].getElementsByTagName("AddressLine")[0].childNodes[0].nodeValue;
+    var hotelAddress2 = availabilityOption[i].getElementsByTagName("AddressLine")[1].childNodes[0].nodeValue;
+    var hotelAddress = hotelAddress1 + " " + hotelAddress2;
+    var phoneNumber = availabilityOption[i].getElementsByTagName("ContactNumber")[0].getAttribute("Phone");
+    var faxNumber = availabilityOption[i].getElementsByTagName("ContactNumber")[0].getAttribute("Fax");
+    var forRating = availabilityOption[i].getElementsByTagName("Property")[0];
+    var rating = forRating.getElementsByTagName("Text")[0].childNodes[0].nodeValue;
+    var rateRangeMin = availabilityOption[i].getElementsByTagName("RateRange")[0].getAttribute("Min");
+    var rateRangeMax = availabilityOption[i].getElementsByTagName("RateRange")[0].getAttribute("Max");
+    tempArray.push({hotelCode, hotelName, hotelLongitude, hotelLatitude, hotelAddress, phoneNumber, faxNumber, rating, rateRangeMin, rateRangeMax});
+  }
+  resultDataHotels.push(tempArray);
+
+  //Hotel Media Request
+for (var i = 0; i < resultDataHotels[0].length; i++) {
+  var gettingImages = "<HotelRef HotelCode=\""+resultDataHotels[0][i].hotelCode+"\" CodeContext=\"Sabre\">\
+            <ImageRef MaxImages=\"5\">\
+                <Images>\
+                    <Image Type=\"THUMBNAIL\" />\
+                </Images>\
+                <Categories>\
+                    <Category Code=\"1\" />\
+                </Categories>\
+                <AdditionalInfo>\
+                    <Info Type=\"CAPTION\">true</Info>\
+                </AdditionalInfo>\
+                <Languages>\
+                    <Language Code=\"EN\" />\
+                </Languages>\
+            </ImageRef>\
+        </HotelRef>"
+console.log(gettingImages);
+  var getHotelMedia = {
+  "async": true,
+  "crossDomain": true,
+  "url": "https://webservices-as.havail.sabre.com/",
+  "method": "POST",
+  "headers": {
+    "content-type": "text/xml",
+    "cache-control": "no-cache",
+    "postman-token": "1b30db71-dba1-58d3-55e0-16eed57d5ac9"
+  },
+  "data": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n        <SOAP-ENV:Header>\r\n            <eb:MessageHeader xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <eb:From>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">999999</eb:PartyId>\r\n                </eb:From>\r\n                <eb:To>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">123123</eb:PartyId>\r\n                </eb:To>\r\n                <eb:CPAId>R7OI</eb:CPAId>\r\n                 <eb:ConversationId>99999</eb:ConversationId>\r\n                <eb:Service eb:type=\"sabreXML\"></eb:Service>\r\n                <eb:Action>GetHotelMediaRQ</eb:Action>\r\n            </eb:MessageHeader> <ns6:Security xmlns:ns6=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <ns6:BinarySecurityToken>"+securityToken+"</ns6:BinarySecurityToken>\r\n            </ns6:Security>\r\n        </SOAP-ENV:Header>\r\n        <SOAP-ENV:Body>\r\n<GetHotelMediaRQ xmlns=\"http://services.sabre.com/hotel/media/v1\" version=\"1.0.0\">\r\n    <HotelRefs>\r\n "+gettingImages+"    </HotelRefs>\r\n</GetHotelMediaRQ>\r\n\t\r\n\t    </SOAP-ENV:Body>\r\n    </SOAP-ENV:Envelope>\r\n "
+}
+
+$.ajax(getHotelMedia).done(function (response) {
+  console.log(gettingImages);
+  console.log(response);
+});
+//Hotel Media Request End
+}
+//End of for loop
+
+
+});
+//Hotel Data Getting end
+
+
+}
+    // Getting list of Airports
+    if(result.length == 0){
+    $http({
+      method: "GET",
+      url: "js/airports.json",
+      headers: {
+        "Content-Type" : "application/x-www-form-urlencoded"
+      }
+    }).then(function(response){
+      result = response.data;
+      for (var i = 0; i < result.length; i++) {
+          destinationName.push(result[i].label);
+          destinationIATA.push(result[i].id);
+      }
+      $("#destinationName").autocomplete({
+        source: destinationName
+      })
+    });
+  }
+  else {
+    for (var i = 0; i < result.length; i++) {
+          destinationName.push(result[i].label);
+          destinationIATA.push(result[i].id);
+      }
+       $("#destinationName").autocomplete({
+        source: destinationName
+      })
+    }
+
+    //Authenticating for token
+    var auth = {
+  "async": true,
+  "crossDomain": true,
+  "url": "https://webservices-as.havail.sabre.com/",
+  "method": "POST",
+  "headers": {
+    "content-type": "text/xml",
+    "cache-control": "no-cache",
+    
+  },
+  "data":"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\t\t<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:xsd=\"http://www.w3.org/1999/XMLSchema\">\r\n\t\t    <SOAP-ENV:Header>\r\n\t\t        <eb:MessageHeader SOAP-ENV:mustUnderstand=\"1\" eb:version=\"1.0\">\r\n\t\t            <eb:ConversationId>99999</eb:ConversationId>\r\n\t\t            <eb:From>\r\n\t\t                <eb:PartyId type=\"urn:x12.org:IO5:01\">999999</eb:PartyId>\r\n\t\t            </eb:From>\r\n\t\t            <eb:To>\r\n\t\t                <eb:PartyId type=\"urn:x12.org:IO5:01\">123123</eb:PartyId>\r\n\t\t            </eb:To>\r\n\t\t            <eb:CPAId>R7OI</eb:CPAId>\r\n\t\t            <eb:Service eb:type=\"OTA\">SessionCreateRQ</eb:Service>\r\n\t\t            <eb:Action>SessionCreateRQ</eb:Action>\r\n\t\t            <eb:MessageData>\r\n\t\t                <eb:MessageId>1000</eb:MessageId>\r\n\t\t                <eb:Timestamp>2001-02-15T11:15:12Z</eb:Timestamp>\r\n\t\t                <eb:TimeToLive>2001-02-15T11:15:12Z</eb:TimeToLive>\r\n\t\t            </eb:MessageData>\r\n\t\t        </eb:MessageHeader>\r\n\t\t        <wsse:Security xmlns:wsse=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns:wsu=\"http://schemas.xmlsoap.org/ws/2002/12/utility\">\r\n\t\t            <wsse:UsernameToken> \r\n\t\t                <wsse:Username>595258</wsse:Username>\r\n\t\t                <wsse:Password>WS500917</wsse:Password>\r\n\t\t                <Organization>R7OI</Organization>\r\n\t\t                <Domain>DEFAULT</Domain> \r\n\t\t            </wsse:UsernameToken>\r\n\t\t        </wsse:Security>\r\n\t\t    </SOAP-ENV:Header>\r\n\t\t    <SOAP-ENV:Body>\r\n\t\t        <eb:Manifest SOAP-ENV:mustUnderstand=\"1\" eb:version=\"1.0\">\r\n\t\t            <eb:Reference xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\"cid:rootelement\" xlink:type=\"simple\"/>\r\n\t\t        </eb:Manifest>\r\n\t\t    </SOAP-ENV:Body>\r\n\t\t</SOAP-ENV:Envelope>"
+}
+
+$.ajax(auth).done(function(response){
+  securityToken = response.getElementsByTagName("BinarySecurityToken")[0].childNodes[0].nodeValue;
+  })
+});
+//Hotel controller starts
+
+app.controller('HotelDetailsController', function($scope, $ionicSideMenuDelegate) {
+  
+    })
