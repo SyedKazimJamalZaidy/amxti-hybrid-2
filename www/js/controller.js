@@ -75,6 +75,10 @@ app.controller('LoginController', function($scope, $ionicSideMenuDelegate, $stat
 
 // Flights Controller RoundTrip
 .controller('RoundController', function($scope, $http, $state,$ionicSideMenuDelegate, $ionicLoading) {
+  $ionicLoading.show({
+    template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
+    duration: 1000
+  })
   var destinationName= [];
   var destinationIATA = [];
   resultData = [];
@@ -88,13 +92,11 @@ app.controller('LoginController', function($scope, $ionicSideMenuDelegate, $stat
     }
   }
     $scope.flightDetails = function(){
-          $ionicLoading.show({
-            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
-            duration: 3000
-          }).then(function(){});
-
       resultData = [];
-      var from = document.getElementById("from").value;
+          $ionicLoading.show({
+            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>'
+          }).then(function(){
+              var from = document.getElementById("from").value;
       var to = document.getElementById("to").value;
       var departDate = document.getElementById('departDate').value;
       var arrDate = document.getElementById('arrDate').value;
@@ -215,17 +217,23 @@ $.ajax(getFlightData).done(function(response){
           resultData.push(tempArray);
           
         }
+        $ionicLoading.hide();
         $state.go('menu.flightdetails');
   }
   else {
+    $ionicLoading.hide();
     alert("No flights found");
   }
       
     })
+}
+          });
 
+      
+    
 
        
-      }
+      
 
   }
          
@@ -323,13 +331,16 @@ $.ajax(auth).done(function(response){
       return "has-tabs-top"
     }
  }
+ $ionicLoading.show({
+  template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
+  duration: 1000
+ })
     $scope.flightDetails = function(){
       resultData = [];
       $ionicLoading.show({
-            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
-            duration: 3000
-          }).then(function(){});
-      var fromSingle = document.getElementById("fromSingle").value;
+            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>'
+          }).then(function(){
+            var fromSingle = document.getElementById("fromSingle").value;
       var toSingle = document.getElementById("toSingle").value;
       var departDate = document.getElementById('departDate').value;
       var adult = document.getElementById('adult').value;
@@ -453,10 +464,12 @@ $.ajax(getFlightData).done(function(response){
           resultData.push(tempArray);
           
         }
+        $ionicLoading.hide();
         $state.go('menu.flightdetails');
        
       }
       else {
+        $ionicLoading.hide();
         alert("No flights found");
       }
     })
@@ -464,6 +477,8 @@ $.ajax(getFlightData).done(function(response){
 
       }
        
+          });
+      
   }
          
     
@@ -557,10 +572,9 @@ app.controller('FlightDetailController', function($scope, $ionicSideMenuDelegate
         $scope.toConfirm = function($index){
           selectedFlight = $scope.finalData[$index];
           $ionicLoading.show({
-            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
-            duration: 3000
+            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>'
           }).then(function(){
-            
+            $ionicLoading.hide();
           $state.go('menu.flightconfirmation');
           });
         }
@@ -590,13 +604,14 @@ app.controller('FlightDetailMultiController0', function($scope, $ionicSideMenuDe
           totalFareMulti = parseInt(selectedFlightMulti0[0].totalFare);
           // $state.go('menu.flightconfirmation');
            $ionicLoading.show({
-            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
-            duration: 3000
+            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>'
           }).then(function(){});
           if(resultDataMulti1.length != 0){
+            $ionicLoading.hide();
             $state.go('menu.flightdetailsmulti1');
           }
           else {
+            $ionicLoading.hide();
             $state.go('menu.flightconfirmationMulti');
           }
         }
@@ -624,13 +639,14 @@ app.controller('FlightDetailMultiController1', function($scope, $ionicSideMenuDe
           totalFareMulti = totalFareMulti + parseInt(selectedFlightMulti1[0].totalFare);
           // $state.go('menu.flightconfirmation');
           $ionicLoading.show({
-            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
-            duration: 3000
+            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>'
           }).then(function(){});
           if(resultDataMulti2.length != 0){
+            $ionicLoading.hide();
             $state.go('menu.flightdetailsmulti2')
           }
           else {
+            $ionicLoading.hide();
            $state.go('menu.flightconfirmationMulti');
           }
         }
@@ -657,9 +673,9 @@ app.controller('FlightDetailMultiController2', function($scope, $ionicSideMenuDe
           selectedFlightMulti.push(selectedFlightMulti2);
           totalFareMulti = totalFareMulti + parseInt(selectedFlightMulti2[0].totalFare);
           $ionicLoading.show({
-            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
-            duration: 3000
+            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>'
           }).then(function(){});
+          $ionicLoading.hide();
           $state.go('menu.flightconfirmationMulti');
         }
         $scope.toggleGroup = function(group) {
@@ -676,7 +692,11 @@ app.controller('FlightDetailMultiController2', function($scope, $ionicSideMenuDe
 //FLight Detail Multi Controller End
 
 //Flight COnfrimation Controller
-app.controller('FlightConfirmationController', function($scope, $ionicSideMenuDelegate, $state) {
+app.controller('FlightConfirmationController', function($scope, $ionicSideMenuDelegate, $state, $ionicLoading) {
+      $ionicLoading.show({
+        template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
+        duration: 1000
+      });
       $scope.selectedFlight = selectedFlight;
       $scope.toUserDetails = function(){
         $state.go('menu.userdetails');
@@ -684,7 +704,11 @@ app.controller('FlightConfirmationController', function($scope, $ionicSideMenuDe
     })
 //Flight Confirmation Controller End
 //Flight COnfrimation Multi Controller
-app.controller('FlightConfirmationMultiController', function($scope, $ionicSideMenuDelegate, $state) {
+app.controller('FlightConfirmationMultiController', function($scope, $ionicSideMenuDelegate, $state, $ionicLoading) {
+  $ionicLoading.show({
+        template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
+        duration: 1000
+      });
       $scope.selectedFlight = selectedFlightMulti;
       $scope.totalFareMulti = totalFareMulti;
       $scope.toUserDetails = function(){
@@ -850,13 +874,17 @@ app.controller('MutliCityController', function($scope, $ionicSideMenuDelegate, $
   var toIATA0;
   var toIATA1;
   var toIATA2;
+   $ionicLoading.show({
+    template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
+    duration: 1000
+  })
       $scope.whichClassToUse = function(someValue){
     someValue = ionic.Platform.platform();
     if(someValue == "android"){
       return "has-tabs-top"
     }
  }
-      
+ 
 
       // Getting list of Airlines
       $http({
@@ -967,12 +995,11 @@ $.ajax(auth).done(function(response){
   })
   
     $scope.getFirstValue = function(){
-      $ionicLoading.show({
-            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
-            duration: 3000
-          }).then(function(){});
       resultDataMulti0 = [];
-      var firstLocationfrom = document.getElementById("from0").value;
+      $ionicLoading.show({
+            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>'
+          }).then(function(){
+            var firstLocationfrom = document.getElementById("from0").value;
       var firstLocationto = document.getElementById("to0").value;
       var firstLocationdepartdate = document.getElementById("departDate0").value;
       var airlineCode = document.getElementById("airlineCode");
@@ -1092,23 +1119,27 @@ $.ajax(getFlightData).done(function(response){
           resultDataMulti0.push(tempArray);
           
         }
+        $ionicLoading.hide();
       }
       else {
+        $ionicLoading.hide();
         alert('No flights found for the first trip');
       }
     })
       }
       
 
+          });
+      
+      
     }//Flight data ends
 
     $scope.getSecondValue = function(){
-      $ionicLoading.show({
-            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
-            duration: 3000
-          }).then(function(){});
       resultDataMulti1 = [];
-      var secondLocationfrom = document.getElementById("from1").value;
+      $ionicLoading.show({
+            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>'
+          }).then(function(){
+            var secondLocationfrom = document.getElementById("from1").value;
       var secondLocationto = document.getElementById("to1").value;
       var secondLocationdepartdate = document.getElementById("departDate1").value;
       var airlineCode = document.getElementById("airlineCode");
@@ -1229,24 +1260,28 @@ $.ajax(getFlightData).done(function(response){
           resultDataMulti1.push(tempArray);
           
         }
+        $ionicLoading.hide();
        }
        else {
+        $ionicLoading.hide();
           alert("No flights found for second trip");
         } 
     })
         }
       }
       
+          });
+      
+      
 
     }//Flight data ends
 
     $scope.getThirdValue = function(){
-      $ionicLoading.show({
-            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
-            duration: 3000
-          }).then(function(){});
       resultDataMulti2 = [];
-      var thirdLocationfrom = document.getElementById("from2").value;
+      $ionicLoading.show({
+            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>'
+          }).then(function(){
+            var thirdLocationfrom = document.getElementById("from2").value;
       var thirdLocationto = document.getElementById("to2").value;
       var thirdLocationdepartdate = document.getElementById("departDate2").value;
       var airlineCode = document.getElementById("airlineCode");
@@ -1367,8 +1402,10 @@ $.ajax(getFlightData).done(function(response){
           resultDataMulti2.push(tempArray);
           
         }
+        $ionicLoading.hide();
       }
       else {
+        $ionicLoading.hide();
         alert("No flights found for third trip");
       }
     })
@@ -1376,18 +1413,24 @@ $.ajax(getFlightData).done(function(response){
         }
       }
       
+          });
+      
+      
     }//Flight data ends
     $scope.flightDetailsMulti = function(){
        $ionicLoading.show({
-            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
-            duration: 3000
-          }).then(function(){});
-     if(resultDataMulti0.length == 0){
-      alert("Enter atleast one location to proceed");
-     }
-     else {
-       $state.go('menu.flightdetailsmulti0');
-     }
+            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>'
+          }).then(function(){
+            if(resultDataMulti0.length == 0){
+              $ionicLoading.hide();
+              alert("Enter atleast one location to proceed");
+             }
+             else {
+              $ionicLoading.hide();
+               $state.go('menu.flightdetailsmulti0');
+             }
+          });
+     
       
 
 }//function on the button ends here
@@ -1397,11 +1440,20 @@ $.ajax(getFlightData).done(function(response){
 //Multi City Controller Ends
 
 //Hotel controller starts
-app.controller('HotelController', function($scope, $ionicSideMenuDelegate, $http, $state) {
+app.controller('HotelController', function($scope, $ionicSideMenuDelegate, $http, $state, $ionicLoading) {
   var destinationName = [];
   var destinationIATA = [];
   var availabilityOption;
+  resultDataHotels = [];
+  $ionicLoading.show({
+    template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
+    duration: 1000
+  })
   $scope.getHotels = function(){
+    $ionicLoading.show({
+      template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>'
+    }).then(function(){
+          resultDataHotels = [];
     var destinationNameHotel = document.getElementById("destinationName").value;
     var fromStay = document.getElementById("fromStay").value;
     var toStay = document.getElementById("toStay").value;
@@ -1462,11 +1514,11 @@ $.ajax(getHotelDetail).done(function (response) {console.log(response);
           hotelImage = result.getElementsByTagName("Image")[0].getAttribute("Url");
         }
         else {
-          hotelImage = "/images/nophoto.png";
+          hotelImage = "images/nophoto.png";
         }
       }
       else {
-               hotelImage = "/images/nophoto.png";
+               hotelImage = "images/nophoto.png";
              }       
     });
     //Getting Image End
@@ -1490,11 +1542,13 @@ $.ajax(getHotelDetail).done(function (response) {console.log(response);
     tempArray.push({hotelCode, hotelName, hotelLongitude, hotelLatitude, hotelAddress, phoneNumber, faxNumber, rating, rateRangeMin, rateRangeMax, hotelImage});
   }
   resultDataHotels.push(tempArray);
+  $ionicLoading.hide();
   $state.go('menu.hoteldetails');
 });
 //Hotel Data Getting end
 
 
+});
 }
     // Getting list of Airports
     if(result.length == 0){

@@ -12,14 +12,14 @@
                 Rating: {{data.rating}}                                   
               </div>
                 <a class="item item-thumbnail-left item-button-right item-text-wrap">
-                  <img ng-src="{{data.hotelImage}}">
+                  <img ng-src="{{data.hotelImage  }}">
                   <h3>{{data.hotelAddress}}</h3>
                   <h3>Price range: {{data.rateRangeMin | currency}}-{{data.rateRangeMax | currency}}</h3>
                   <p>Phone Number: {{data.phoneNumber}}</p>
                   <p>Fax Number: {{data.faxNumber}}</p>
                   </a>
                 <button class="button button-block button-assertive" ng-click="toConfirm($index)">
-                  Submit to see full itinerary  <i class="ion-arrow-right-b"></i>
+                  Click for more info  <i class="ion-arrow-right-b"></i>
                 </button>                    
               </div>
               
