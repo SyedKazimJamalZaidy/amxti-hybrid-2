@@ -9,11 +9,11 @@
 }
 .container {
 	background: #13314d;
-	height: 400px;
 	color: #fff;
 	text-align: center;
 	vertical-align: middle;
 	padding-top: 100px;
+	padding-bottom: 100px;
 	border-top: 5px solid #e52029;
 }
 .banner {
@@ -23,16 +23,16 @@
 }
 .login-icon {
 	font-size: 150px;
-	background: url(../images/login-icon.png) no-repeat center center;
-	width: 168px;
-	height: 188px;
+	background: url(../images/logo.png) no-repeat center center;
+	width: 104px;
+	height: 100px;
 	position: relative;
 	display: block;
 	text-align: center;
 	margin: 0 auto;
 }
-.button-royal {
-	background: #e52029!important;
+.button-royal, .button.button-assertive {
+	background: #fff!important;
 	-webkit-transform: perspective(1px) translateZ(0);
 	transform: perspective(1px) translateZ(0);
 	box-shadow: 0 0 1px transparent;
@@ -41,8 +41,11 @@
 	transition-duration: 0.3s;
 	-webkit-transition-property: color, background-color;
 	transition-property: color, background-color;
+	border:1px solid #e52029!important;
+	font-weight:bold;
+	color:#e52029!important;
 }
-.button-royal:hover {
+.button-royal:hover, .button.button-assertive:hover {
 	background: #13314d!important
 }
 .list {
@@ -76,7 +79,7 @@
 .flightbutton {
 	background-color: #d71d24;
 	width: 100%;
-	height: 122px;
+	height: 110px;
 	display: block;
 	margin: 0px;
 	color: #fff;
@@ -122,7 +125,7 @@
 .hotelbutton {
 	background-color: #813162;
 	width: 100%;
-	height: 122px;
+	height: 110px;
 	display: block;
 	margin: 0px;
 	color: #fff;
@@ -166,7 +169,7 @@
 .carbutton {
 	background-color: #f7be3d;
 	width: 100%;
-	height: 122px;
+	height: 110px;
 	display: block;
 	margin: 0px;
 	color: #fff;
@@ -236,10 +239,10 @@ a.menuitem:hover {
 	padding: 0px!important
 }
 .tab-item .icon {
-	color: #d71d24
+	color: #13314d
 }
 .tabs-striped .tab-item.tab-item-active {
-	border-color: #d71d24!important
+	border-color: #13314d!important
 }
 .home-icon {
 	background: url(../images/home-icon.png) no-repeat 10% 100%;
@@ -307,12 +310,19 @@ a.menuitem:hover {
 	float: left;
 	box-sizing: border-box;
 }
+
+.pkgcontainermulticity {
+	width: 100%;
+	float: left;
+	box-sizing: border-box;
+}
 .pkgheader {
-	background: #515050;
+	background: #e6e4e4;
 	height: 40px;
-	color: #fff;
+	color: #13314d;
 	border-radius: 10px 10px 0px 0px;
 	padding: 10px;
+	font-size:16px;
 }
 .pkgrow {
 	background: #fff;
@@ -351,10 +361,17 @@ a.menuitem:hover {
 	color: #a4a4a4;
 	font-size: 14px
 }
-.pkgtime {
-	color: #e52029;
+.departuretime {
+	color: #58c72c;
 	display: block;
-	font-size: 32px;
+	font-size: 30px;
+	padding-top: 15px;
+}
+
+.arrivaltimergt {
+	color: #13314d;
+	display: block;
+	font-size: 30px;
 	padding-top: 15px;
 }
 .flight-logo {
@@ -380,5 +397,8 @@ a.menuitem:hover {
 	padding: 15px 0px;
 	float: right;
 	color: #e52029;
-	font-size: 32px;
+	font-size: 26px;
 }
+
+.ion-plus-circled, .ion-minus-circled{font-size:36px;}
+.buttonrgt{text-align:right; padding-top:4px!important; padding-bottom:4px!important;}

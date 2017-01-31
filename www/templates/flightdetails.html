@@ -15,9 +15,9 @@
         </div>
         <div class="pkgaltrow">
           <div class="pkgdept">({{item.departureAirport}}) <span class="pkgdeptdate"> {{item.departureDate}}</span><br>
-            <span class="pkgtime">{{item.departureTime}}</span> </div>
+            <span class="departuretime">{{item.departureTime}}</span> </div>
           <div class="pkgdeptrgt">({{item.arrivalAirport}}) <span class="pkgdeptdate">{{item.arrivalDate}}</span><br>
-            <span class="pkgtime">{{item.arrivalTime}}</span> </div>
+            <span class="arrivaltimergt">{{item.arrivalTime}}</span> </div>
         </div>
         <div class="pkgrow">
           <div class="flight-number">Flight No: {{item.flightCode}}{{item.flightNumber}}<br>
@@ -32,3 +32,5 @@ Duration of Flight: {{item.elapsedTime | time: 'mm'}}
     </div>
   </ion-content>
 </ion-view>
+
+
