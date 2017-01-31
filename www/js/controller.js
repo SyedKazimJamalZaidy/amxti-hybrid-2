@@ -564,7 +564,6 @@ app.controller('FlightDetailController', function($scope, $ionicSideMenuDelegate
             template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
             duration: 3000
           }).then(function(){
-            
           $state.go('menu.flightconfirmation');
           });
         }
