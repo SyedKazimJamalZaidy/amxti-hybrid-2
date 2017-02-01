@@ -1,0 +1,23 @@
+<!-- Hotel Confirmation Page -->
+<ion-view view-title="Hotel Information">
+<div class="bar bar-subheader">
+  <h2 class="title">Please review the details carefully</h2>
+  </div>
+<ion-content has-subheader="true" class="has-subheader">
+           <div class="list card">
+
+			  <div class="item">
+			    <h2>{{hotelDetails.hotelName}}</h2>
+			    <p>{{hotelDetails.rating}}</p>
+			  </div>
+
+			  <div class="item item-body">
+			    <img class="full-image" ng-src="{{hotelFullDetails.hotelImageDetail}}">
+			    <p>
+			      {{hotelFullDetails.hotelDescription}}
+			    </p>
+			  </div>
+
+			</div>
+              <button class="button button-block button-outline button-assertive" ng-click="toUserDetails()">Confirm Hotel</button>
+            </ion-content>

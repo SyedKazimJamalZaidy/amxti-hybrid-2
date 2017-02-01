@@ -15,6 +15,8 @@ var selectedFlightMulti1; //Selected Flights for multi city
 var selectedFlightMulti2; //Selected Flights for multi city
 var passengerDetail= [];
 var totalFareMulti = 0;
+var selectedHotel;//Selected hotel detail
+var selectedHotelDetails = []; //Further details for hotels
 app.controller('MenuController', function($scope, $ionicSideMenuDelegate) {
       $scope.toggleLeft = function() {
         $ionicSideMenuDelegate.toggleLeft();
@@ -718,8 +720,10 @@ app.controller('FlightConfirmationMultiController', function($scope, $ionicSideM
 //Flight Confirmation Multi Controller End
 
 //User Details Controller
-app.controller('UserDetailsController', function($scope, $ionicSideMenuDelegate, $state, $http, $ionicLoading) {
+app.controller('UserDetailsController', function($scope, $ionicSideMenuDelegate, $state, $http, $ionicLoading,$ionicHistory) {
       passengerDetail = [];
+      console.log($ionicHistory.backView());
+      console.log($ionicHistory.backView().stateName);
       $http({
         method: "GET",
         url: "js/countrycodes.json",
@@ -737,13 +741,15 @@ app.controller('UserDetailsController', function($scope, $ionicSideMenuDelegate,
             template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
             duration: 3000
           }).then(function(){
-            alert("Please check your email for flight itinerary");
+            alert("Please check your email for payment information");
           });
       }
 
       $scope.toPayment = function(){
-         
-          passengerDetail = [];
+        //Hotels PNR
+          if ($ionicHistory.backView().stateName == "menu.hotelconfirmation") {
+            console.log('Kazim');
+            passengerDetail = [];
           var fname = document.getElementById("fname").value;
           var mname = document.getElementById("mname").value;
           var lname = document.getElementById("lname").value;
@@ -760,6 +766,46 @@ app.controller('UserDetailsController', function($scope, $ionicSideMenuDelegate,
            }
           }
           passengerDetail.push(fname, mname, lname, selectedCountryCode, cnumber, email);
+          var getHotelPNR = {
+            "async": true,
+            "crossDomain": true,
+            "url": "https://webservices-as.havail.sabre.com/",
+            "method": "POST",
+            "headers": {
+              "content-type": "text/xml",
+              "cache-control": "no-cache",
+              "postman-token": "1343030e-c41f-ffda-0506-02456987b190"
+            },
+            "data": "\t<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n        <SOAP-ENV:Header>\r\n            <eb:MessageHeader xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <eb:From>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">999999</eb:PartyId>\r\n                </eb:From>\r\n                <eb:To>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">123123</eb:PartyId>\r\n                </eb:To>\r\n                <eb:CPAId>R7OI</eb:CPAId>\r\n                 <eb:ConversationId>99999</eb:ConversationId>\r\n                <eb:Service eb:type=\"sabreXML\"></eb:Service>\r\n                <eb:Action>PassengerDetailsRQ</eb:Action>\r\n            </eb:MessageHeader> <ns6:Security xmlns:ns6=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <ns6:BinarySecurityToken>"+securityToken+"</ns6:BinarySecurityToken>\r\n            </ns6:Security>\r\n        </SOAP-ENV:Header>\r\n        <SOAP-ENV:Body>\r\n<PassengerDetailsRQ xmlns=\"http://services.sabre.com/sp/pd/v3_3\" version=\"3.3.0\" IgnoreOnError=\"false\" HaltOnError=\"false\">\r\n<PostProcessing IgnoreAfter=\"false\" RedisplayReservation=\"true\" UnmaskCreditCard=\"true\"/>\r\n<PreProcessing IgnoreBefore=\"true\">\r\n<UniqueID ID=\"\"/>\r\n</PreProcessing>\r\n\r\n<TravelItineraryAddInfoRQ>\r\n<AgencyInfo>\r\n<Address>\r\n<AddressLine>SABRE TRAVEL</AddressLine>\r\n<CityName>SOUTHLAKE</CityName>\r\n<CountryCode>US</CountryCode>\r\n<PostalCode>76092</PostalCode>\r\n<StateCountyProv StateCode=\"TX\"/>\r\n<StreetNmbr>3150 SABRE DRIVE</StreetNmbr>\r\n<VendorPrefs>\r\n<Airline Hosted=\"true\"/>\r\n</VendorPrefs>\r\n</Address>\r\n</AgencyInfo>\r\n<CustomerInfo>\r\n<ContactNumbers>\r\n<ContactNumber NameNumber=\"1.1\" Phone=\""+selectedCountryCode+cnumber+"\" PhoneUseType=\"M\"/>\r\n</ContactNumbers>\r\n<PersonName NameNumber=\"1.1\" NameReference=\"ABC123\" PassengerType=\"ADT\">\r\n<GivenName>"+fname+mname+"</GivenName>\r\n<Surname>"+lname+"</Surname>\r\n</PersonName>\r\n</CustomerInfo>\r\n</TravelItineraryAddInfoRQ>\r\n</PassengerDetailsRQ>\r\n      </SOAP-ENV:Body>\r\n    </SOAP-ENV:Envelope>\r\n "
+          }
+
+          $.ajax(getHotelPNR).done(function (response) {
+            console.log(response);
+          });
+          }
+          //Hotels PNR End
+
+          //Flights PNR
+          else {
+            passengerDetail = [];
+          var fname = document.getElementById("fname").value;
+          var mname = document.getElementById("mname").value;
+          var lname = document.getElementById("lname").value;
+          var countrycode = document.getElementById("countrycode");
+          var selectedCountryName = countrycode.options[countrycode.selectedIndex].value;
+          var selectedCountryCode;
+          var cnumber = document.getElementById("cnumber").value;
+          var email = document.getElementById("email").value;
+          
+          for (var i = 0; i < $scope.countryCodes.length; i++) {
+            
+           if($scope.countryCodes[i].name == selectedCountryName){
+            selectedCountryCode = $scope.countryCodes[i].code;
+           }
+          }
+          passengerDetail.push(fname, mname, lname, selectedCountryCode, cnumber, email);
+
+          
         //Getting user data
         var getUserData = {
             "async": true,
@@ -836,9 +882,12 @@ app.controller('UserDetailsController', function($scope, $ionicSideMenuDelegate,
               
 
               $.ajax(flightBooking).done(function(response){
-                $state.go('menu.paymentmethod');
+                console.log(response)
+                // $state.go('menu.paymentmethod');
               })
           })
+          }
+          
         
       }
     })
@@ -1024,6 +1073,7 @@ $.ajax(auth).done(function(response){
       }
       if(fromIATA0 == toIATA0){
         alert("Please select different departure or arrival airport to complete a journey");
+        $ionicLoading.hide();
       }
       else {
         for (var i = 0; i < airlineInfo.length; i++) {
@@ -1484,7 +1534,7 @@ app.controller('HotelController', function($scope, $ionicSideMenuDelegate, $http
       "data": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n        <SOAP-ENV:Header>\r\n            <eb:MessageHeader xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <eb:From>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">999999</eb:PartyId>\r\n                </eb:From>\r\n                <eb:To>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">123123</eb:PartyId>\r\n                </eb:To>\r\n                <eb:CPAId>R7OI</eb:CPAId>\r\n                 <eb:ConversationId>99999</eb:ConversationId>\r\n                <eb:Service eb:type=\"sabreXML\"></eb:Service>\r\n                <eb:Action>OTA_HotelAvailLLSRQ</eb:Action>\r\n            </eb:MessageHeader> <ns6:Security xmlns:ns6=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <ns6:BinarySecurityToken>"+securityToken+"</ns6:BinarySecurityToken>\r\n            </ns6:Security>\r\n        </SOAP-ENV:Header>\r\n        <SOAP-ENV:Body>\r\n\r\n\t<OTA_HotelAvailRQ xmlns=\"http://webservices.sabre.com/sabreXML/2011/10\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" Version=\"2.2.1\">\r\n    <AvailRequestSegment>\r\n        <Customer>\r\n            <Corporate>\r\n                <ID>R7OI</ID>\r\n            </Corporate>\r\n        </Customer>\r\n        <GuestCounts Count=\""+guests+"\" />\r\n        <HotelSearchCriteria>\r\n            <Criterion>\r\n                <HotelRef HotelCityCode=\""+destinationNameHotelIATA+"\" />\r\n            </Criterion>\r\n        </HotelSearchCriteria>\r\n        <TimeSpan End=\""+toStay[0]+"-"+toStay[1]+"\" Start=\""+fromStay[0]+"-"+fromStay[1]+"\" />\r\n    </AvailRequestSegment>\r\n</OTA_HotelAvailRQ>\r\n\t\r\n\t\r\n\t    </SOAP-ENV:Body>\r\n    </SOAP-ENV:Envelope>\r\n "
     }
 
-$.ajax(getHotelDetail).done(function (response) {console.log(response);
+$.ajax(getHotelDetail).done(function (response) {
   availabilityOption = response.getElementsByTagName("AvailabilityOption");
   var tempArray=[];
   for (var i = 0; i < availabilityOption.length; i++) {
@@ -1492,7 +1542,6 @@ $.ajax(getHotelDetail).done(function (response) {console.log(response);
     var hotelImage;
     //Getting Image
     var getImage = {
-      "async": true,
       "crossDomain": true,
       "url": "https://webservices-as.havail.sabre.com/",
       "method": "POST",
@@ -1506,7 +1555,6 @@ $.ajax(getHotelDetail).done(function (response) {console.log(response);
     }
 
     $.ajax(getImage).done(function (result) {
-      console.log(result);
       var hotelMedia = result.getElementsByTagName("HotelMediaInfo").length;
       if(hotelMedia != 0){
         var image = result.getElementsByTagName("ImageItem").length;
@@ -1537,9 +1585,15 @@ $.ajax(getHotelDetail).done(function (response) {console.log(response);
     else {
       rating = "";
     }
-    var rateRangeMin = availabilityOption[i].getElementsByTagName("RateRange")[0].getAttribute("Min");
-    var rateRangeMax = availabilityOption[i].getElementsByTagName("RateRange")[0].getAttribute("Max");
-    tempArray.push({hotelCode, hotelName, hotelLongitude, hotelLatitude, hotelAddress, phoneNumber, faxNumber, rating, rateRangeMin, rateRangeMax, hotelImage});
+    if(availabilityOption[i].getElementsByTagName("RateRange")[0] !=null){
+      var rateRangeMin = availabilityOption[i].getElementsByTagName("RateRange")[0].getAttribute("Min");
+      var rateRangeMax = availabilityOption[i].getElementsByTagName("RateRange")[0].getAttribute("Max");
+    }
+    else {
+      rateRangeMax = "";
+      rateRangeMin = "";
+    }
+    tempArray.push({hotelCode, hotelName, hotelLongitude, hotelLatitude, hotelAddress, phoneNumber, faxNumber, rating, rateRangeMin, rateRangeMax, hotelImage, toStay, fromStay});
   }
   resultDataHotels.push(tempArray);
   $ionicLoading.hide();
@@ -1595,12 +1649,88 @@ $.ajax(getHotelDetail).done(function (response) {console.log(response);
 
 $.ajax(auth).done(function(response){
   securityToken = response.getElementsByTagName("BinarySecurityToken")[0].childNodes[0].nodeValue;
+  console.log(securityToken);
   })
 });
 //Hotel controller starts
 
-app.controller('HotelDetailsController', function($scope, $ionicSideMenuDelegate) {
-  console.log(resultDataHotels[0]);
+app.controller('HotelDetailsController', function($scope, $ionicSideMenuDelegate, $state, $ionicLoading) {
   $scope.hotelData = resultDataHotels[0];
   $scope.resultLength = resultDataHotels[0].length;
+  $scope.toConfirm = function($index){
+    selectedHotel = [];
+    $ionicLoading.show({
+      template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>'
+    }).then(function(){
+      selectedHotel = $scope.hotelData[$index];
+      //Hotel Full Details
+      var hotelFullDetails = {
+        "async": true,
+        "crossDomain": true,
+        "url": "https://webservices-as.havail.sabre.com/",
+        "method": "POST",
+        "headers": {
+          "content-type": "text/xml",
+          "cache-control": "no-cache",
+          "postman-token": "f54305ca-bc20-e4e4-1ea9-b61a0c30856e"
+        },
+        "data": "\t<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n        <SOAP-ENV:Header>\r\n            <eb:MessageHeader xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <eb:From>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">999999</eb:PartyId>\r\n                </eb:From>\r\n                <eb:To>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">123123</eb:PartyId>\r\n                </eb:To>\r\n                <eb:CPAId>R7OI</eb:CPAId>\r\n                 <eb:ConversationId>99999</eb:ConversationId>\r\n                <eb:Service eb:type=\"sabreXML\"></eb:Service>\r\n                <eb:Action>HotelPropertyDescriptionLLSRQ</eb:Action>\r\n            </eb:MessageHeader> <ns6:Security xmlns:ns6=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <ns6:BinarySecurityToken>"+securityToken+"</ns6:BinarySecurityToken>\r\n            </ns6:Security>\r\n        </SOAP-ENV:Header>\r\n        <SOAP-ENV:Body>\r\n<HotelPropertyDescriptionRQ xmlns=\"http://webservices.sabre.com/sabreXML/2011/10\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" Version=\"2.3.0\">\r\n    <AvailRequestSegment>\r\n        <GuestCounts Count=\"2\" />\r\n        <HotelSearchCriteria>\r\n            <Criterion>\r\n                <HotelRef HotelCode=\""+selectedHotel.hotelCode+"\" />\r\n            </Criterion>\r\n        </HotelSearchCriteria>\r\n        <TimeSpan End=\""+selectedHotel.toStay[0]+"-"+selectedHotel.toStay[1]+"\" Start=\""+selectedHotel.fromStay[0]+"-"+selectedHotel.fromStay[1]+"\" />\r\n    </AvailRequestSegment>\r\n</HotelPropertyDescriptionRQ>\r\n  \r\n      </SOAP-ENV:Body>\r\n    </SOAP-ENV:Envelope>\r\n "
+      }
+
+      $.ajax(hotelFullDetails).done(function (response) {
+        console.log(response);
+        var hotelImageDetail;
+        var hotelDescription = [];
+        var descriptionLength = response.getElementsByTagName("Description")[0].childNodes.length;
+        for (var i = 0; i < descriptionLength; i++) {
+          hotelDescription.push(response.getElementsByTagName("Description")[0].childNodes[i].textContent);
+        }
+        hotelDescription = hotelDescription.join("");
+        //Getting Image
+    var getImage = {
+      "crossDomain": true,
+      "url": "https://webservices-as.havail.sabre.com/",
+      "method": "POST",
+      async: false,
+      "headers": {
+        "content-type": "text/xml",
+        "cache-control": "no-cache",
+        "postman-token": "44c7d3d1-3811-57ec-85aa-4896648583d7"
+      },
+      "data": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n        <SOAP-ENV:Header>\r\n            <eb:MessageHeader xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <eb:From>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">999999</eb:PartyId>\r\n                </eb:From>\r\n                <eb:To>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">123123</eb:PartyId>\r\n                </eb:To>\r\n                <eb:CPAId>R7OI</eb:CPAId>\r\n                 <eb:ConversationId>99999</eb:ConversationId>\r\n                <eb:Service eb:type=\"sabreXML\"></eb:Service>\r\n                <eb:Action>GetHotelMediaRQ</eb:Action>\r\n            </eb:MessageHeader> <ns6:Security xmlns:ns6=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <ns6:BinarySecurityToken>"+securityToken+"</ns6:BinarySecurityToken>\r\n            </ns6:Security>\r\n        </SOAP-ENV:Header>\r\n        <SOAP-ENV:Body>\r\n<GetHotelMediaRQ xmlns=\"http://services.sabre.com/hotel/media/v1\" version=\"1.0.0\">\r\n    <HotelRefs>\r\n        <HotelRef HotelCode=\""+selectedHotel.hotelCode+"\" CodeContext=\"Sabre\">\r\n            <ImageRef MaxImages=\"5\">\r\n                <Images>\r\n                    <Image Type=\"THUMBNAIL\" />\r\n                </Images>\r\n                <Categories>\r\n                    <Category Code=\"1\" />\r\n                </Categories>\r\n                <AdditionalInfo>\r\n                    <Info Type=\"CAPTION\">true</Info>\r\n                </AdditionalInfo>\r\n                <Languages>\r\n                    <Language Code=\"EN\" />\r\n                </Languages>\r\n            </ImageRef>\r\n        </HotelRef>\r\n    </HotelRefs>\r\n</GetHotelMediaRQ>\r\n\t\r\n\t    </SOAP-ENV:Body>\r\n    </SOAP-ENV:Envelope>\r\n "
+    }
+
+    $.ajax(getImage).done(function (result) {
+          var hotelMediaDetail = result.getElementsByTagName("HotelMediaInfo").length;
+      if(hotelMediaDetail != 0){
+        var image = result.getElementsByTagName("ImageItem").length;
+        if(image != 0){
+          hotelImageDetail = result.getElementsByTagName("Image")[0].getAttribute("Url");
+        }
+        else {
+          hotelImageDetail = "images/nophoto.png";
+        }
+      }
+      else {
+               hotelImageDetail = "images/nophoto.png";
+             }       
+    });
+    //Getting Image End
+    selectedHotelDetails.push({hotelImageDetail, hotelDescription});
+      
+      $state.go('menu.hotelconfirmation');
+      $ionicLoading.hide();
+      });
+      //Hotel Full Details End
+    }) 
+  }
+
+    });
+
+app.controller('HotelConfirmationController', function($scope, $ionicSideMenuDelegate, $state) {
+    $scope.hotelDetails = selectedHotel;
+    $scope.hotelFullDetails = selectedHotelDetails[0];
+    $scope.toUserDetails = function(){
+      $state.go('menu.userdetails');
+    }
     });
