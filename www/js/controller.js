@@ -19,62 +19,66 @@ app.controller('MenuController', function($scope, $ionicSideMenuDelegate) {
       $scope.toggleLeft = function() {
         $ionicSideMenuDelegate.toggleLeft();
       };
-    })
+    });
 
 app.controller('HomePageController', function($scope, $ionicSideMenuDelegate) {
   
-    })
+    });
 
 app.controller('Controller', function($scope, $ionicSideMenuDelegate) {
-    })
+    });
 
 
 app.controller('ChatController', function($scope, $ionicSideMenuDelegate) {
-    })
+    });
 
 
 app.controller('ChatSingleController', function($scope, $ionicSideMenuDelegate) {
-    })
+    });
 
 
 app.controller('DrinkController', function($scope, $ionicSideMenuDelegate) {
-    })
+    });
 
 
 
 
 app.controller('TabTwoController', function($scope, $ionicSideMenuDelegate) {
-    })
+    });
 
 
 app.controller('TabThreeController', function($scope, $ionicSideMenuDelegate) {
-    })
+    });
 
 
 //First Tab Controller
 app.controller('FirstController', function($scope, $ionicSideMenuDelegate, $state) {
         $scope.login = function(){
             $state.go('login');
-        }
+        };
         $scope.register = function(){
             $state.go('registration');
-        }
-    })
+        };
+    });
 
 
 //Login Page Controller
 app.controller('LoginController', function($scope, $ionicSideMenuDelegate, $state) {
         $scope.success = function(){
             $state.go('menu.homepage');
-        }
+        };
 		$scope.register = function(){
             $state.go('registration');
-        }
+        };
     })
 
 
 // Flights Controller RoundTrip
 .controller('RoundController', function($scope, $http, $state,$ionicSideMenuDelegate, $ionicLoading) {
+  $ionicLoading.show({
+    template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
+    duration: 1000
+  });
   var destinationName= [];
   var destinationIATA = [];
   resultData = [];
@@ -83,18 +87,16 @@ app.controller('LoginController', function($scope, $ionicSideMenuDelegate, $stat
 
   $scope.whichClassToUse = function(someValue){
     someValue = ionic.Platform.platform();
-    if(someValue == "android"){
-      return "has-tabs-top"
+    if(someValue === "android"){
+      return "has-tabs-top";
     }
-  }
+  };
     $scope.flightDetails = function(){
-          $ionicLoading.show({
-            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
-            duration: 3000
-          }).then(function(){});
-
       resultData = [];
-      var from = document.getElementById("from").value;
+          $ionicLoading.show({
+            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>'
+          }).then(function(){
+              var from = document.getElementById("from").value;
       var to = document.getElementById("to").value;
       var departDate = document.getElementById('departDate').value;
       var arrDate = document.getElementById('arrDate').value;
@@ -105,7 +107,7 @@ app.controller('LoginController', function($scope, $ionicSideMenuDelegate, $stat
       var fromIATA;
       var toIATA;
       for (var i = 0; i < result.length; i++) {
-        if(from == result[i].label)
+        if(from === result[i].label)
           {
             fromIATA = result[i].id;
             
@@ -120,7 +122,7 @@ app.controller('LoginController', function($scope, $ionicSideMenuDelegate, $stat
           }
       }
       if(fromIATA == toIATA){
-        alert("Please select a different departure or arrival airport to complete a journey!")
+        alert("Please select a different departure or arrival airport to complete a journey!");
       }
       else {
               for (var i = 0; i < airlineInfo.length; i++) {
@@ -161,7 +163,7 @@ app.controller('LoginController', function($scope, $ionicSideMenuDelegate, $stat
             <ExcludeCallDirectCarriers Enabled=\"true\" />\
         </TPA_Extensions>\
     </TravelPreferences>  <TravelerInfoSummary>\r\n        <SeatsRequested>1</SeatsRequested>\r\n        <AirTravelerAvail>\r\n            \t<PassengerTypeQuantity Code=\"ADT\" Quantity= \""+adult+"\" />\r\n\t\t\t \r\n        </AirTravelerAvail>\r\n    </TravelerInfoSummary>\r\n    <TPA_Extensions>\r\n        <IntelliSellTransaction>\r\n            <RequestType Name=\"50ITINS\" />\r\n        </IntelliSellTransaction>\r\n    </TPA_Extensions>\r\n</OTA_AirLowFareSearchRQ>\r\n\r\n    </soapenv:Body>\r\n</soapenv:Envelope>"
-}
+};
 //Making AJAX Request for data of flights
 $.ajax(getFlightData).done(function(response){
   if(response.getElementsByTagName("PricedItineraries").length != 0){
@@ -215,19 +217,25 @@ $.ajax(getFlightData).done(function(response){
           resultData.push(tempArray);
           
         }
+        $ionicLoading.hide();
         $state.go('menu.flightdetails');
   }
   else {
+    $ionicLoading.hide();
     alert("No flights found");
   }
       
-    })
+    });
+}
+          });
 
+      
+    
 
        
-      }
+      
 
-  }
+  };
          
     
 
@@ -245,11 +253,11 @@ $.ajax(getFlightData).done(function(response){
     
   },
   "data":"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\t\t<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:xsd=\"http://www.w3.org/1999/XMLSchema\">\r\n\t\t    <SOAP-ENV:Header>\r\n\t\t        <eb:MessageHeader SOAP-ENV:mustUnderstand=\"1\" eb:version=\"1.0\">\r\n\t\t            <eb:ConversationId>99999</eb:ConversationId>\r\n\t\t            <eb:From>\r\n\t\t                <eb:PartyId type=\"urn:x12.org:IO5:01\">999999</eb:PartyId>\r\n\t\t            </eb:From>\r\n\t\t            <eb:To>\r\n\t\t                <eb:PartyId type=\"urn:x12.org:IO5:01\">123123</eb:PartyId>\r\n\t\t            </eb:To>\r\n\t\t            <eb:CPAId>R7OI</eb:CPAId>\r\n\t\t            <eb:Service eb:type=\"OTA\">SessionCreateRQ</eb:Service>\r\n\t\t            <eb:Action>SessionCreateRQ</eb:Action>\r\n\t\t            <eb:MessageData>\r\n\t\t                <eb:MessageId>1000</eb:MessageId>\r\n\t\t                <eb:Timestamp>2001-02-15T11:15:12Z</eb:Timestamp>\r\n\t\t                <eb:TimeToLive>2001-02-15T11:15:12Z</eb:TimeToLive>\r\n\t\t            </eb:MessageData>\r\n\t\t        </eb:MessageHeader>\r\n\t\t        <wsse:Security xmlns:wsse=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns:wsu=\"http://schemas.xmlsoap.org/ws/2002/12/utility\">\r\n\t\t            <wsse:UsernameToken> \r\n\t\t                <wsse:Username>595258</wsse:Username>\r\n\t\t                <wsse:Password>WS500917</wsse:Password>\r\n\t\t                <Organization>R7OI</Organization>\r\n\t\t                <Domain>DEFAULT</Domain> \r\n\t\t            </wsse:UsernameToken>\r\n\t\t        </wsse:Security>\r\n\t\t    </SOAP-ENV:Header>\r\n\t\t    <SOAP-ENV:Body>\r\n\t\t        <eb:Manifest SOAP-ENV:mustUnderstand=\"1\" eb:version=\"1.0\">\r\n\t\t            <eb:Reference xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\"cid:rootelement\" xlink:type=\"simple\"/>\r\n\t\t        </eb:Manifest>\r\n\t\t    </SOAP-ENV:Body>\r\n\t\t</SOAP-ENV:Envelope>"
-}
+};
 
 $.ajax(auth).done(function(response){
   securityToken = response.getElementsByTagName("BinarySecurityToken")[0].childNodes[0].nodeValue;
-  })
+  });
   
 
 
@@ -290,10 +298,10 @@ $.ajax(auth).done(function(response){
       }
       $("#from").autocomplete({
         source: destinationName
-      })
+      });
       $("#to").autocomplete({
         source: destinationName
-      })
+      });
     });
   }
   else {
@@ -303,10 +311,10 @@ $.ajax(auth).done(function(response){
       }
        $("#from").autocomplete({
         source: destinationName
-      })
+      });
       $("#to").autocomplete({
         source: destinationName
-      })
+      });
   }
 })
 // Flights Controller End
@@ -322,14 +330,17 @@ $.ajax(auth).done(function(response){
     if(someValue == "android"){
       return "has-tabs-top"
     }
- }
+ };
+ $ionicLoading.show({
+  template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
+  duration: 1000
+ });
     $scope.flightDetails = function(){
       resultData = [];
       $ionicLoading.show({
-            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
-            duration: 3000
-          }).then(function(){});
-      var fromSingle = document.getElementById("fromSingle").value;
+            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>'
+          }).then(function(){
+            var fromSingle = document.getElementById("fromSingle").value;
       var toSingle = document.getElementById("toSingle").value;
       var departDate = document.getElementById('departDate').value;
       var adult = document.getElementById('adult').value;
@@ -400,10 +411,10 @@ $.ajax(auth).done(function(response){
 }
 //Making AJAX Request for data of flights
 $.ajax(getFlightData).done(function(response){
-  console.log(response);
+  
       if(response.getElementsByTagName("PricedItineraries").length != 0){
       var pricedItineraries = response.getElementsByTagName("PricedItineraries")[0].childNodes;
-        console.log(pricedItineraries.length);
+       
         for (var i = 0; i < pricedItineraries.length; i++) {
           
           var totalFare = pricedItineraries[i].getElementsByTagName("ItinTotalFare")[0].getElementsByTagName("TotalFare")[0].getAttribute("Amount");
@@ -411,7 +422,6 @@ $.ajax(getFlightData).done(function(response){
           var originDestinationOptions = pricedItineraries[i].getElementsByTagName("AirItinerary")[0].getElementsByTagName("OriginDestinationOptions")[0];
           
           var tempArray = [];
-          console.log(originDestinationOptions.childNodes.length);
           for (var j = 0; j < originDestinationOptions.childNodes.length; j++) {
             var originDestinationOption = originDestinationOptions.childNodes[j].childNodes;
             
@@ -454,10 +464,12 @@ $.ajax(getFlightData).done(function(response){
           resultData.push(tempArray);
           
         }
+        $ionicLoading.hide();
         $state.go('menu.flightdetails');
-        console.log(resultData);
+       
       }
       else {
+        $ionicLoading.hide();
         alert("No flights found");
       }
     })
@@ -465,6 +477,8 @@ $.ajax(getFlightData).done(function(response){
 
       }
        
+          });
+      
   }
          
     
@@ -558,9 +572,9 @@ app.controller('FlightDetailController', function($scope, $ionicSideMenuDelegate
         $scope.toConfirm = function($index){
           selectedFlight = $scope.finalData[$index];
           $ionicLoading.show({
-            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
-            duration: 3000
+            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>'
           }).then(function(){
+            $ionicLoading.hide();
           $state.go('menu.flightconfirmation');
           });
         }
@@ -590,13 +604,14 @@ app.controller('FlightDetailMultiController0', function($scope, $ionicSideMenuDe
           totalFareMulti = parseInt(selectedFlightMulti0[0].totalFare);
           // $state.go('menu.flightconfirmation');
            $ionicLoading.show({
-            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
-            duration: 3000
+            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>'
           }).then(function(){});
           if(resultDataMulti1.length != 0){
+            $ionicLoading.hide();
             $state.go('menu.flightdetailsmulti1');
           }
           else {
+            $ionicLoading.hide();
             $state.go('menu.flightconfirmationMulti');
           }
         }
@@ -624,13 +639,14 @@ app.controller('FlightDetailMultiController1', function($scope, $ionicSideMenuDe
           totalFareMulti = totalFareMulti + parseInt(selectedFlightMulti1[0].totalFare);
           // $state.go('menu.flightconfirmation');
           $ionicLoading.show({
-            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
-            duration: 3000
+            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>'
           }).then(function(){});
           if(resultDataMulti2.length != 0){
+            $ionicLoading.hide();
             $state.go('menu.flightdetailsmulti2')
           }
           else {
+            $ionicLoading.hide();
            $state.go('menu.flightconfirmationMulti');
           }
         }
@@ -657,9 +673,9 @@ app.controller('FlightDetailMultiController2', function($scope, $ionicSideMenuDe
           selectedFlightMulti.push(selectedFlightMulti2);
           totalFareMulti = totalFareMulti + parseInt(selectedFlightMulti2[0].totalFare);
           $ionicLoading.show({
-            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
-            duration: 3000
+            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>'
           }).then(function(){});
+          $ionicLoading.hide();
           $state.go('menu.flightconfirmationMulti');
         }
         $scope.toggleGroup = function(group) {
@@ -676,15 +692,24 @@ app.controller('FlightDetailMultiController2', function($scope, $ionicSideMenuDe
 //FLight Detail Multi Controller End
 
 //Flight COnfrimation Controller
-app.controller('FlightConfirmationController', function($scope, $ionicSideMenuDelegate, $state) {
+app.controller('FlightConfirmationController', function($scope, $ionicSideMenuDelegate, $state, $ionicLoading) {
+      $ionicLoading.show({
+        template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
+        duration: 1000
+      });
       $scope.selectedFlight = selectedFlight;
+	  console.log(selectedFlight);
       $scope.toUserDetails = function(){
         $state.go('menu.userdetails');
       }
     })
 //Flight Confirmation Controller End
 //Flight COnfrimation Multi Controller
-app.controller('FlightConfirmationMultiController', function($scope, $ionicSideMenuDelegate, $state) {
+app.controller('FlightConfirmationMultiController', function($scope, $ionicSideMenuDelegate, $state, $ionicLoading) {
+  $ionicLoading.show({
+        template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
+        duration: 1000
+      });
       $scope.selectedFlight = selectedFlightMulti;
       $scope.totalFareMulti = totalFareMulti;
       $scope.toUserDetails = function(){
@@ -850,13 +875,17 @@ app.controller('MutliCityController', function($scope, $ionicSideMenuDelegate, $
   var toIATA0;
   var toIATA1;
   var toIATA2;
+   $ionicLoading.show({
+    template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
+    duration: 1000
+  })
       $scope.whichClassToUse = function(someValue){
     someValue = ionic.Platform.platform();
     if(someValue == "android"){
       return "has-tabs-top"
     }
  }
-      
+ 
 
       // Getting list of Airlines
       $http({
@@ -967,12 +996,11 @@ $.ajax(auth).done(function(response){
   })
   
     $scope.getFirstValue = function(){
-      $ionicLoading.show({
-            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
-            duration: 3000
-          }).then(function(){});
       resultDataMulti0 = [];
-      var firstLocationfrom = document.getElementById("from0").value;
+      $ionicLoading.show({
+            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>'
+          }).then(function(){
+            var firstLocationfrom = document.getElementById("from0").value;
       var firstLocationto = document.getElementById("to0").value;
       var firstLocationdepartdate = document.getElementById("departDate0").value;
       var airlineCode = document.getElementById("airlineCode");
@@ -1092,23 +1120,27 @@ $.ajax(getFlightData).done(function(response){
           resultDataMulti0.push(tempArray);
           
         }
+        $ionicLoading.hide();
       }
       else {
+        $ionicLoading.hide();
         alert('No flights found for the first trip');
       }
     })
       }
       
 
+          });
+      
+      
     }//Flight data ends
 
     $scope.getSecondValue = function(){
-      $ionicLoading.show({
-            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
-            duration: 3000
-          }).then(function(){});
       resultDataMulti1 = [];
-      var secondLocationfrom = document.getElementById("from1").value;
+      $ionicLoading.show({
+            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>'
+          }).then(function(){
+            var secondLocationfrom = document.getElementById("from1").value;
       var secondLocationto = document.getElementById("to1").value;
       var secondLocationdepartdate = document.getElementById("departDate1").value;
       var airlineCode = document.getElementById("airlineCode");
@@ -1229,24 +1261,28 @@ $.ajax(getFlightData).done(function(response){
           resultDataMulti1.push(tempArray);
           
         }
+        $ionicLoading.hide();
        }
        else {
+        $ionicLoading.hide();
           alert("No flights found for second trip");
         } 
     })
         }
       }
       
+          });
+      
+      
 
     }//Flight data ends
 
     $scope.getThirdValue = function(){
-      $ionicLoading.show({
-            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
-            duration: 3000
-          }).then(function(){});
       resultDataMulti2 = [];
-      var thirdLocationfrom = document.getElementById("from2").value;
+      $ionicLoading.show({
+            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>'
+          }).then(function(){
+            var thirdLocationfrom = document.getElementById("from2").value;
       var thirdLocationto = document.getElementById("to2").value;
       var thirdLocationdepartdate = document.getElementById("departDate2").value;
       var airlineCode = document.getElementById("airlineCode");
@@ -1367,8 +1403,10 @@ $.ajax(getFlightData).done(function(response){
           resultDataMulti2.push(tempArray);
           
         }
+        $ionicLoading.hide();
       }
       else {
+        $ionicLoading.hide();
         alert("No flights found for third trip");
       }
     })
@@ -1376,18 +1414,24 @@ $.ajax(getFlightData).done(function(response){
         }
       }
       
+          });
+      
+      
     }//Flight data ends
     $scope.flightDetailsMulti = function(){
        $ionicLoading.show({
-            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
-            duration: 3000
-          }).then(function(){});
-     if(resultDataMulti0.length == 0){
-      alert("Enter atleast one location to proceed");
-     }
-     else {
-       $state.go('menu.flightdetailsmulti0');
-     }
+            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>'
+          }).then(function(){
+            if(resultDataMulti0.length == 0){
+              $ionicLoading.hide();
+              alert("Enter atleast one location to proceed");
+             }
+             else {
+              $ionicLoading.hide();
+               $state.go('menu.flightdetailsmulti0');
+             }
+          });
+     
       
 
 }//function on the button ends here
@@ -1397,11 +1441,20 @@ $.ajax(getFlightData).done(function(response){
 //Multi City Controller Ends
 
 //Hotel controller starts
-app.controller('HotelController', function($scope, $ionicSideMenuDelegate, $http) {
+app.controller('HotelController', function($scope, $ionicSideMenuDelegate, $http, $state, $ionicLoading) {
   var destinationName = [];
   var destinationIATA = [];
   var availabilityOption;
+  resultDataHotels = [];
+  $ionicLoading.show({
+    template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
+    duration: 1000
+  })
   $scope.getHotels = function(){
+    $ionicLoading.show({
+      template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>'
+    }).then(function(){
+          resultDataHotels = [];
     var destinationNameHotel = document.getElementById("destinationName").value;
     var fromStay = document.getElementById("fromStay").value;
     var toStay = document.getElementById("toStay").value;
@@ -1432,12 +1485,44 @@ app.controller('HotelController', function($scope, $ionicSideMenuDelegate, $http
       "data": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n        <SOAP-ENV:Header>\r\n            <eb:MessageHeader xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <eb:From>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">999999</eb:PartyId>\r\n                </eb:From>\r\n                <eb:To>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">123123</eb:PartyId>\r\n                </eb:To>\r\n                <eb:CPAId>R7OI</eb:CPAId>\r\n                 <eb:ConversationId>99999</eb:ConversationId>\r\n                <eb:Service eb:type=\"sabreXML\"></eb:Service>\r\n                <eb:Action>OTA_HotelAvailLLSRQ</eb:Action>\r\n            </eb:MessageHeader> <ns6:Security xmlns:ns6=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <ns6:BinarySecurityToken>"+securityToken+"</ns6:BinarySecurityToken>\r\n            </ns6:Security>\r\n        </SOAP-ENV:Header>\r\n        <SOAP-ENV:Body>\r\n\r\n\t<OTA_HotelAvailRQ xmlns=\"http://webservices.sabre.com/sabreXML/2011/10\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" Version=\"2.2.1\">\r\n    <AvailRequestSegment>\r\n        <Customer>\r\n            <Corporate>\r\n                <ID>R7OI</ID>\r\n            </Corporate>\r\n        </Customer>\r\n        <GuestCounts Count=\""+guests+"\" />\r\n        <HotelSearchCriteria>\r\n            <Criterion>\r\n                <HotelRef HotelCityCode=\""+destinationNameHotelIATA+"\" />\r\n            </Criterion>\r\n        </HotelSearchCriteria>\r\n        <TimeSpan End=\""+toStay[0]+"-"+toStay[1]+"\" Start=\""+fromStay[0]+"-"+fromStay[1]+"\" />\r\n    </AvailRequestSegment>\r\n</OTA_HotelAvailRQ>\r\n\t\r\n\t\r\n\t    </SOAP-ENV:Body>\r\n    </SOAP-ENV:Envelope>\r\n "
     }
 
-$.ajax(getHotelDetail).done(function (response) {
-  console.log(response);
+$.ajax(getHotelDetail).done(function (response) {console.log(response);
   availabilityOption = response.getElementsByTagName("AvailabilityOption");
   var tempArray=[];
   for (var i = 0; i < availabilityOption.length; i++) {
     var hotelCode = availabilityOption[i].getElementsByTagName("BasicPropertyInfo")[0].getAttribute("HotelCode");
+    var hotelImage;
+    //Getting Image
+    var getImage = {
+      "async": true,
+      "crossDomain": true,
+      "url": "https://webservices-as.havail.sabre.com/",
+      "method": "POST",
+      async: false,
+      "headers": {
+        "content-type": "text/xml",
+        "cache-control": "no-cache",
+        "postman-token": "44c7d3d1-3811-57ec-85aa-4896648583d7"
+      },
+      "data": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n        <SOAP-ENV:Header>\r\n            <eb:MessageHeader xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <eb:From>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">999999</eb:PartyId>\r\n                </eb:From>\r\n                <eb:To>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">123123</eb:PartyId>\r\n                </eb:To>\r\n                <eb:CPAId>R7OI</eb:CPAId>\r\n                 <eb:ConversationId>99999</eb:ConversationId>\r\n                <eb:Service eb:type=\"sabreXML\"></eb:Service>\r\n                <eb:Action>GetHotelMediaRQ</eb:Action>\r\n            </eb:MessageHeader> <ns6:Security xmlns:ns6=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <ns6:BinarySecurityToken>"+securityToken+"</ns6:BinarySecurityToken>\r\n            </ns6:Security>\r\n        </SOAP-ENV:Header>\r\n        <SOAP-ENV:Body>\r\n<GetHotelMediaRQ xmlns=\"http://services.sabre.com/hotel/media/v1\" version=\"1.0.0\">\r\n    <HotelRefs>\r\n        <HotelRef HotelCode=\""+hotelCode+"\" CodeContext=\"Sabre\">\r\n            <ImageRef MaxImages=\"1\">\r\n                <Images>\r\n                    <Image Type=\"THUMBNAIL\" />\r\n                </Images>\r\n                <Categories>\r\n                    <Category Code=\"1\" />\r\n                </Categories>\r\n                <AdditionalInfo>\r\n                    <Info Type=\"CAPTION\">true</Info>\r\n                </AdditionalInfo>\r\n                <Languages>\r\n                    <Language Code=\"EN\" />\r\n                </Languages>\r\n            </ImageRef>\r\n        </HotelRef>\r\n    </HotelRefs>\r\n</GetHotelMediaRQ>\r\n\t\r\n\t    </SOAP-ENV:Body>\r\n    </SOAP-ENV:Envelope>\r\n "
+    }
+
+    $.ajax(getImage).done(function (result) {
+      console.log(result);
+      var hotelMedia = result.getElementsByTagName("HotelMediaInfo").length;
+      if(hotelMedia != 0){
+        var image = result.getElementsByTagName("ImageItem").length;
+        if(image != 0){
+          hotelImage = result.getElementsByTagName("Image")[0].getAttribute("Url");
+        }
+        else {
+          hotelImage = "images/nophoto.png";
+        }
+      }
+      else {
+               hotelImage = "images/nophoto.png";
+             }       
+    });
+    //Getting Image End
     var hotelName = availabilityOption[i].getElementsByTagName("BasicPropertyInfo")[0].getAttribute("HotelName");
     var hotelLongitude = availabilityOption[i].getElementsByTagName("BasicPropertyInfo")[0].getAttribute("Longitude");
     var hotelLatitude = availabilityOption[i].getElementsByTagName("BasicPropertyInfo")[0].getAttribute("Latitude");
@@ -1446,59 +1531,25 @@ $.ajax(getHotelDetail).done(function (response) {
     var hotelAddress = hotelAddress1 + " " + hotelAddress2;
     var phoneNumber = availabilityOption[i].getElementsByTagName("ContactNumber")[0].getAttribute("Phone");
     var faxNumber = availabilityOption[i].getElementsByTagName("ContactNumber")[0].getAttribute("Fax");
-    var forRating = availabilityOption[i].getElementsByTagName("Property")[0];
+    if(availabilityOption[i].getElementsByTagName("Property")[0] != null){
+      var forRating = availabilityOption[i].getElementsByTagName("Property")[0];
     var rating = forRating.getElementsByTagName("Text")[0].childNodes[0].nodeValue;
+    }
+    else {
+      rating = "";
+    }
     var rateRangeMin = availabilityOption[i].getElementsByTagName("RateRange")[0].getAttribute("Min");
     var rateRangeMax = availabilityOption[i].getElementsByTagName("RateRange")[0].getAttribute("Max");
-    tempArray.push({hotelCode, hotelName, hotelLongitude, hotelLatitude, hotelAddress, phoneNumber, faxNumber, rating, rateRangeMin, rateRangeMax});
+    tempArray.push({hotelCode, hotelName, hotelLongitude, hotelLatitude, hotelAddress, phoneNumber, faxNumber, rating, rateRangeMin, rateRangeMax, hotelImage});
   }
   resultDataHotels.push(tempArray);
-
-  //Hotel Media Request
-for (var i = 0; i < resultDataHotels[0].length; i++) {
-  var gettingImages = "<HotelRef HotelCode=\""+resultDataHotels[0][i].hotelCode+"\" CodeContext=\"Sabre\">\
-            <ImageRef MaxImages=\"5\">\
-                <Images>\
-                    <Image Type=\"THUMBNAIL\" />\
-                </Images>\
-                <Categories>\
-                    <Category Code=\"1\" />\
-                </Categories>\
-                <AdditionalInfo>\
-                    <Info Type=\"CAPTION\">true</Info>\
-                </AdditionalInfo>\
-                <Languages>\
-                    <Language Code=\"EN\" />\
-                </Languages>\
-            </ImageRef>\
-        </HotelRef>"
-console.log(gettingImages);
-  var getHotelMedia = {
-  "async": true,
-  "crossDomain": true,
-  "url": "https://webservices-as.havail.sabre.com/",
-  "method": "POST",
-  "headers": {
-    "content-type": "text/xml",
-    "cache-control": "no-cache",
-    "postman-token": "1b30db71-dba1-58d3-55e0-16eed57d5ac9"
-  },
-  "data": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n        <SOAP-ENV:Header>\r\n            <eb:MessageHeader xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <eb:From>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">999999</eb:PartyId>\r\n                </eb:From>\r\n                <eb:To>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">123123</eb:PartyId>\r\n                </eb:To>\r\n                <eb:CPAId>R7OI</eb:CPAId>\r\n                 <eb:ConversationId>99999</eb:ConversationId>\r\n                <eb:Service eb:type=\"sabreXML\"></eb:Service>\r\n                <eb:Action>GetHotelMediaRQ</eb:Action>\r\n            </eb:MessageHeader> <ns6:Security xmlns:ns6=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <ns6:BinarySecurityToken>"+securityToken+"</ns6:BinarySecurityToken>\r\n            </ns6:Security>\r\n        </SOAP-ENV:Header>\r\n        <SOAP-ENV:Body>\r\n<GetHotelMediaRQ xmlns=\"http://services.sabre.com/hotel/media/v1\" version=\"1.0.0\">\r\n    <HotelRefs>\r\n "+gettingImages+"    </HotelRefs>\r\n</GetHotelMediaRQ>\r\n\t\r\n\t    </SOAP-ENV:Body>\r\n    </SOAP-ENV:Envelope>\r\n "
-}
-
-$.ajax(getHotelMedia).done(function (response) {
-  console.log(gettingImages);
-  console.log(response);
-});
-//Hotel Media Request End
-}
-//End of for loop
-
-
+  $ionicLoading.hide();
+  $state.go('menu.hoteldetails');
 });
 //Hotel Data Getting end
 
 
+});
 }
     // Getting list of Airports
     if(result.length == 0){
@@ -1550,5 +1601,7 @@ $.ajax(auth).done(function(response){
 //Hotel controller starts
 
 app.controller('HotelDetailsController', function($scope, $ionicSideMenuDelegate) {
-  
-    })
+  console.log(resultDataHotels[0]);
+  $scope.hotelData = resultDataHotels[0];
+  $scope.resultLength = resultDataHotels[0].length;
+    });

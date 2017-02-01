@@ -4,6 +4,26 @@
   <h2 class="title">Please review the details carefully</h2>
   </div>
 <ion-content has-subheader="true" class="has-subheader">
+<section>
+		<nav>
+		<ol class="cd-multi-steps text-bottom count">
+			<li class="visited"><a href="javascript:history.back()">Select</a></li>
+			<li  class="current"><em>Booking</em></li>
+			<li><em>Confirm</em></li>
+		</ol>
+	</nav>
+</section>
+ <div class="event">
+  <span>#002</span>
+  <div class="info">
+    Feb 21, 2017 <br />
+    Toal Price
+  </div>
+  <div class="price">
+    {{selectedFlight[0].totalFare | currency}}
+  </div>
+</div>
+
             <div class="list" ng-repeat="data in selectedFlight">
             <div class="pkgcontainerconfirm">
 <div class="pkgheader">({{data.departureAirport}}) to ({{data.arrivalAirport}})</div>
@@ -23,15 +43,15 @@
 <div class="pkgrow">
 <div class="flight-number">Flight No: {{data.flightCode}}{{data.flightNumber}}<br>
 Duration of Flight: {{data.elapsedTime | time: 'mm'}}</div>
-<div class="pkg-price">{{data.totalFare | currency}}</div>
+<div class="pkg-price displayoff">{{data.totalFare | currency}}</div>
 </div>
 </div>
 
-              <button class="button button-block button-assertive" ng-click="toUserDetails($index)">
-                  Confirm
-                </button>        
+                   
             </div>
-              
+             <div class="list"> <button class="button button-block button-assertive" ng-click="toUserDetails($index)">
+                  Confirm
+                </button></div>   
             </ion-content>
   <!-- <ion-content has-subheader="false">
     <div class="list" ng-repeat="data in selectedFlight">

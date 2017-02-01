@@ -1,29 +1,25 @@
 <!-- Hotel Details Page -->
-<ion-view view-title="Flight Details">
+<ion-view view-title="Hotel Details">
 <div class="bar bar-subheader">
   <h2 class="title">Showing {{resultLength}} results in total</h2>
   </div>
             <ion-content has-subheader="true" class="has-subheader">
-            <div class="list" ng-repeat="data in finalData track by $index">
+            <div class="list" ng-repeat="data in hotelData track by $index">
             Result {{$index +1}} of {{resultLength}}
-              <div ng-repeat="item in data  track by $index">
+              
               <div class="item-divider">
-                {{item.departureAirport}}-{{item.arrivalAirport}}<br>
-                Time elapsed: {{item.elapsedTime | time: 'mm'}}<br>
-                Total fare for full itinerary: {{item.totalFare | currency}}                                                 
+                {{data.hotelName}}<br>
+                Rating: {{data.rating}}                                   
               </div>
                 <a class="item item-thumbnail-left item-button-right item-text-wrap">
-                  <img ng-src="http://pics.avs.io/200/200/{{item.flightCode}}.png">
-                  <h3>{{item.departureAirportName}}</h3>
-                  <p>({{item.departureAirport}}) {{item.departureDate}} {{item.departureTime}}</p>
-                  <h3>{{item.arrivalAirportName}}</h3>
-                  <p>({{item.arrivalAirport}}) {{item.arrivalDate}} {{item.arrivalTime}}</p>
-                  <h4>
-                Flight: {{item.flightCode}}{{item.flightNumber}}</h4>
-                </a>
-              </div>
+                  <img ng-src="{{data.hotelImage  }}">
+                  <h3>{{data.hotelAddress}}</h3>
+                  <h3>Price range: {{data.rateRangeMin | currency}}-{{data.rateRangeMax | currency}}</h3>
+                  <p>Phone Number: {{data.phoneNumber}}</p>
+                  <p>Fax Number: {{data.faxNumber}}</p>
+                  </a>
                 <button class="button button-block button-assertive" ng-click="toConfirm($index)">
-                  Submit to see full itinerary  <i class="ion-arrow-right-b"></i>
+                  Click for more info  <i class="ion-arrow-right-b"></i>
                 </button>                    
               </div>
               
