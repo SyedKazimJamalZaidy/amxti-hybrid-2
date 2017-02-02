@@ -1681,6 +1681,9 @@ app.controller('HotelDetailsController', function($scope, $ionicSideMenuDelegate
         console.log(response);
         var hotelImageDetail;
         var hotelDescription = [];
+        roomDetails = [];
+        var roomList = response.getElementsByTagName("RoomRates")[0].children;
+        
         var descriptionLength = response.getElementsByTagName("Description")[0].childNodes.length;
         for (var i = 0; i < descriptionLength; i++) {
           hotelDescription.push(response.getElementsByTagName("Description")[0].childNodes[i].textContent);
@@ -1716,7 +1719,22 @@ app.controller('HotelDetailsController', function($scope, $ionicSideMenuDelegate
              }       
     });
     //Getting Image End
-    selectedHotelDetails.push({hotelImageDetail, hotelDescription});
+    for (var i = 0; i < roomList.length; i++) {
+         var additionalInfo = roomList[i].getElementsByTagName("AdditionalInfo");
+         var roomDetail ="";
+         for (var j = 0; j < additionalInfo[0].children.length; j++) {
+           if (additionalInfo[0].children[j].nodeName == "Text") {         
+            console.log(additionalInfo[0].children[j].textContent);
+            roomDetail += additionalInfo[0].children[j].textContent;
+           }
+         }
+          var roomPrice = roomList[i].getElementsByTagName("HotelTotalPricing")[0].getAttribute("Amount");
+          console.log(roomDetail);
+          var tempArray = [];
+          tempArray.push({roomPrice, roomDetail});
+          roomDetails.push(tempArray);
+        }
+        selectedHotelDetails.push({hotelImageDetail, hotelDescription, roomDetails});
       
       $state.go('menu.hotelconfirmation');
       $ionicLoading.hide();

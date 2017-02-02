@@ -1,4 +1,4 @@
-var app = angular.module('demo', ['ionic', 'ngMessages'])
+var app = angular.module('demo', ['ionic', 'ngMessages', 'ngCordova'])
     
     .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
