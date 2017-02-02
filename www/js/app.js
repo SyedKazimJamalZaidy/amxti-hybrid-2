@@ -200,6 +200,16 @@ var app = angular.module('demo', ['ionic', 'ngMessages'])
                     }
                 }
             })
+             //Hotels Confirmation page
+            .state('menu.hotelconfirmation', {
+                url: '/hotelconfirmation',
+                views: {
+                    'view-content': {
+                        templateUrl: 'templates/hotelconfirmation.html',
+                        controller : 'HotelConfirmationController'
+                    }
+                }
+            })
 
         $urlRouterProvider.otherwise('/login');
     }])

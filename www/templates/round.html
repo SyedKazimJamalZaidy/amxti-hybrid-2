@@ -5,7 +5,7 @@
       </ion-nav-buttons>
 
       <ion-content has-subheader="false" ng-class="whichClassToUse(call.State)">
-              <form name="roundForm" novalidate>
+             
               <div class="list">
               
                 <label class="item item-input item-stacked-label">
@@ -58,16 +58,16 @@
                     <option ng-repeat="names in airlineName | orderBy" >{{names}}</option>
                   </select>
                 </label>
+<<<<<<< HEAD
              <div class="linespace"></div>
               <a class="button button-block button-royal" ng-click="flightDetails()" >
                 Proceed <!-- ng-disabled="roundForm.$invalid" -->
+=======
+             
+              <a class="button button-block button-royal" ng-click="flightDetails()">
+                Proceed 
+>>>>>>> 8b0bf76b70a2570d76e0c3ebaae16dd103bf26cb
               </a> </div>
-              <div class="padding">
-                <p ng-show="roundForm.from.$error.required && roundForm.from.$dirty && roundForm.from.$touched">*Departure destination required</p>
-                <p ng-show="roundForm.to.$error.required && roundForm.to.$dirty && roundForm.to.$touched">*Arrival destination required</p>
-                <p ng-show="roundForm.departDate.$error.required && roundForm.departDate.$dirty && roundForm.departDate.$touched">*Departure date required</p>
-                <p ng-show="roundForm.arrDate.$error.required && roundForm.arrDate.$dirty && roundForm.arrDate.$touched">*Arrival date required</p>
-              </div>
               </form>
             </ion-content>
 

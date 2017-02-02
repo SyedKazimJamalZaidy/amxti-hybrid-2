@@ -5,7 +5,6 @@
       </ion-nav-buttons>
 
       <ion-content has-subheader="false" ng-class="whichClassToUse(call.State)">
-      <form name="singleform">
               <div class="list">
                 <label class="item item-input item-stacked-label">
                   <span class="input-label">From</span>
@@ -49,19 +48,13 @@
                   </div>
                    <select id="airlineCode">
                     <option> </option>
-                    <option ng-repeat="names in airlineName | orderBy" >{{names}}</option>
+                    <option ng-repeat="names in airlineName | orderBy">{{names}}</option>
                   </select>
                 </label>
                <div class="linespace"></div>
-              <a class="button button-block button-royal" ng-click="flightDetails()">
-                Proceed  <!-- ng-disabled="singleform.$invalid" -->
+              <a class="button button-block button-royal" ng-click="flightDetails()" >
+                Proceed  
               </a></div>
-              <div class="padding">
-                <p ng-show="singleform.from.$error.required && singleform.from.$dirty && singleform.from.$touched">*Departure destination required</p>
-                <p ng-show="singleform.to.$error.required && singleform.to.$dirty && singleform.to.$touched">*Arrival destination required</p>
-                <p ng-show="singleform.departDate.$error.required && singleform.departDate.$dirty && singleform.departDate.$touched">*Departure date required</p>
-              </div>
-              </form>
             </ion-content>
 
       <ion-tabs class="tabs-icon-top tabs-striped">

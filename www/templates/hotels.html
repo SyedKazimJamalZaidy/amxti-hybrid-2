@@ -6,35 +6,38 @@
 
     <ion-content has-header="true" padding="true">
 
-      <div class="list">
-        <label class="item item-input">
-        <i class="icon ion-location placeholder-icon"></i>
-          <input type="text" id="destinationName" placeholder="Enter location">
-        </label>
-        <label class="item item-input">
-          <span class="input-label" ><i class="ion-calendar"></i> From:</span>
-          <input type="date" id="fromStay">
-        </label>
-        <label class="item item-input">
-          <span class="input-label"><i class="ion-calendar"></i> To:</span>
-          <input type="date"  id="toStay">
-        </label>
-      </div>
-      <div class="row">
-          <div class="col">
-            <label class="item item-input">
-            <span class="input-label" id="toStay"><i class="ion-ios-people"></i> Guests:</span>
-              <input type="number" placeholder="Guests" value="2" id="guests">
-            </label>
-          </div>
-          <div class="col">
-            <label class="item item-input">
-            <span class="input-label" id="toStay"><i class="ion-ios-home"></i> Rooms:</span>
-              <input type="number" value="1" id="rooms">
-            </label>
-          </div>
-      </div>
-      <button class="button button-assertive button-outline button-block" ng-click="getHotels()"><i class="ion-ios-search-strong"></i> Search</button>
+      
+        <div class="list">
+          <label class="item item-input">
+          <i class="icon ion-location placeholder-icon"></i>
+            <input type="text" id="destinationName" placeholder="Enter location" name="location" ng-model="location" required>
+          </label>
+          <label class="item item-input">
+            <span class="input-label" ><i class="ion-calendar"></i> From:</span>
+            <input type="date" id="fromStay" name="fromStay" ng-model="fromStay" required>
+          </label>
+          <label class="item item-input">
+            <span class="input-label"><i class="ion-calendar"></i> To:</span>
+            <input type="date"  id="toStay" name="toStay" ng-model="toStay" required>
+          </label>
+        </div>
+        <div class="row">
+            <div class="col">
+              <label class="item item-input">
+              <span class="input-label" id="toStay"><i class="ion-ios-people"></i> Guests:</span>
+                <input type="number" placeholder="Guests" value="2" id="guests">
+              </label>
+            </div>
+            <div class="col">
+              <label class="item item-input">
+              <span class="input-label" id="toStay"><i class="ion-ios-home"></i> Rooms:</span>
+                <input type="number" value="1" id="rooms">
+              </label>
+            </div>
+        </div>
+        <button class="button button-assertive button-outline button-block" ng-click="getHotels()" ><i class="ion-ios-search-strong"></i> Search Hotels
+        </button>
+      
     </ion-content>
     
   </ion-view>
