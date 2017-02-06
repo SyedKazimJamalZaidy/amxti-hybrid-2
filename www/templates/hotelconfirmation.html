@@ -4,6 +4,7 @@
   <h2 class="title">Please review the details carefully</h2>
   </div>
 <ion-content has-subheader="true" class="has-subheader">
+		<div id="map" data-tap-disabled="true"></div>
            <div class="list card">
 
 			  <div class="item">
@@ -17,7 +18,16 @@
 			      {{hotelFullDetails.hotelDescription}}
 			    </p>
 			  </div>
-
+			  <div class="item item-body" ng-repeat="data in hotelFullDetails.roomDetails">
+			  
+			  	<div class="item item-text-wrap item-button-right" ng-repeat="item in data">
+				    Room Type: {{item.roomDetail}}<br>
+				    Amount: {{item.roomPrice | currency}}
+				    <button class="button button-assertive button-outline">
+				      <i class="ion-ios-checkmark-outline"></i>
+				    </button>
+				</div>
+			  </div> 
 			</div>
               <button class="button button-block button-outline button-assertive" ng-click="toUserDetails()">Confirm Hotel</button>
             </ion-content>
