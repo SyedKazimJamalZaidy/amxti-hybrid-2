@@ -8,14 +8,14 @@
 		<nav>
 		<ol class="cd-multi-steps text-bottom count">
 			<li class="current"><em>Select</em></li>
-			<li ><em>Reservation</em></li>
+			<li ><em>Reserve</em></li>
 			<li><em>Confirm</em></li>
 		</ol>
 	</nav>
 </section>
 
-            <div class="list" ng-repeat="data in hotelData track by $index">
-            Result {{$index +1}} of {{resultLength}}
+            <div class="list toppadoff" ng-repeat="data in hotelData track by $index">
+           <div class="displayoff">Result {{$index +1}} of {{resultLength}}</div>
               
               <div class="item-divider displayoff">
                 {{data.hotelName}}<br>
@@ -38,7 +38,6 @@
                                
               </div>
               
-            </div>
               
             </ion-content>
           </ion-view>

@@ -4,30 +4,39 @@
   <h2 class="title">Please review the details carefully</h2>
   </div>
 <ion-content has-subheader="true" class="has-subheader">
-		<div id="map" data-tap-disabled="true"></div>
+  <section>
+		<nav>
+		<ol class="cd-multi-steps text-bottom count">
+			<li class="visited"><a href="javascript:history.back()">Select</a></li>
+			<li class="current"><em>Reserve</em></li>
+			<li><em>Confirm</em></li>
+		</ol>
+	</nav>
+</section>
+		
            <div class="list card">
 
-			  <div class="item">
-			    <h2>{{hotelDetails.hotelName}}</h2>
-			    <p>{{hotelDetails.rating}}</p>
-			  </div>
-
 			  <div class="item item-body">
-			    <img class="full-image" ng-src="{{hotelFullDetails.hotelImageDetail}}">
-			    <p>
+			    <img class="full-image imageheightset" ng-src="{{hotelFullDetails.hotelImageDetail}}" alt="">
+                <div class="badge">{{hotelDetails.rating}}</div>
+                <div class="namecontainer">
+                   <div class="hotelnamelft">{{hotelDetails.hotelName}}</div>
+                   <div class="hotelpricelft">Start From <span>{{hotelDetails.rateRangeMin | currency}}</span></div>
+                   </div>
+			    <p class="hoteldetail">
 			      {{hotelFullDetails.hotelDescription}}
 			    </p>
+                <div id="map" data-tap-disabled="false"></div>
 			  </div>
 			  <div class="item item-body" ng-repeat="data in hotelFullDetails.roomDetails">
 			  
-			  	<div class="item item-text-wrap item-button-right" ng-repeat="item in data">
-				    Room Type: {{item.roomDetail}}<br>
-				    Amount: {{item.roomPrice | currency}}
-				    <button class="button button-assertive button-outline">
-				      <i class="ion-ios-checkmark-outline"></i>
-				    </button>
+			  	<div class="item item-text-wrap" ng-repeat="item in data">
+				   <p class="roomdetail">{{item.roomDetail}}</p>
+                     <h3 class="hotelprice">Per Night<br /> <span>{{item.roomPrice | currency}}</span></h3>
+				       <button class="button button-block button-outline button-assertive" ng-click="toUserDetails()">Confirm Hotel</button>
 				</div>
 			  </div> 
 			</div>
-              <button class="button button-block button-outline button-assertive" ng-click="toUserDetails()">Confirm Hotel</button>
+           
             </ion-content>
+            </ion-view>

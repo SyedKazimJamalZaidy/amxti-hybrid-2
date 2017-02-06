@@ -5,7 +5,7 @@
     <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
   </ion-nav-buttons>
   <ion-content has-subheader="false" ng-class="whichClassToUse(call.State)">
-    <form name="roundForm" novalidate>
+    
       <div class="list" >
         <label class="item item-input item-stacked-label"> <span class="input-label">From</span>
           <input type="text" placeholder="Select departure airport" id="from0">
@@ -92,7 +92,7 @@
         </label>
         <div class="linespace"></div>
         <a class="button button-block button-royal"  ng-click="flightDetailsMulti()" ng-disabled="roundForm.$invalid"> Proceed </a></div>
-    </form>
+
   </ion-content>
   <ion-tabs class="tabs-icon-top tabs-striped">
     <ion-tab title="Round Trip" icon-on="ion-paper-airplane" icon-off="ion-paper-airplane" ui-sref="menu.round"> </ion-tab>
@@ -101,133 +101,4 @@
   </ion-tabs>
 </ion-view>
 
-<ion-nav-buttons side="left">
-        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
-</ion-nav-buttons>
-	<ion-content has-subheader="false" ng-class="whichClassToUse(call.State)">
-              <div class="list" >
-              
-                  <label class="item item-input item-stacked-label">
-                    <span class="input-label">From</span>
-                    <input type="text" placeholder="Select departure airport" id="from0" name="from" ng-model="from" required>
-                  </label>
-                   <div class="linespace"></div>
-                  <label class="item item-input item-stacked-label">
-                    <span class="input-label">To</span>
-                    <input type="text" placeholder="Select arrival airport" id="to0" name="to" ng-model="to" required>
-                  </label>
-                   <div class="linespace"></div>
-                  <label class="item item-input item-stacked-label">
-                    <span class="input-label">Departure Date</span>
-                    <input type="date" id="departDate0" name="departDate" ng-model="departDate" required>
-                  </label>
-                 
-                   <div class="linespace"></div>
-                  
-
-                  <div class="item item-divider">
-                    <button class="button button-assertive button-small ion-plus-round" ng-click="form1=true"> Add locations</button>
-                     <button class="button button-assertive button-small ion-plus-round" ng-click="form1=false"> Delete locations</button>
-                     <button class="button button-balanced button-small ion-checkmark" ng-click="getFirstValue()" > Lock flight</button>
-                  </div>
-                </div>
-                
-
-            <div class="list" ng-show="form1">
-              
-                  <label class="item item-input item-stacked-label">
-                    <span class="input-label">From</span>
-                    <input type="text" placeholder="Select departure airport" id="from1" name="fromm1" ng-model="from1" required>
-                  </label>
-                  <label class="item item-input item-stacked-label">
-                    <span class="input-label">To</span>
-                    <input type="text" placeholder="Select arrival airport" id="to1" name="to1" ng-model="to1" required>
-                  </label>
-                  <label class="item item-input item-stacked-label">
-                    <span class="input-label">Departure Date</span>
-                    <input type="date" id="departDate1" name="departDate1" ng-model="departDate1" required>
-                  </label>
-              
-                  <div class="item item-divider">
-                    <button class="button button-assertive button-small ion-plus-round" ng-click="form2=true"> Add more locations</button>
-                     <button class="button button-assertive button-small ion-plus-round" ng-click="form2=false"> Delete locations</button>
-                     <button class="button button-balanced button-small ion-checkmark" ng-click="getSecondValue()" > Lock flight</button>
-                  </div>
-                </div>                
-                
-
-              <!-- Third Form -->
-                 <div class="list" ng-show="form2">
-              
-                  <label class="item item-input item-stacked-label">
-                    <span class="input-label">From</span>
-                    <input type="text" placeholder="Select departure airport"  id="from2" name="from2" ng-model="from2" required>
-                  </label>
-                  <label class="item item-input item-stacked-label">
-                    <span class="input-label">To</span>
-                    <input type="text" placeholder="Select arrival airport" id="to2" name="to2" ng-model="to2" required>
-                  </label>
-                  <label class="item item-input item-stacked-label">
-                    <span class="input-label">Departure Date</span>
-                    <input type="date"  id="departDate2" name="departDate2" ng-model="departDate2" required>
-                  </label>
-                  <div class="item item-divider">
-                    <button class="button button-balanced button-small ion-checkmark" ng-click="getThirdValue()" > Lock flight</button>
-                  </div>
-                 
-                </div>        
-                
-        
-                <div class="row">
-
-                 <div class="linespace"></div>
-                <div class="row paddingoff">
-
-                  <div class="col">
-                    <label class="item item-input item-stacked-label">
-                      <span class="input-label">Adults</span>
-                      <input type="number" placeholder="0" id="adult" value="1">
-                    </label>
-                  </div>
-                  <div class="col">
-                    <label class="item item-input item-stacked-label">
-                      <span class="input-label">Children</span>
-                      <input type="number" placeholder="0">
-                    </label>
-                  </div>
-                  <div class="col">
-                    <label class="item item-input item-stacked-label">
-                      <span class="input-label">Seniors</span>
-                      <input type="number" placeholder="0">
-                    </label>
-                  </div>
-                </div>
-                 <div class="linespace"></div>
-                <label class="item item-input item-select">
-                  <div class="input-label">
-                    Preffered Flight
-                  </div>
-                  <select id="airlineCode">
-                  <option> </option>
-                    <option ng-repeat="names in airlineName | orderBy">{{names}}</option>
-                  </select>
-                </label>
-
-              </div>             
-                <a class="button button-block button-royal"  ng-click="flightDetailsMulti()" >
-
-                  Proceed
-                </a>
-	</ion-content>
-	<ion-tabs class="tabs-icon-top tabs-striped">
-      <ion-tab title="Round Trip" icon-on="ion-paper-airplane" icon-off="ion-paper-airplane" ui-sref="menu.round">
-      </ion-tab>
-
-      <ion-tab title="Single Trip" icon-on="ion-android-plane" icon-off="ion-android-plane" ui-sref="menu.single">
-      </ion-tab>
-
-      <ion-tab title="Mutli City" icon-on="ion-planet" icon-off="ion-planet" ui-sref="menu.multicity">
-      </ion-tab>
-    </ion-tabs>
-</ion-view>
 
