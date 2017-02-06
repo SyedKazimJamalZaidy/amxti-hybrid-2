@@ -442,7 +442,6 @@ a.menuitem:hover {
   height: 80px;
   background: #fff;
   border: 1px solid #CCC;
-  border-radius: 2px;
   margin: 25px;
   border-radius:5px;
 }
@@ -452,8 +451,7 @@ a.menuitem:hover {
   width: 99%;
   height: 70px;
   background: #fff;
-  border: 1px solid #CCC;
-  border-radius: 2px; 
+  border: 1px solid #CCC; 
   transform: rotate(2deg);
   position: relative;
   top: 12px;
@@ -467,8 +465,7 @@ a.menuitem:hover {
   width: 40%;
   height: 75px;
   background: #fff;
-  border: 1px solid #CCC;
-  border-radius: 2px; 
+  border: 1px solid #CCC; 
   transform: rotate(-2deg);
   position: relative;
   top: -136px;
@@ -518,3 +515,12 @@ font-size:22px;
 }
 
 /*Eof Price Tag*/
+
+
+.toppadoff{padding-top:0px; padding-bottom:0px}
+
+.hotelname{color:#13314d; font-size:16px; text-transform:capitalize!important;}
+
+.hotelprice{text-align: center; top:25%; right:3%; position:absolute}
+.hotelprice span{font-size:140%; color:#e52029}
+.hotelrating{font-size:75%!important; color:#58c72c!important;}

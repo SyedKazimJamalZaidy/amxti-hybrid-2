@@ -4,23 +4,38 @@
   <h2 class="title">Showing {{resultLength}} results in total</h2>
   </div>
             <ion-content has-subheader="true" class="has-subheader">
+             <section>
+		<nav>
+		<ol class="cd-multi-steps text-bottom count">
+			<li class="current"><em>Select</em></li>
+			<li ><em>Reservation</em></li>
+			<li><em>Confirm</em></li>
+		</ol>
+	</nav>
+</section>
+
             <div class="list" ng-repeat="data in hotelData track by $index">
             Result {{$index +1}} of {{resultLength}}
               
-              <div class="item-divider">
+              <div class="item-divider displayoff">
                 {{data.hotelName}}<br>
                 Rating: {{data.rating}}                                   
               </div>
-                <a class="item item-thumbnail-left item-button-right item-text-wrap">
+                <a class="item item-thumbnail-left item-button-right item-text-wrap" ng-click="toConfirm($index)">
                   <img ng-src="{{data.hotelImage  }}">
-                  <h3>{{data.hotelAddress}}</h3>
-                  <h3>Price range: {{data.rateRangeMin | currency}}-{{data.rateRangeMax | currency}}</h3>
-                  <p>Phone Number: {{data.phoneNumber}}</p>
-                  <p>Fax Number: {{data.faxNumber}}</p>
+                   <h3 class="hotelname">{{data.hotelName}}</h3>
+                    <p class="hotelrating">Rating: {{data.rating}} </p>     
+                 
+                  <h3 class="hotelprice">Start From<br /> <span>{{data.rateRangeMin | currency}}</span></h3>
+                   <h3 class="displayoff">{{data.hotelAddress}}</h3>
+                  <span class="displayoff">{{data.rateRangeMax | currency}}</span>
+                  <p class="displayoff">Phone Number: {{data.phoneNumber}}</p>
+                  <p class="displayoff">Fax Number: {{data.faxNumber}}</p>
+                  <button class="button button-block button-assertive displayoff" ng-click="toConfirm($index)">
+                  View Detail  <i class="ion-arrow-right-b"></i>
+                </button>     
                   </a>
-                <button class="button button-block button-assertive" ng-click="toConfirm($index)">
-                  Click for more info  <i class="ion-arrow-right-b"></i>
-                </button>                    
+                               
               </div>
               
             </div>
