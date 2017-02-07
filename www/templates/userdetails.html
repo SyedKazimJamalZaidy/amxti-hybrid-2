@@ -1,7 +1,6 @@
 <!-- User Details Page -->
 <ion-view view-title="User Details">
   <ion-content has-subheader="false">
-   <h4>Please enter your details according to your passport:</h4>
     <div class="list">
     <h4>Please enter your details according to your passport:</h4>
     	<label class="item item-input item-select">
@@ -50,22 +49,9 @@
 	  </label>
          <div class="linespace"></div>
 
-	<button class="button button-assertive button-block" ng-click="toPayment()" ng-disabled="userdetails.$invalid">Proceed to payment information </button>
-<<<<<<< HEAD
-	<button class="button button-assertive button-block" ng-disabled="userdetails.$invalid" ng-click="payLater()">Pay later </button>	</div>
-	<div class="padding">
-		<p ng-show="userdetails.fname.$error.required && userdetails.fname.$dirty && userdetails.fname.$touched">*First name is required</p>
-		<p ng-show="userdetails.fname.$error.minlength && userdetails.fname.$dirty && userdetails.fname.$touched">*First name must be longer than 4 characters</p>
-		<p ng-show="userdetails.mname.$error.minlength && userdetails.mname.$dirty && userdetails.mname.$touched">*Middle name must be longer than 4 characters</p>
-		<p ng-show="userdetails.fname.$error.required && userdetails.lname.$dirty && userdetails.lname.$touched">*Last name is required</p>
-		<p ng-show="userdetails.lname.$error.minlength && userdetails.lname.$dirty && userdetails.lname.$touched">*Last name must be longer than 4 characters</p>
-		<p ng-show="userdetails.Email.$error.required && userdetails.Email.$dirty && userdetails.Email.$touched">*Email is required</p>
-		<p ng-show="userdetails.Email.$error.minlength && userdetails.Email.$dirty && userdetails.Email.$touched">*Email must be longer than 5 characters</p>
-		<p ng-show="userdetails.Email.$invalid && !userdetails.Email.$pristine">*Enter correct email</p>
-		<p ng-show="userdetails.number.$error.required && userdetails.number.$dirty && userdetails.number.$touched">*Email is required</p>
-	</div>
+	<button class="button button-assertive button-block" ng-click="toPayment()">Proceed to payment information </button>
 
-=======
-	<button class="button button-assertive button-block" ng-disabled="userdetails.$invalid" ng-click="payLater()">Pay later </button>
+	<button class="button button-assertive button-block" ng-click="payLater()">Pay later </button>	</div>
+	
   </ion-content>
 </ion-view>
