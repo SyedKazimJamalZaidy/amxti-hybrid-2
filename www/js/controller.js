@@ -1,5 +1,6 @@
 var resultData = [];//result of flights coming from Sabre api
 resultDataHotels = [];//result of hotels coming from Sabre api
+var resultDataCars = []; //result of cars from sabre
 var result=[]; //Response result of Airports from solude amxti
 var airlineInfo; //Response result of Airlines
 var selectedFlightMulti =[]; //for multi city
@@ -17,6 +18,7 @@ var passengerDetail= [];
 var totalFareMulti = 0;
 var selectedHotel;//Selected hotel detail
 var selectedHotelDetails = []; //Further details for hotels
+var selectCar = [];//Selected Car
 app.controller('MenuController', function($scope, $ionicSideMenuDelegate) {
       $scope.toggleLeft = function() {
         $ionicSideMenuDelegate.toggleLeft();
@@ -784,6 +786,86 @@ app.controller('UserDetailsController', function($scope, $ionicSideMenuDelegate,
           });
           }
           //Hotels PNR End
+
+          //Cars PNR
+          else if ($ionicHistory.backView().stateName == "menu.cardetails") {
+            console.log('Kazim');
+               passengerDetail = [];
+                var fname = document.getElementById("fname").value;
+                var mname = document.getElementById("mname").value;
+                var lname = document.getElementById("lname").value;
+                var countrycode = document.getElementById("countrycode");
+                var selectedCountryName = countrycode.options[countrycode.selectedIndex].value;
+                var selectedCountryCode;
+                var cnumber = document.getElementById("cnumber").value;
+                var email = document.getElementById("email").value;
+                
+                for (var i = 0; i < $scope.countryCodes.length; i++) {
+                  
+                 if($scope.countryCodes[i].name == selectedCountryName){
+                  selectedCountryCode = $scope.countryCodes[i].dial_code;
+                 }
+                }
+                passengerDetail.push(fname, mname, lname, selectedCountryCode, cnumber, email);
+                console.log(passengerDetail);
+            var carPNR = {
+                "async": true,
+                "crossDomain": true,
+                "url": "https://webservices-as.havail.sabre.com/",
+                "method": "POST",
+                "headers": {
+                  "content-type": "text/xml",
+                  "cache-control": "no-cache",
+                  "postman-token": "b05c54e0-3416-1429-ab3f-e373d850b137"
+                },
+                "data": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n        <SOAP-ENV:Header>\r\n            <eb:MessageHeader xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <eb:From>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">999999</eb:PartyId>\r\n                </eb:From>\r\n                <eb:To>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">123123</eb:PartyId>\r\n                </eb:To>\r\n                <eb:CPAId>R7OI</eb:CPAId>\r\n                 <eb:ConversationId>99999</eb:ConversationId>\r\n                <eb:Service eb:type=\"sabreXML\"></eb:Service>\r\n                <eb:Action>PassengerDetailsRQ</eb:Action>\r\n            </eb:MessageHeader> <ns6:Security xmlns:ns6=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <ns6:BinarySecurityToken>"+securityToken+"</ns6:BinarySecurityToken>\r\n            </ns6:Security>\r\n        </SOAP-ENV:Header>\r\n        <SOAP-ENV:Body>\r\n\r\n\t<PassengerDetailsRQ xmlns=\"http://services.sabre.com/sp/pd/v3_3\" version=\"3.3.0\" IgnoreOnError=\"false\" HaltOnError=\"false\">\r\n    <PostProcessing IgnoreAfter=\"false\" RedisplayReservation=\"true\" UnmaskCreditCard=\"true\" />\r\n    <PreProcessing IgnoreBefore=\"true\">\r\n        <UniqueID ID=\"\" />\r\n    </PreProcessing>\r\n   \r\n    <TravelItineraryAddInfoRQ>\r\n        <CustomerInfo>\r\n            <ContactNumbers>\r\n                <ContactNumber NameNumber=\"1.1\" Phone=\""+selectedCountryCode+"-"+cnumber+"\" PhoneUseType=\"H\" />\r\n            </ContactNumbers>\r\n            <Email Address=\""+email+"\" NameNumber=\"1.1\" ShortText=\"ABC123\" Type=\"CC\"/>\r\n            <PersonName NameNumber=\"1.1\" NameReference=\"ABC123\" PassengerType=\"ADT\">\r\n                <GivenName>"+fname+""+ mname+"</GivenName>\r\n                <Surname>"+lname+"</Surname>\r\n            </PersonName>\r\n        </CustomerInfo>\r\n    </TravelItineraryAddInfoRQ>\r\n</PassengerDetailsRQ>\r\n\t\r\n\t    </SOAP-ENV:Body>\r\n    </SOAP-ENV:Envelope>\r\n "
+              }
+
+              $.ajax(carPNR).done(function (response) {
+                console.log(response);
+                console.log(selectedCar[0].pickupTime);
+                var nameNumber = response.getElementsByTagName("PersonName")[0].getAttribute("NameNumber");
+
+                 //Car booking
+              var carBook = {
+                    "async": true,
+                    "crossDomain": true,
+                    "url": "https://webservices-as.havail.sabre.com/",
+                    "method": "POST",
+                    "headers": {
+                      "content-type": "text/xml",
+                      "cache-control": "no-cache",
+                      "postman-token": "b724903c-5a01-e0bd-2451-10bef80f4e49"
+                    },
+                    "data": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n        <SOAP-ENV:Header>\r\n            <eb:MessageHeader xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <eb:From>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">999999</eb:PartyId>\r\n                </eb:From>\r\n                <eb:To>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">123123</eb:PartyId>\r\n                </eb:To>\r\n                <eb:CPAId>R7OI</eb:CPAId>\r\n                 <eb:ConversationId>99999</eb:ConversationId>\r\n                <eb:Service eb:type=\"sabreXML\"></eb:Service>\r\n                <eb:Action>OTA_VehResLLSRQ</eb:Action>\r\n            </eb:MessageHeader> <ns6:Security xmlns:ns6=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <ns6:BinarySecurityToken>Shared/IDL:IceSess\\/SessMgr:1\\.0.IDL/Common/!ICESMS\\/RESG!ICESMSLB\\/RES.LB!-3310500457963795066!1634598!0</ns6:BinarySecurityToken>\r\n            </ns6:Security>\r\n        </SOAP-ENV:Header>\r\n        <SOAP-ENV:Body>\r\n\r\n\t<OTA_VehResRQ xmlns=\"http://webservices.sabre.com/sabreXML/2011/10\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" Version=\"2.1.0\">\r\n<VehResRQCore>\r\n<Customer NameNumber=\""+nameNumber+"\"/>\r\n<VehPrefs>\r\n<VehPref>\r\n<VehType>"+selectedCar[0].vehTypeXML+"</VehType>\r\n</VehPref>\r\n</VehPrefs>\r\n<VehRentalCore PickUpDateTime=\""+selectedCar[0].pickupDate[0]+"-"+selectedCar[0].pickupDate[1]+"T"+selectedCar[0].pickupTime[0]+":"+selectedCar[0].pickupTime[1]+"\" Quantity=\"1\" ReturnDateTime=\""+selectedCar[0].dropoffDate[0]+"-"+selectedCar[0].dropoffDate[1]+"T"+selectedCar[0].dropoffTime[0]+":"+selectedCar[0].dropoffTime[1]+"\">\r\n<PickUpLocation LocationCode=\""+selectedCar[0].destinationNameCarsIATA+"\"/>\r\n</VehRentalCore>\r\n<VendorPrefs>\r\n<VendorPref Code=\"ZE\"/>\r\n</VendorPrefs>\r\n</VehResRQCore>\r\n</OTA_VehResRQ>\r\n\t\r\n\t    </SOAP-ENV:Body>\r\n    </SOAP-ENV:Envelope>\r\n "
+                  }
+
+                  $.ajax(carBook).done(function (result) {
+                    console.log(carBook);
+                    console.log(result);
+
+                    var endTransactionCars = {
+                      "async": true,
+                      "crossDomain": true,
+                      "url": "https://webservices-as.havail.sabre.com/",
+                      "method": "POST",
+                      "headers": {
+                        "content-type": "text/xml",
+                        "cache-control": "no-cache",
+                        "postman-token": "3205ffb4-f3b2-4b84-d6b7-5a52351440b5"
+                      },
+                      "data": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n        <SOAP-ENV:Header>\r\n            <eb:MessageHeader xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <eb:From>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">999999</eb:PartyId>\r\n                </eb:From>\r\n                <eb:To>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">123123</eb:PartyId>\r\n                </eb:To>\r\n                <eb:CPAId>R7OI</eb:CPAId>\r\n                 <eb:ConversationId>99999</eb:ConversationId>\r\n                <eb:Service eb:type=\"sabreXML\"></eb:Service>\r\n                <eb:Action>EndTransactionLLSRQ</eb:Action>\r\n            </eb:MessageHeader> <ns6:Security xmlns:ns6=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <ns6:BinarySecurityToken>"+securityToken+"</ns6:BinarySecurityToken>\r\n            </ns6:Security>\r\n        </SOAP-ENV:Header>\r\n        <SOAP-ENV:Body>\r\n\r\n  <EndTransactionRQ xmlns=\"http://webservices.sabre.com/sabreXML/2011/10\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" ReturnHostCommand=\"false\" TimeStamp=\"2016-06-22T11:00:00-06:00\" Version=\"2.0.6\">\r\n<EndTransaction Ind=\"true\">\r\n<Email Ind=\"true\">\r\n<Itinerary Ind=\"true\">\r\n<PDF Ind=\"true\"/>\r\n</Itinerary>\r\n<PersonName NameNumber=\""+nameNumber+"\"/>\r\n</Email>\r\n</EndTransaction>\r\n</EndTransactionRQ>\r\n  \r\n      </SOAP-ENV:Body>\r\n    </SOAP-ENV:Envelope>\r\n "
+                    }
+
+                    $.ajax(endTransactionCars).done(function (response) {
+                      console.log(response);
+                    });
+                  });
+              });
+
+             
+          }
+          //Cars PNR End
 
           //Flights PNR
           else {
@@ -1649,7 +1731,6 @@ $.ajax(getHotelDetail).done(function (response) {
 
 $.ajax(auth).done(function(response){
   securityToken = response.getElementsByTagName("BinarySecurityToken")[0].childNodes[0].nodeValue;
-  console.log(securityToken);
   })
 });
 //Hotel controller starts
@@ -1658,6 +1739,7 @@ app.controller('HotelDetailsController', function($scope, $ionicSideMenuDelegate
   $scope.hotelData = resultDataHotels[0];
   $scope.resultLength = resultDataHotels[0].length;
   $scope.toConfirm = function($index){
+    console.log($index);
     selectedHotel = [];
     $ionicLoading.show({
       template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>'
@@ -1752,3 +1834,219 @@ app.controller('HotelConfirmationController', function($scope, $ionicSideMenuDel
       $state.go('menu.userdetails');
     }
     });
+
+app.controller('CarsController', function($scope, $ionicSideMenuDelegate, $http, $state) {
+  var destinationName = [];
+  var destinationIATA = [];
+  //Authenticating for token
+    var auth = {
+  "async": true,
+  "crossDomain": true,
+  "url": "https://webservices-as.havail.sabre.com/",
+  "method": "POST",
+  "headers": {
+    "content-type": "text/xml",
+    "cache-control": "no-cache",
+    
+  },
+  "data":"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\t\t<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:xsd=\"http://www.w3.org/1999/XMLSchema\">\r\n\t\t    <SOAP-ENV:Header>\r\n\t\t        <eb:MessageHeader SOAP-ENV:mustUnderstand=\"1\" eb:version=\"1.0\">\r\n\t\t            <eb:ConversationId>99999</eb:ConversationId>\r\n\t\t            <eb:From>\r\n\t\t                <eb:PartyId type=\"urn:x12.org:IO5:01\">999999</eb:PartyId>\r\n\t\t            </eb:From>\r\n\t\t            <eb:To>\r\n\t\t                <eb:PartyId type=\"urn:x12.org:IO5:01\">123123</eb:PartyId>\r\n\t\t            </eb:To>\r\n\t\t            <eb:CPAId>R7OI</eb:CPAId>\r\n\t\t            <eb:Service eb:type=\"OTA\">SessionCreateRQ</eb:Service>\r\n\t\t            <eb:Action>SessionCreateRQ</eb:Action>\r\n\t\t            <eb:MessageData>\r\n\t\t                <eb:MessageId>1000</eb:MessageId>\r\n\t\t                <eb:Timestamp>2001-02-15T11:15:12Z</eb:Timestamp>\r\n\t\t                <eb:TimeToLive>2001-02-15T11:15:12Z</eb:TimeToLive>\r\n\t\t            </eb:MessageData>\r\n\t\t        </eb:MessageHeader>\r\n\t\t        <wsse:Security xmlns:wsse=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns:wsu=\"http://schemas.xmlsoap.org/ws/2002/12/utility\">\r\n\t\t            <wsse:UsernameToken> \r\n\t\t                <wsse:Username>595258</wsse:Username>\r\n\t\t                <wsse:Password>WS500917</wsse:Password>\r\n\t\t                <Organization>R7OI</Organization>\r\n\t\t                <Domain>DEFAULT</Domain> \r\n\t\t            </wsse:UsernameToken>\r\n\t\t        </wsse:Security>\r\n\t\t    </SOAP-ENV:Header>\r\n\t\t    <SOAP-ENV:Body>\r\n\t\t        <eb:Manifest SOAP-ENV:mustUnderstand=\"1\" eb:version=\"1.0\">\r\n\t\t            <eb:Reference xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\"cid:rootelement\" xlink:type=\"simple\"/>\r\n\t\t        </eb:Manifest>\r\n\t\t    </SOAP-ENV:Body>\r\n\t\t</SOAP-ENV:Envelope>"
+}
+
+$.ajax(auth).done(function(response){
+  securityToken = response.getElementsByTagName("BinarySecurityToken")[0].childNodes[0].nodeValue;
+  console.log(securityToken);
+  })
+//Getting list of airports
+if(result.length == 0){
+    $http({
+      method: "GET",
+      url: "js/airports.json",
+      headers: {
+        "Content-Type" : "application/x-www-form-urlencoded"
+      }
+    }).then(function(response){
+      result = response.data;
+      for (var i = 0; i < result.length; i++) {
+          destinationName.push(result[i].label);
+          destinationIATA.push(result[i].id);
+      }
+      $("#destinationNameCars").autocomplete({
+        source: destinationName
+      })
+    });
+  }
+  else {
+    for (var i = 0; i < result.length; i++) {
+          destinationName.push(result[i].label);
+          destinationIATA.push(result[i].id);
+      }
+       $("#destinationNameCars").autocomplete({
+        source: destinationName
+      })
+    }
+
+  $scope.getCars = function(){
+    resultDataCars = [];
+    var destinationNameCars = document.getElementById("destinationNameCars").value;
+    var pickupDate = document.getElementById("pickupDate").value;
+    var pickupTime = document.getElementById("pickupTime").value;
+    var dropoffDate = document.getElementById("dropoffDate").value;
+    var dropoffTime = document.getElementById("dropoffTime").value;
+    var destinationNameCarsIATA;
+    for (var i = 0; i < result.length; i++) {
+      if (destinationNameCars == result[i].label) {
+        destinationNameCarsIATA = result[i].id;
+      }
+    }
+    pickupDate = pickupDate.split("-");
+    pickupDate = pickupDate.splice(1,2);
+    dropoffDate = dropoffDate.split("-");
+    dropoffDate = dropoffDate.splice(1,2);
+    pickupTime = pickupTime.split(":");
+    dropoffTime = dropoffTime.split(":")
+//Getting list of cars
+var getCarDetails = {
+      "async": true,
+      "crossDomain": true,
+      "url": "https://webservices-as.havail.sabre.com/",
+      "method": "POST",
+      "headers": {
+        "content-type": "text/xml",
+        "cache-control": "no-cache",
+        "postman-token": "859de484-0791-9f0d-a75f-95fe8cb3670c"
+      },
+      "data": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n        <SOAP-ENV:Header>\r\n            <eb:MessageHeader xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <eb:From>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">999999</eb:PartyId>\r\n                </eb:From>\r\n                <eb:To>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">123123</eb:PartyId>\r\n                </eb:To>\r\n                <eb:CPAId>R7OI</eb:CPAId>\r\n                 <eb:ConversationId>99999</eb:ConversationId>\r\n                <eb:Service eb:type=\"sabreXML\"></eb:Service>\r\n                <eb:Action>OTA_VehAvailRateLLSRQ</eb:Action>\r\n            </eb:MessageHeader> <ns6:Security xmlns:ns6=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <ns6:BinarySecurityToken>"+securityToken+"</ns6:BinarySecurityToken>\r\n            </ns6:Security>\r\n        </SOAP-ENV:Header>\r\n        <SOAP-ENV:Body>\r\n\r\n\t<OTA_VehAvailRateRQ Version=\"2.4.1\" xmlns=\"http://webservices.sabre.com/sabreXML/2011/10\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n    <VehAvailRQCore QueryType=\"Quote\">\r\n        <VehRentalCore PickUpDateTime=\""+pickupDate[0]+"-"+pickupDate[1]+"T"+pickupTime[0]+":"+pickupTime[1]+"\" ReturnDateTime=\""+dropoffDate[0]+"-"+dropoffDate[1]+"T"+dropoffTime[0]+":"+dropoffTime[1]+"\">\r\n            <PickUpLocation LocationCode=\""+destinationNameCarsIATA+"\" />\r\n        </VehRentalCore>\r\n        <VendorPrefs>\r\n            <VendorPref Code=\"ZE\" />\r\n        </VendorPrefs>\r\n    </VehAvailRQCore>\r\n</OTA_VehAvailRateRQ>\r\n\t\r\n\t\r\n\t    </SOAP-ENV:Body>\r\n    </SOAP-ENV:Envelope>\r\n "
+    }
+
+    $.ajax(getCarDetails).done(function (response) {
+      console.log(response);
+      var vehVendorAvails = response.getElementsByTagName("VehVendorAvails")[0];
+      for (var i = 0; i < vehVendorAvails.children.length; i++) {
+        var tempArray = [];
+        var vehTypeXML = vehVendorAvails.children[i].getElementsByTagName("VehType")[0].childNodes[0].nodeValue;
+        var vehCategory;
+        var vehType;
+        var transmissionType;
+        var climateControl;
+        switch (vehTypeXML[0]) {
+            case 'M': 
+            vehCategory =  "Mini";
+            break;
+            case 'E':
+            vehCategory = "Economy";
+            break;
+            case 'C':
+            vehCategory =  "Compact";
+            break;
+            case 'I':
+            vehCategory = "Lower Middle Range";
+            break;
+            case 'S':
+            vehCategory = "Mid-Range";
+            break;
+            case 'F':
+            vehCategory = "Upper Mid-Range";
+            break;
+            case 'P':
+            vehCategory = "Luxury";
+            break;
+            case 'L':
+            vehCategory = "Top Luxury";
+            break;
+            case 'X':
+            vehCategory = "Special Car";
+            break;
+          
+          default:
+            vehCategory = "No Information";
+            break;
+        }
+        switch (vehTypeXML[1]) {
+            case 'B':
+              vehType =  "2 Door";
+            break;
+            case 'C':
+              vehType = "3 Door";
+            break;
+            case 'D':
+              vehType = "4 Door";
+            break;
+            case 'W':
+              vehType = "Estate";
+            break;
+            case 'V':
+              vehType = "Van/MiniBus";
+            break;
+            case 'L':
+              vehType = "Saloon";
+            break;
+            case 'S':
+              vehType = "Sport";
+            break;
+            case 'T':
+              vehType = "Cabriolet";
+            break;
+            case 'F':
+              vehType = "4x4";
+            break;
+            case 'P':
+              vehType = "Pick Up";
+            break;
+            case 'J':
+              vehType = "Off-Road";
+            break;
+            case 'X':
+              vehType = "Special";
+            break;
+          
+            default:
+              vehType = "No Information";
+            break;
+        }
+        switch (vehTypeXML[2]) {
+            case 'M':
+              transmissionType =  "Manual";
+            break;
+            case 'A':
+              transmissionType = "Automatic";
+            break;
+            default:
+              transmissionType = "No Information";
+            break;
+        }
+        switch (vehTypeXML[3]) {
+            case 'M':
+              climateControl = "Without Climate Control";
+            break;
+            case 'R':
+              climateControl = "With Climate Control";
+            break;
+          
+            default:
+              climateControl = "No Information";
+            break;
+        }
+        var amount = vehVendorAvails.children[i].getElementsByTagName("VehicleCharge")[0].getAttribute("Amount");
+        tempArray.push({vehTypeXML, amount, vehCategory, vehType, transmissionType, climateControl, pickupTime, pickupDate, dropoffTime, dropoffDate, destinationNameCarsIATA});
+        resultDataCars.push(tempArray);
+      }
+      $state.go("menu.cardetails");
+    });
+
+  }
+
+});
+//controller ends
+
+//Car details controller
+app.controller('CarDetailsController', function($scope, $ionicSideMenuDelegate, $state) {
+  selectedCar = [];
+  $scope.resultLength = resultDataCars.length;
+  $scope.carsData = resultDataCars;
+  console.log(resultDataCars);
+  $scope.selectCar = function($index){
+    selectedCar = $scope.carsData[$index];
+    $state.go("menu.userdetails");
+  }
+});
+//controller ends

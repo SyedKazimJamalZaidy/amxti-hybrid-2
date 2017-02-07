@@ -1,0 +1,37 @@
+  <ion-view title="Search Cars" hide-back-button="true">
+
+    <ion-nav-buttons side="left">
+      <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+
+    <ion-content has-header="true" padding="true">
+
+      
+        <div class="list">
+          <label class="item item-input">
+          <i class="icon ion-location placeholder-icon"></i>
+            <input type="text" id="destinationNameCars" placeholder="Enter location" name="location" ng-model="location" required>
+          </label>
+          <label class="item item-input">
+            <span class="input-label" ><i class="ion-calendar"></i> Pickup date:</span>
+            <input type="date" id="pickupDate" name="fromStay" ng-model="fromStay" required>
+          </label>
+          <label class="item item-input">
+            <span class="input-label" ><i class="ion-clock"></i> Pickup time:</span>
+            <input type="time" id="pickupTime" name="fromStay" ng-model="fromStay" required>
+          </label>
+          <label class="item item-input">
+            <span class="input-label"><i class="ion-calendar"></i> Dropoff date:</span>
+            <input type="date"  id="dropoffDate" name="toStay" ng-model="toStay" required>
+          </label>
+          <label class="item item-input">
+            <span class="input-label"><i class="ion-clock"></i> Dropoff Time:</span>
+            <input type="time"  id="dropoffTime" name="toStay" ng-model="toStay" required>
+          </label>
+        </div>
+        <button class="button button-assertive button-outline button-block" ng-click="getCars()" ><i class="ion-ios-search-strong"></i> Search Cars
+        </button>
+      
+    </ion-content>
+    
+  </ion-view>
