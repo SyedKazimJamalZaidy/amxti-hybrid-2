@@ -1,5 +1,4 @@
 @import url("steps.css");
-
 .pull-right {
 	float: right;
 }
@@ -435,123 +434,175 @@ a.menuitem:hover {
 	padding-top: 4px!important;
 	padding-bottom: 4px!important;
 }
-
 /*Price Tag*/
 
 .event {
-  height: 80px;
-  background: #fff;
-  border: 1px solid #CCC;
-  margin: 25px;
-  border-radius:5px;
+	height: 80px;
+	background: #fff;
+	border: 1px solid #CCC;
+	margin: 25px;
+	border-radius: 5px;
 }
 .event:before {
-  content: '';
-  display: block;
-  width: 99%;
-  height: 70px;
-  background: #fff;
-  border: 1px solid #CCC; 
-  transform: rotate(2deg);
-  position: relative;
-  top: 12px;
-  left: 2px;
-  z-index: -1;
-  border-radius:5px;
+	content: '';
+	display: block;
+	width: 99%;
+	height: 70px;
+	background: #fff;
+	border: 1px solid #CCC;
+	transform: rotate(2deg);
+	position: relative;
+	top: 12px;
+	left: 2px;
+	z-index: -1;
+	border-radius: 5px;
 }
 .event:after {
-  content: '';
-  display: block;
-  width: 40%;
-  height: 75px;
-  background: #fff;
-  border: 1px solid #CCC; 
-  transform: rotate(-2deg);
-  position: relative;
-  top: -136px;
-  z-index: -2;  
-  border-radius:5px;
+	content: '';
+	display: block;
+	width: 40%;
+	height: 75px;
+	background: #fff;
+	border: 1px solid #CCC;
+	transform: rotate(-2deg);
+	position: relative;
+	top: -136px;
+	z-index: -2;
+	border-radius: 5px;
 }
 .event > span {
-  display: block;
-  width: 40px;
-  background: #232323;  
-  position: relative;
-  top: -55px;
-  left: -15px; 
-  /* Text */
-  color: #fff;
-  font-size: 10px;
-  padding: 2px 7px;
-  text-align: right;
+	display: block;
+	width: 40px;
+	background: #232323;
+	position: relative;
+	top: -55px;
+	left: -15px;
+	/* Text */
+	color: #fff;
+	font-size: 10px;
+	padding: 2px 7px;
+	text-align: right;
 }
 .event > .info {
-  display: inline-block;
-  position: relative;
-  top: -85px;
-  left: 40px;
-  
-  /* Text */
-  color: #232323;
-  font-weight: 600;
-  line-height: 25px;
+	display: inline-block;
+	position: relative;
+	top: -85px;
+	left: 40px;
+	/* Text */
+	color: #232323;
+	font-weight: 600;
+	line-height: 25px;
 }
 .event > .info:first-line {
-  text-transform: uppercase;
-  font-size: 10px;
-  margin: 10px 0 0 0;
-  font-weight: 700;
+	text-transform: uppercase;
+	font-size: 10px;
+	margin: 10px 0 0 0;
+	font-weight: 700;
 }
 .event > .price {
-  display: inline-block;
-  position: relative;
-  top: -85px;
-  left: 115px; 
-  
-  /* Text */
-  color: #E35354;
-  text-align: center;
-font-size:22px;
+	display: inline-block;
+	position: relative;
+	top: -85px;
+	left: 115px;
+	/* Text */
+	color: #E35354;
+	text-align: center;
+	font-size: 22px;
 }
-
 /*Eof Price Tag*/
 
 
-.toppadoff{padding-top:0px; padding-bottom:0px}
-
-.hotelname{color:#13314d; font-size:16px; text-transform:capitalize!important;}
-
-.hotelprice{text-align: center; top:25%; right:3%; position:absolute}
-.hotelprice span{font-size:140%; color:#e52029}
-.hotelrating{font-size:75%!important; color:#58c72c!important;}
-.hoteldetail{font-size:12px; text-transform:capitalize!important; margin-top: 20px;
-    clear: both;
-    float: left;}
-.badge {
-  height: 75px;
-  width: 75px;
-  display: table-cell!important;
-  text-align: center;
-  vertical-align: middle;
-  border-radius: 50%;
-  background: #fff;
-  top: 196px!important;
-  left: 40%!important;
-  border:1px solid #ccc;
-  padding-top: 30px;
-  font-size: 12px;
-  color:#58c72c!important;
-  text-transform:capitalize;
+.toppadoff {
+	padding-top: 0px;
+	padding-bottom: 0px
 }
-
-.imageheightset{height:216px}
-
-.namecontainer{margin-top:50px}
-.hotelnamelft{float:left; background:#13314d; color:#fff; padding:10px; text-transform:capitalize!important; width:100%; white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;}
-.hotelpricelft{float:left; background:#f7be3d; color:#fff; padding:10px; width:100%}
-.hotelpricelft span{font-weight:bold}
-.roomdetail{font-size:12px; text-transform:capitalize!important; margin-top: 20px;
-    clear: both;
-    float: left; width:70%}
+.hotelname {
+	color: #13314d;
+	font-size: 16px;
+	text-transform: capitalize!important;
+}
+.hotelprice {
+	text-align: center;
+	top: 25%;
+	right: 3%;
+	position: absolute
+}
+.hotelprice span {
+	font-size: 140%;
+	color: #e52029
+}
+.hotelrating {
+	font-size: 75%!important;
+	color: #58c72c!important;
+}
+.hoteldetail {
+	font-size: 12px;
+	text-transform: capitalize!important;
+	margin-top: 20px;
+	clear: both;
+	float: left;
+}
+.badge {
+	height: 75px;
+	width: 75px;
+	display: table-cell!important;
+	text-align: center;
+	vertical-align: middle;
+	border-radius: 50%;
+	background: #fff;
+	top: 196px!important;
+	left: 40%!important;
+	border: 1px solid #ccc;
+	padding-top: 30px;
+	font-size: 12px;
+	color: #58c72c!important;
+	text-transform: capitalize;
+}
+.imageheightset {
+	height: 216px
+}
+.namecontainer {
+	margin-top: 50px
+}
+.hotelnamelft {
+	float: left;
+	background: #13314d;
+	color: #fff;
+	padding: 10px;
+	text-transform: capitalize!important;
+	width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.hotelpricelft {
+	float: left;
+	background: #f7be3d;
+	color: #fff;
+	padding: 10px;
+	width: 100%
+}
+.hotelpricelft span {
+	font-weight: bold
+}
+.roomdetail {
+	font-size: 12px;
+	text-transform: capitalize!important;
+	margin-top: 20px;
+	clear: both;
+	float: left;
+	width: 65%;
+	padding-right: 10px
+}
+.roomprice {
+	text-align: center;
+	color: #13314d
+}
+.roomprice span {
+	font-size: 140%;
+	color: #58c72c
+}
+.hotelconfirmationbg {
+	background: #f5f5f5;
+	margin: 15px 0px;
+}
