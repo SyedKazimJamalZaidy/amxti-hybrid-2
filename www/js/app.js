@@ -170,6 +170,26 @@ var app = angular.module('demo', ['ionic', 'ngMessages', 'ngCordova'])
                     }
                 }
             })
+            //Cars Page
+            .state('menu.cars', {
+                url: '/cars',
+                views: {
+                    'view-content': {
+                        templateUrl: 'templates/cars.html',
+                        controller : 'CarsController'
+                    }
+                }
+            })
+            //Car details page
+            .state('menu.cardetails', {
+                url: '/cardetails',
+                views: {
+                    'view-content': {
+                        templateUrl: 'templates/cardetails.html',
+                        controller : 'CarDetailsController'
+                    }
+                }
+            })
             .state('menu.drink', {
                 url: '/drink',
                 views: {
