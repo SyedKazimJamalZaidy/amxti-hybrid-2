@@ -31,7 +31,7 @@
 			  <div class="item item-body hotelconfirmationbg" ng-repeat="data in hotelFullDetails.roomDetails">
 			  
 			  	<div class="item item-text-wrap" ng-repeat="item in data">
-				   <p class="roomdetail">{{item.roomDetail}}</p>
+				   <p class="roomdetail"><span>Room Detail</span> <br />{{item.roomDetail}}</p>
                      <h3 class="roomprice">Per Night<br /> <span>{{item.roomPrice | currency}}</span></h3>
 				       <button class="button button-block button-outline button-assertive" ng-click="toUserDetails()">Confirm Hotel</button>
 				</div>
