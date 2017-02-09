@@ -25,12 +25,12 @@ app.controller('MenuController', function($scope, $ionicSideMenuDelegate) {
       };
     });
 
-app.controller('HomePageController', function($scope, $ionicSideMenuDelegate) {
+app.controller('HomePageController', function($scope, $ionicSideMenuDelegate, $ionicPopup) {
     //Authenticating for token
     var auth = {
   "async": true,
   "crossDomain": true,
-  "url": "https://webservices.havail.sabre.com",
+  "url": "https://sws-crt.cert.havail.sabre.com",
   "method": "POST",
   "headers": {
     "content-type": "text/xml",
@@ -170,7 +170,7 @@ app.controller('LoginController', function($scope, $ionicSideMenuDelegate, $stat
       var getFlightData = {
         "async": true,
         "crossDomain": true,
-        "url": "https://webservices-as.havail.sabre.com/",
+        "url": "https://sws-crt.cert.havail.sabre.com",
         "method": "POST",
         "headers": {
           "content-type": "text/xml",
@@ -188,6 +188,7 @@ app.controller('LoginController', function($scope, $ionicSideMenuDelegate, $stat
 };
 //Making AJAX Request for data of flights
 $.ajax(getFlightData).done(function(response){
+  console.log(response);
   if(response.getElementsByTagName("PricedItineraries").length != 0){
     var pricedItineraries = response.getElementsByTagName("PricedItineraries")[0].childNodes;
       
@@ -415,7 +416,7 @@ $.ajax(getFlightData).done(function(response){
       var getFlightData = {
         "async": true,
         "crossDomain": true,
-        "url": "https://webservices-as.havail.sabre.com/",
+        "url": "https://sws-crt.cert.havail.sabre.com",
         "method": "POST",
         "headers": {
           "content-type": "text/xml",
@@ -433,7 +434,7 @@ $.ajax(getFlightData).done(function(response){
 }
 //Making AJAX Request for data of flights
 $.ajax(getFlightData).done(function(response){
-  
+      console.log(response);
       if(response.getElementsByTagName("PricedItineraries").length != 0){
       var pricedItineraries = response.getElementsByTagName("PricedItineraries")[0].childNodes;
        
@@ -790,7 +791,7 @@ app.controller('UserDetailsController', function($scope, $ionicSideMenuDelegate,
           var getHotelPNR = {
             "async": true,
             "crossDomain": true,
-            "url": "https://webservices-as.havail.sabre.com/",
+            "url": "https://sws-crt.cert.havail.sabre.com",
             "method": "POST",
             "headers": {
               "content-type": "text/xml",
@@ -830,55 +831,56 @@ app.controller('UserDetailsController', function($scope, $ionicSideMenuDelegate,
             var carPNR = {
                 "async": true,
                 "crossDomain": true,
-                "url": "https://webservices-as.havail.sabre.com/",
+                "url": "https://sws-crt.cert.havail.sabre.com",
                 "method": "POST",
                 "headers": {
                   "content-type": "text/xml",
                   "cache-control": "no-cache",
                   "postman-token": "b05c54e0-3416-1429-ab3f-e373d850b137"
                 },
-                "data": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n        <SOAP-ENV:Header>\r\n            <eb:MessageHeader xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <eb:From>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">999999</eb:PartyId>\r\n                </eb:From>\r\n                <eb:To>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">123123</eb:PartyId>\r\n                </eb:To>\r\n                <eb:CPAId>R7OI</eb:CPAId>\r\n                 <eb:ConversationId>99999</eb:ConversationId>\r\n                <eb:Service eb:type=\"sabreXML\"></eb:Service>\r\n                <eb:Action>PassengerDetailsRQ</eb:Action>\r\n            </eb:MessageHeader> <ns6:Security xmlns:ns6=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <ns6:BinarySecurityToken>"+securityToken+"</ns6:BinarySecurityToken>\r\n            </ns6:Security>\r\n        </SOAP-ENV:Header>\r\n        <SOAP-ENV:Body>\r\n\r\n\t<PassengerDetailsRQ xmlns=\"http://services.sabre.com/sp/pd/v3_3\" version=\"3.3.0\" IgnoreOnError=\"false\" HaltOnError=\"false\">\r\n    <PostProcessing IgnoreAfter=\"false\" RedisplayReservation=\"true\" UnmaskCreditCard=\"true\" />\r\n    <PreProcessing IgnoreBefore=\"true\">\r\n        <UniqueID ID=\"\" />\r\n    </PreProcessing>\r\n   \r\n    <TravelItineraryAddInfoRQ>\r\n        <CustomerInfo>\r\n            <ContactNumbers>\r\n                <ContactNumber NameNumber=\"1.1\" Phone=\""+selectedCountryCode+"-"+cnumber+"\" PhoneUseType=\"H\" />\r\n            </ContactNumbers>\r\n            <Email Address=\""+email+"\" NameNumber=\"1.1\" ShortText=\"ABC123\" Type=\"CC\"/>\r\n            <PersonName NameNumber=\"1.1\" NameReference=\"ABC123\" PassengerType=\"ADT\">\r\n                <GivenName>"+fname+""+ mname+"</GivenName>\r\n                <Surname>"+lname+"</Surname>\r\n            </PersonName>\r\n        </CustomerInfo>\r\n    </TravelItineraryAddInfoRQ>\r\n</PassengerDetailsRQ>\r\n\t\r\n\t    </SOAP-ENV:Body>\r\n    </SOAP-ENV:Envelope>\r\n "
+                "data": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n        <SOAP-ENV:Header>\r\n            <eb:MessageHeader xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <eb:From>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">999999</eb:PartyId>\r\n                </eb:From>\r\n                <eb:To>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">123123</eb:PartyId>\r\n                </eb:To>\r\n                <eb:CPAId>R7OI</eb:CPAId>\r\n                 <eb:ConversationId>99999</eb:ConversationId>\r\n                <eb:Service eb:type=\"sabreXML\"></eb:Service>\r\n                <eb:Action>PassengerDetailsRQ</eb:Action>\r\n            </eb:MessageHeader> <ns6:Security xmlns:ns6=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <ns6:BinarySecurityToken>"+securityToken+"</ns6:BinarySecurityToken>\r\n            </ns6:Security>\r\n        </SOAP-ENV:Header>\r\n        <SOAP-ENV:Body>\r\n\r\n\t<PassengerDetailsRQ xmlns=\"http://services.sabre.com/sp/pd/v3_3\" version=\"3.3.0\" IgnoreOnError=\"false\" HaltOnError=\"false\">\r\n    <PostProcessing IgnoreAfter=\"false\" RedisplayReservation=\"true\" UnmaskCreditCard=\"true\" />\r\n    <PreProcessing IgnoreBefore=\"true\">\r\n        <UniqueID ID=\"\" />\r\n    </PreProcessing>\r\n   \r\n    <TravelItineraryAddInfoRQ>\r\n        <CustomerInfo>\r\n            <ContactNumbers>\r\n                <ContactNumber NameNumber=\"1.1\" Phone=\""+selectedCountryCode+"-"+cnumber+"\" PhoneUseType=\"M\" />\r\n            </ContactNumbers>\r\n            <Email Address=\""+email+"\" NameNumber=\"1.1\" ShortText=\"ABC123\" Type=\"CC\"/>\r\n            <PersonName NameNumber=\"1.1\" NameReference=\"ABC123\" PassengerType=\"ADT\">\r\n                <GivenName>"+fname+""+ mname+"</GivenName>\r\n                <Surname>"+lname+"</Surname>\r\n            </PersonName>\r\n        </CustomerInfo>\r\n    </TravelItineraryAddInfoRQ>\r\n</PassengerDetailsRQ>\r\n\t\r\n\t    </SOAP-ENV:Body>\r\n    </SOAP-ENV:Envelope>\r\n "
               }
 
               $.ajax(carPNR).done(function (response) {
+                console.log(carPNR);
                 console.log(response);
-                console.log(selectedCar[0].pickupTime);
+                console.log(selectedCar[0]);
                 var nameNumber = response.getElementsByTagName("PersonName")[0].getAttribute("NameNumber");
 
                  //Car booking
               var carBook = {
                     "async": true,
                     "crossDomain": true,
-                    "url": "https://webservices-as.havail.sabre.com/",
+                    "url": "https://sws-crt.cert.havail.sabre.com",
                     "method": "POST",
                     "headers": {
                       "content-type": "text/xml",
                       "cache-control": "no-cache",
                       "postman-token": "b724903c-5a01-e0bd-2451-10bef80f4e49"
                     },
-                    "data": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n        <SOAP-ENV:Header>\r\n            <eb:MessageHeader xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <eb:From>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">999999</eb:PartyId>\r\n                </eb:From>\r\n                <eb:To>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">123123</eb:PartyId>\r\n                </eb:To>\r\n                <eb:CPAId>R7OI</eb:CPAId>\r\n                 <eb:ConversationId>99999</eb:ConversationId>\r\n                <eb:Service eb:type=\"sabreXML\"></eb:Service>\r\n                <eb:Action>OTA_VehResLLSRQ</eb:Action>\r\n            </eb:MessageHeader> <ns6:Security xmlns:ns6=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <ns6:BinarySecurityToken>Shared/IDL:IceSess\\/SessMgr:1\\.0.IDL/Common/!ICESMS\\/RESG!ICESMSLB\\/RES.LB!-3310500457963795066!1634598!0</ns6:BinarySecurityToken>\r\n            </ns6:Security>\r\n        </SOAP-ENV:Header>\r\n        <SOAP-ENV:Body>\r\n\r\n\t<OTA_VehResRQ xmlns=\"http://webservices.sabre.com/sabreXML/2011/10\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" Version=\"2.1.0\">\r\n<VehResRQCore>\r\n<Customer NameNumber=\""+nameNumber+"\"/>\r\n<VehPrefs>\r\n<VehPref>\r\n<VehType>"+selectedCar[0].vehTypeXML+"</VehType>\r\n</VehPref>\r\n</VehPrefs>\r\n<VehRentalCore PickUpDateTime=\""+selectedCar[0].pickupDate[0]+"-"+selectedCar[0].pickupDate[1]+"T"+selectedCar[0].pickupTime[0]+":"+selectedCar[0].pickupTime[1]+"\" Quantity=\"1\" ReturnDateTime=\""+selectedCar[0].dropoffDate[0]+"-"+selectedCar[0].dropoffDate[1]+"T"+selectedCar[0].dropoffTime[0]+":"+selectedCar[0].dropoffTime[1]+"\">\r\n<PickUpLocation LocationCode=\""+selectedCar[0].destinationNameCarsIATA+"\"/>\r\n</VehRentalCore>\r\n<VendorPrefs>\r\n<VendorPref Code=\"ZE\"/>\r\n</VendorPrefs>\r\n</VehResRQCore>\r\n</OTA_VehResRQ>\r\n\t\r\n\t    </SOAP-ENV:Body>\r\n    </SOAP-ENV:Envelope>\r\n "
+                    "data": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n        <SOAP-ENV:Header>\r\n            <eb:MessageHeader xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <eb:From>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">999999</eb:PartyId>\r\n                </eb:From>\r\n                <eb:To>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">123123</eb:PartyId>\r\n                </eb:To>\r\n                <eb:CPAId>R7OI</eb:CPAId>\r\n                 <eb:ConversationId>99999</eb:ConversationId>\r\n                <eb:Service eb:type=\"sabreXML\"></eb:Service>\r\n                <eb:Action>OTA_VehResLLSRQ</eb:Action>\r\n            </eb:MessageHeader> <ns6:Security xmlns:ns6=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <ns6:BinarySecurityToken>"+securityToken+"</ns6:BinarySecurityToken>\r\n            </ns6:Security>\r\n        </SOAP-ENV:Header>\r\n        <SOAP-ENV:Body>\r\n\r\n\t<OTA_VehResRQ xmlns=\"http://webservices.sabre.com/sabreXML/2011/10\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" Version=\"2.1.0\">\r\n<VehResRQCore>\r\n<RateQualifier><DropOffCharge Amount=\""+selectedCar[0].amount+"\"/>\r\n</RateQualifier>\r\n<VehPrefs>\r\n<VehPref>\r\n<VehType>"+selectedCar[0].vehTypeXML+"</VehType>\r\n</VehPref>\r\n</VehPrefs>\r\n<VehRentalCore PickUpDateTime=\""+selectedCar[0].pickupDate[0]+"-"+selectedCar[0].pickupDate[1]+"T"+selectedCar[0].pickupTime[0]+":"+selectedCar[0].pickupTime[1]+"\" Quantity=\"1\" ReturnDateTime=\""+selectedCar[0].dropoffDate[0]+"-"+selectedCar[0].dropoffDate[1]+"T"+selectedCar[0].dropoffTime[0]+":"+selectedCar[0].dropoffTime[1]+"\">\r\n<PickUpLocation LocationCode=\""+selectedCar[0].destinationNameCarsIATA+"\"/>\r\n</VehRentalCore>\r\n<VendorPrefs>\r\n<VendorPref Code=\"ZE\"/>\r\n</VendorPrefs>\r\n</VehResRQCore>\r\n</OTA_VehResRQ>\r\n\t\r\n\t    </SOAP-ENV:Body>\r\n    </SOAP-ENV:Envelope>\r\n "
                   }
 
                   $.ajax(carBook).done(function (result) {
                     console.log(carBook);
                     console.log(result);
 
-                    var endTransactionCars = {
-                      "async": true,
-                      "crossDomain": true,
-                      "url": "https://webservices-as.havail.sabre.com/",
-                      "method": "POST",
-                      "headers": {
-                        "content-type": "text/xml",
-                        "cache-control": "no-cache",
-                        "postman-token": "3205ffb4-f3b2-4b84-d6b7-5a52351440b5"
-                      },
-                      "data": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n        <SOAP-ENV:Header>\r\n            <eb:MessageHeader xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <eb:From>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">999999</eb:PartyId>\r\n                </eb:From>\r\n                <eb:To>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">123123</eb:PartyId>\r\n                </eb:To>\r\n                <eb:CPAId>R7OI</eb:CPAId>\r\n                 <eb:ConversationId>99999</eb:ConversationId>\r\n                <eb:Service eb:type=\"sabreXML\"></eb:Service>\r\n                <eb:Action>EndTransactionLLSRQ</eb:Action>\r\n            </eb:MessageHeader> <ns6:Security xmlns:ns6=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <ns6:BinarySecurityToken>"+securityToken+"</ns6:BinarySecurityToken>\r\n            </ns6:Security>\r\n        </SOAP-ENV:Header>\r\n        <SOAP-ENV:Body>\r\n\r\n  <EndTransactionRQ xmlns=\"http://webservices.sabre.com/sabreXML/2011/10\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" ReturnHostCommand=\"false\" TimeStamp=\"2016-06-22T11:00:00-06:00\" Version=\"2.0.6\">\r\n<EndTransaction Ind=\"true\">\r\n<Email Ind=\"true\">\r\n<Itinerary Ind=\"true\">\r\n<PDF Ind=\"true\"/>\r\n</Itinerary>\r\n<PersonName NameNumber=\""+nameNumber+"\"/>\r\n</Email>\r\n</EndTransaction>\r\n</EndTransactionRQ>\r\n  \r\n      </SOAP-ENV:Body>\r\n    </SOAP-ENV:Envelope>\r\n "
-                    }
+                      var endTransactionCars = {
+                        "async": true,
+                        "crossDomain": true,
+                        "url": "https://sws-crt.cert.havail.sabre.com",
+                        "method": "POST",
+                        "headers": {
+                          "content-type": "text/xml",
+                          "cache-control": "no-cache",
+                          "postman-token": "3205ffb4-f3b2-4b84-d6b7-5a52351440b5"
+                        },
+                        "data": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n        <SOAP-ENV:Header>\r\n            <eb:MessageHeader xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <eb:From>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">999999</eb:PartyId>\r\n                </eb:From>\r\n                <eb:To>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">123123</eb:PartyId>\r\n                </eb:To>\r\n                <eb:CPAId>R7OI</eb:CPAId>\r\n                 <eb:ConversationId>99999</eb:ConversationId>\r\n                <eb:Service eb:type=\"sabreXML\"></eb:Service>\r\n                <eb:Action>EndTransactionLLSRQ</eb:Action>\r\n            </eb:MessageHeader> <ns6:Security xmlns:ns6=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <ns6:BinarySecurityToken>"+securityToken+"</ns6:BinarySecurityToken>\r\n            </ns6:Security>\r\n        </SOAP-ENV:Header>\r\n        <SOAP-ENV:Body>\r\n\r\n  <EndTransactionRQ xmlns=\"http://webservices.sabre.com/sabreXML/2011/10\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" ReturnHostCommand=\"false\" TimeStamp=\"2016-06-22T11:00:00-06:00\" Version=\"2.0.6\">\r\n<EndTransaction Ind=\"true\"/>\r\n<Source ReceivedFrom=\"SWS TESTS\"/>\r\n</EndTransactionRQ>\r\n  \r\n      </SOAP-ENV:Body>\r\n    </SOAP-ENV:Envelope>\r\n "
+                      }
 
-                    $.ajax(endTransactionCars).done(function (response) {
-                      console.log(response);
-                    });
+                      $.ajax(endTransactionCars).done(function (response) {
+                        console.log(response);
+                      });
                   });
               });
 
@@ -911,7 +913,7 @@ app.controller('UserDetailsController', function($scope, $ionicSideMenuDelegate,
         var getUserData = {
             "async": true,
             "crossDomain": true,
-            "url": "https://webservices-as.havail.sabre.com/",
+            "url": "https://sws-crt.cert.havail.sabre.com",
             "method": "POST",
             "headers": {
               "content-type": "text/xml",
@@ -936,7 +938,7 @@ app.controller('UserDetailsController', function($scope, $ionicSideMenuDelegate,
             var flightBooking = {
             "async": true,
             "crossDomain": true,
-            "url": "https://webservices-as.havail.sabre.com/",
+            "url": "https://sws-crt.cert.havail.sabre.com",
             "method": "POST",
             "headers": {
               "content-type": "text/xml",
@@ -1201,7 +1203,7 @@ else {
     var getFlightData = {
         "async": true,
         "crossDomain": true,
-        "url": "https://webservices-as.havail.sabre.com/",
+        "url": "https://sws-crt.cert.havail.sabre.com",
         "method": "POST",
         "headers": {
           "content-type": "text/xml",
@@ -1342,7 +1344,7 @@ $.ajax(getFlightData).done(function(response){
     var getFlightData = {
         "async": true,
         "crossDomain": true,
-        "url": "https://webservices-as.havail.sabre.com/",
+        "url": "https://sws-crt.cert.havail.sabre.com",
         "method": "POST",
         "headers": {
           "content-type": "text/xml",
@@ -1484,7 +1486,7 @@ $.ajax(getFlightData).done(function(response){
     var getFlightData = {
         "async": true,
         "crossDomain": true,
-        "url": "https://webservices-as.havail.sabre.com/",
+        "url": "https://sws-crt.cert.havail.sabre.com",
         "method": "POST",
         "headers": {
           "content-type": "text/xml",
@@ -1627,7 +1629,7 @@ app.controller('HotelController', function($scope, $ionicSideMenuDelegate, $http
     var getHotelDetail = {
       "async": true,
       "crossDomain": true,
-      "url": "https://webservices-as.havail.sabre.com/",
+      "url": "https://sws-crt.cert.havail.sabre.com",
       "method": "POST",
       "headers": {
         "content-type": "text/xml",
@@ -1646,7 +1648,7 @@ $.ajax(getHotelDetail).done(function (response) {
     //Getting Image
     var getImage = {
       "crossDomain": true,
-      "url": "https://webservices-as.havail.sabre.com/",
+      "url": "https://sws-crt.cert.havail.sabre.com",
       "method": "POST",
       async: false,
       "headers": {
@@ -1770,7 +1772,7 @@ app.controller('HotelDetailsController', function($scope, $ionicSideMenuDelegate
       var hotelFullDetails = {
         "async": true,
         "crossDomain": true,
-        "url": "https://webservices-as.havail.sabre.com/",
+        "url": "https://sws-crt.cert.havail.sabre.com",
         "method": "POST",
         "headers": {
           "content-type": "text/xml",
@@ -1795,7 +1797,7 @@ app.controller('HotelDetailsController', function($scope, $ionicSideMenuDelegate
         //Getting Image
     var getImage = {
       "crossDomain": true,
-      "url": "https://webservices-as.havail.sabre.com/",
+      "url": "https://sws-crt.cert.havail.sabre.com",
       "method": "POST",
       async: false,
       "headers": {
@@ -1930,7 +1932,7 @@ if(result.length == 0){
 var getCarDetails = {
       "async": true,
       "crossDomain": true,
-      "url": "https://webservices-as.havail.sabre.com/",
+      "url": "https://sws-crt.cert.havail.sabre.com",
       "method": "POST",
       "headers": {
         "content-type": "text/xml",

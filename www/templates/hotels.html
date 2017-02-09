@@ -5,21 +5,31 @@
     </ion-nav-buttons>
 
     <ion-content has-header="true">
+    <form name="hotelForm" novalidate>
   <div class="list">
           <label class="item item-input">
           <i class="icon ion-location placeholder-icon"></i>
             <input type="text" id="destinationName" placeholder="Enter location" name="location" ng-model="location" required>
           </label>
+          <div class="help-block" ng-messages="hotelForm.location.$error" ng-if="hotelForm.location.$touched">
+            <p ng-message="required"><i class="ion-alert assertive"></i> Location is required.</p>
+          </div>
            <div class="linespace"></div>
           <label class="item item-input">
             <span class="input-label" ><i class="ion-calendar"></i> From:</span>
             <input type="date" id="fromStay" name="fromStay" ng-model="fromStay" required>
           </label>
+          <div class="help-block" ng-messages="hotelForm.fromStay.$error" ng-if="hotelForm.fromStay.$touched">
+            <p ng-message="required"><i class="ion-alert assertive"></i> Date is required.</p>
+          </div>
            <div class="linespace"></div>
           <label class="item item-input">
             <span class="input-label"><i class="ion-calendar"></i> To:</span>
             <input type="date"  id="toStay" name="toStay" ng-model="toStay" required>
           </label>
+          <div class="help-block" ng-messages="hotelForm.toStay.$error" ng-if="hotelForm.toStay.$touched">
+            <p ng-message="required"><i class="ion-alert assertive"></i> Date is required.</p>
+          </div>
       </div>
         <div class="row toppadoff">
             <div class="col toppadoff">
@@ -36,7 +46,7 @@
             </div>
         </div>
           <div class="list">
-        <button class="button button-assertive button-outline button-block" ng-click="getHotels()" ><i class="ion-ios-search-strong"></i> Search Hotels
+        <button class="button button-assertive button-outline button-block" ng-click="getHotels()"><i class="ion-ios-search-strong"></i> Search Hotels
         </button>
         </div>
     </ion-content>
