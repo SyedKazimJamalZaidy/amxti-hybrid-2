@@ -101,10 +101,10 @@
 	margin: 0px;
 	color: #fff;
 	text-decoration: none;
-	font-size: 33px;
+	font-size: 2em;
 	text-align: center;
 	font-weight: normal;
-	padding: 50px 0 0 60px;
+	padding: 46px 0 0 72px;
 	-webkit-transform: perspective(1px) translateZ(0);
 	transform: perspective(1px) translateZ(0);
 	box-shadow: 0 0 1px transparent;
@@ -127,7 +127,7 @@
 	position: absolute;
 	right: 10px;
 	display: inline-block;
-	top: 30%
+	top: 35%
 }
 .hotelbutton:before {
 	content: "";
@@ -147,10 +147,10 @@
 	margin: 0px;
 	color: #fff;
 	text-decoration: none;
-	font-size: 33px;
+	font-size: 2em;
 	text-align: center;
 	font-weight: normal;
-	padding: 50px 0 0 60px;
+	padding: 46px 0 0 72px;
 	-webkit-transform: perspective(1px) translateZ(0);
 	transform: perspective(1px) translateZ(0);
 	box-shadow: 0 0 1px transparent;
@@ -171,7 +171,7 @@
 	position: absolute;
 	right: 10px;
 	display: inline-block;
-	top: 30%
+	top: 35%
 }
 .carbutton:before {
 	content: "";
@@ -191,10 +191,10 @@
 	margin: 0px;
 	color: #fff;
 	text-decoration: none;
-	font-size: 33px;
+	font-size: 2em;
 	text-align: center;
 	font-weight: normal;
-	padding: 50px 0 0 60px;
+	padding: 46px 0 0 72px;
 	-webkit-transform: perspective(1px) translateZ(0);
 	transform: perspective(1px) translateZ(0);
 	box-shadow: 0 0 1px transparent;
@@ -215,7 +215,7 @@
 	position: absolute;
 	right: 10px;
 	display: inline-block;
-	top: 30%
+	top: 35%
 }
 .bar-assertive {
 	background: #13314d!important;
