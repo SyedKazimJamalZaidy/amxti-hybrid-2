@@ -5,19 +5,28 @@
     <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
   </ion-nav-buttons>
   <ion-content has-subheader="false" ng-class="whichClassToUse(call.State)">
-    
+    <form name="multicityForm" novalidate>
       <div class="list" >
         <label class="item item-input item-stacked-label"> <span class="input-label">From</span>
-          <input type="text" placeholder="Select departure airport" id="from0">
+          <input type="text" placeholder="Select departure airport" id="from0" name="from0" ng-model="from0" required>
         </label>
+        <div class="help-block" ng-messages="multicityForm.from0.$error" ng-if="multicityForm.from0.$touched">
+            <p ng-message="required"><i class="ion-alert assertive"></i> Departure airport is required.</p>
+        </div>
         <div class="linespace"></div>
         <label class="item item-input item-stacked-label"> <span class="input-label">To</span>
-          <input type="text" placeholder="Select arrival airport" id="to0">
+          <input type="text" placeholder="Select arrival airport" id="to0" name="to0" nd-model="to0" required>
         </label>
+        <div class="help-block" ng-messages="multicityForm.to0.$error" ng-if="multicityForm.to0.$touched">
+            <p ng-message="required"><i class="ion-alert assertive"></i> Arrival airport is required.</p>
+        </div>
         <div class="linespace"></div>
         <label class="item item-input item-stacked-label"> <span class="input-label">Departure Date</span>
-          <input type="date" id="departDate0">
+          <input type="date" id="departDate0" name="departDate0" ng-model="departDate0" required>
         </label>
+        <div class="help-block" ng-messages="multicityForm.departDate.$error" ng-if="multicityForm.departDate.$touched">
+            <p ng-message="required"><i class="ion-alert assertive"></i> Departure date is required.</p>
+        </div>
         <div class="linespace"></div>
          <button class="button button-block button-royal ion-ios-locked" ng-click="getFirstValue()">  Lock flight</button>
         <div class="buttonrgt item item-divider">
@@ -26,18 +35,29 @@
         <button class="button icon icon ion-minus-circled" ng-click="form1=false"></button>  
         </div>
         <div class="linespace"></div>
+        </form>
+        <form name="multicityForm1" novalidate>
         <div ng-show="form1">
           <label class="item item-input item-stacked-label"> <span class="input-label">From</span>
-            <input type="text" placeholder="Select departure airport" id="from1">
+            <input type="text" placeholder="Select departure airport" id="from1" name="from1" ng-model="from1" required>
           </label>
+          <div class="help-block" ng-messages="multicityForm1.from1.$error" ng-if="multicityForm1.from1.$touched">
+            <p ng-message="required"><i class="ion-alert assertive"></i> Departure airport is required.</p>
+          </div>
           <div class="linespace"></div>
           <label class="item item-input item-stacked-label"> <span class="input-label">To</span>
-            <input type="text" placeholder="Select arrival airport" id="to1">
+            <input type="text" placeholder="Select arrival airport" id="to1" name="to1" ng-model="to1" required>
           </label>
+          <div class="help-block" ng-messages="multicityForm1.to1.$error" ng-if="multicityForm1.to1.$touched">
+            <p ng-message="required"><i class="ion-alert assertive"></i> Arrival airport is required.</p>
+        </div>
           <div class="linespace"></div>
           <label class="item item-input item-stacked-label"> <span class="input-label">Departure Date</span>
-            <input type="date" id="departDate1">
+            <input type="date" id="departDate1" name="departDate1" ng-model="departDate1" required>
           </label>
+          <div class="help-block" ng-messages="multicityForm1.departDate1.$error" ng-if="multicityForm1.departDate1.$touched">
+            <p ng-message="required"><i class="ion-alert assertive"></i> Departure date is required.</p>
+          </div>
           <div class="linespace"></div>
            <button class="button button-block button-royal ion-ios-locked" ng-click="getSecondValue()">  Lock flight</button>
             <div class="buttonrgt item item-divider">
@@ -47,24 +67,34 @@
         </div>
     <div class="linespace"></div>
         </div>
-    
+        </form>
+        <form name="multicityForm2">
         <div ng-show="form2">
           <label class="item item-input item-stacked-label"> <span class="input-label">From</span>
-            <input type="text" placeholder="Select departure airport"  id="from2">
+            <input type="text" placeholder="Select departure airport"  id="from2" name="from2" ng-model="from2" required>
           </label>
+           <div class="help-block" ng-messages="multicityForm2.from2.$error" ng-if="multicityForm2.from2.$touched">
+            <p ng-message="required"><i class="ion-alert assertive"></i> Departure airport is required.</p>
+          </div>
           <div class="linespace"></div>
           <label class="item item-input item-stacked-label"> <span class="input-label">To</span>
-            <input type="text" placeholder="Select arrival airport" id="to2">
+            <input type="text" placeholder="Select arrival airport" id="to2" name="to2" ng-model="to2" required>
           </label>
+          <div class="help-block" ng-messages="multicityForm2.to2.$error" ng-if="multicityForm2.to2.$touched">
+            <p ng-message="required"><i class="ion-alert assertive"></i> Arrival airport is required.</p>
+         </div>
           <div class="linespace"></div>
           <label class="item item-input item-stacked-label"> <span class="input-label">Departure Date</span>
-            <input type="date"  id="departDate2">
+            <input type="date"  id="departDate2" name="departDate2" ng-model="departDate2" required>
           </label>
+          <div class="help-block" ng-messages="multicityForm2.departDate2.$error" ng-if="multicityForm2.departDate2.$touched">
+            <p ng-message="required"><i class="ion-alert assertive"></i> Departure date is required.</p>
+          </div>
           <div class="item item-divider">
             <button class="button button-block button-royal ion-ios-locked" ng-click="getThirdValue()">  Lock flight</button>
           </div>
         </div>
-    
+      </form>
         <div class="row paddingoff">
           <div class="col">
             <label class="item item-input item-stacked-label"> <span class="input-label">Adults</span>
@@ -91,7 +121,7 @@
         </select>
         </label>
         <div class="linespace"></div>
-        <a class="button button-block button-royal"  ng-click="flightDetailsMulti()" ng-disabled="roundForm.$invalid"> Proceed </a></div>
+        <a class="button button-block button-royal"  ng-click="flightDetailsMulti()"> Proceed </a></div>
 
   </ion-content>
   <ion-tabs class="tabs-icon-top tabs-striped">

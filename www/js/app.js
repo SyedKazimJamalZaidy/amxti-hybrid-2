@@ -1,7 +1,20 @@
 var app = angular.module('demo', ['ionic', 'ngMessages', 'ngCordova'])
     
-    .run(function($ionicPlatform) {
+    .run(function($ionicPlatform, $ionicPopup) {
   $ionicPlatform.ready(function() {
+    if(window.Connection){
+        if(navigator.connection.type == Connection.NONE){
+            $ionicPopup.confirm({
+                title: "Internet Disconnected",
+                content: "The internet is disconnected on your device."
+            }).then(function(result){
+                if(!result){
+                    ionic.Platform.exitApp();
+                    console.log('Exit');
+                }
+            })
+        }
+    }
     if(window.cordova && window.cordova.plugins.Keyboard) {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
@@ -15,6 +28,7 @@ var app = angular.module('demo', ['ionic', 'ngMessages', 'ngCordova'])
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
+
   });
 })
     .config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider', function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {

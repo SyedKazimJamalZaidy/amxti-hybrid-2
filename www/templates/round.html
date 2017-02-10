@@ -5,28 +5,40 @@
       </ion-nav-buttons>
 
       <ion-content has-subheader="false" ng-class="whichClassToUse(call.State)">
-             
+             <form name="roundForm" novalidate>
               <div class="list">
               
                 <label class="item item-input item-stacked-label">
                   <span class="input-label">From</span>
                   <input type="text" placeholder="Select departure airport" id="from" name="from" ng-model="from" required>
                 </label>
+                <div class="help-block" ng-messages="roundForm.from.$error" ng-if="roundForm.from.$touched">
+                    <p ng-message="required"><i class="ion-alert assertive"></i> Departure airport is required.</p>
+                </div>
                  <div class="linespace"></div>
                 <label class="item item-input item-stacked-label">
                   <span class="input-label">To</span>
                   <input type="text" placeholder="Select arrival airport" id="to" name="to" ng-model="to" required>
                 </label>
+                <div class="help-block" ng-messages="roundForm.to.$error" ng-if="roundForm.to.$touched">
+                    <p ng-message="required"><i class="ion-alert assertive"></i> Arrival airport is required.</p>
+                </div>
                  <div class="linespace"></div>
                 <label class="item item-input item-stacked-label">
                   <span class="input-label">Departure Date</span>
                   <input type="date" id="departDate" name="departDate" ng-model="departDate" required>
                 </label>
+                <div class="help-block" ng-messages="roundForm.departDate.$error" ng-if="roundForm.departDate.$touched">
+                    <p ng-message="required"><i class="ion-alert assertive"></i> Departure date is required.</p>
+                </div>
                  <div class="linespace"></div>
                 <label class="item item-input item-stacked-label">
                   <span class="input-label">Arrival Date</span>
                   <input type="date" id="arrDate" name="arrDate" ng-model="arrDate" required>
                 </label>
+                <div class="help-block" ng-messages="roundForm.arrDate.$error" ng-if="roundForm.arrDate.$touched">
+                    <p ng-message="required"><i class="ion-alert assertive"></i> Arrival date is required.</p>
+                </div>
  <div class="linespace"></div>
                 <div class="row paddingoff">
                   <div class="col">
@@ -64,7 +76,8 @@
               <a class="button button-block button-royal" ng-click="flightDetails()">
                 Proceed 
               </a> 
-              </div>
+              </div> 
+              </form>
             </ion-content>
 
       <ion-tabs class="tabs-icon-top tabs-striped">

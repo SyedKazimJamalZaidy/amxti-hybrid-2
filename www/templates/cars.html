@@ -5,7 +5,7 @@
     </ion-nav-buttons>
 
     <ion-content has-header="true" padding="true">
-
+    <form name="carForm" novalidate>
       
         <div class="list">
           <label class="item item-input">
@@ -13,29 +13,49 @@
             <input type="text" id="destinationNameCars" placeholder="Enter location" name="location" ng-model="location" required>
           </label>
             <div class="linespace"></div>
+          <div class="help-block" ng-messages="carForm.location.$error" ng-if="carForm.location.$touched">
+            <p ng-message="required"><i class="ion-alert assertive"></i> Location is required.</p>
+          </div>
           <label class="item item-input">
             <span class="input-label" ><i class="ion-calendar"></i> Pickup date:</span>
             <input type="date" id="pickupDate" name="fromStay" ng-model="fromStay" required>
           </label>
             <div class="linespace"></div>
+          <div class="help-block" ng-messages="carForm.fromStay.$error" ng-if="carForm.fromStay.$touched">
+            <p ng-message="required"><i class="ion-alert assertive"></i> Date is required.</p>
+          </div>
           <label class="item item-input">
             <span class="input-label" ><i class="ion-clock"></i> Pickup time:</span>
-            <input type="time" id="pickupTime" name="fromStay" ng-model="fromStay" required>
+            <input type="time" id="pickupTime" name="fromStayT" ng-model="fromStayT" required>
           </label>
+
             <div class="linespace"></div>
+
+          <div class="help-block" ng-messages="carForm.fromStayT.$error" ng-if="carForm.fromStayT.$touched">
+            <p ng-message="required"><i class="ion-alert assertive"></i> Time is required.</p>
+          </div>
           <label class="item item-input">
             <span class="input-label"><i class="ion-calendar"></i> Dropoff date:</span>
             <input type="date"  id="dropoffDate" name="toStay" ng-model="toStay" required>
           </label>
             <div class="linespace"></div>
+          <div class="help-block" ng-messages="carForm.toStay.$error" ng-if="carForm.toStay.$touched">
+            <p ng-message="required"><i class="ion-alert assertive"></i> Date is required.</p>
+          </div>
+
           <label class="item item-input">
             <span class="input-label"><i class="ion-clock"></i> Dropoff Time:</span>
-            <input type="time"  id="dropoffTime" name="toStay" ng-model="toStay" required>
+            <input type="time"  id="dropoffTime" name="toStayT" ng-model="toStayT" required>
           </label>
+
          <div class="linespace"></div>
-        <button class="button button-assertive button-outline button-block" ng-click="getCars()" ><i class="ion-ios-search-strong"></i> Search Cars
+               <div class="help-block" ng-messages="carForm.toStayT.$error" ng-if="carForm.toStayT.$touched">
+            <p ng-message="required"><i class="ion-alert assertive"></i> Time is required.</p>
+          </div>
+
+        <button class="button button-assertive button-outline button-block" ng-click="getCars()"><i class="ion-ios-search-strong"></i> Search Cars
         </button>
-      </div>
+      </div></form>
     </ion-content>
     
   </ion-view>
