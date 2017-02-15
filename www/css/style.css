@@ -47,7 +47,8 @@
 	color: #e52029!important;
 }
 .button-royal:hover, .button.button-assertive:hover {
-	background: #13314d!important
+	background: #13314d!important;
+	border: 1px solid #6aa1d4!important;
 }
 .login-button {
 	background: #e52029!important;
@@ -100,10 +101,10 @@
 	margin: 0px;
 	color: #fff;
 	text-decoration: none;
-	font-size: 33px;
+	font-size: 2em;
 	text-align: center;
 	font-weight: normal;
-	padding: 50px 0 0 60px;
+	padding: 46px 0 0 72px;
 	-webkit-transform: perspective(1px) translateZ(0);
 	transform: perspective(1px) translateZ(0);
 	box-shadow: 0 0 1px transparent;
@@ -126,7 +127,7 @@
 	position: absolute;
 	right: 10px;
 	display: inline-block;
-	top: 30%
+	top: 35%
 }
 .hotelbutton:before {
 	content: "";
@@ -146,10 +147,10 @@
 	margin: 0px;
 	color: #fff;
 	text-decoration: none;
-	font-size: 33px;
+	font-size: 2em;
 	text-align: center;
 	font-weight: normal;
-	padding: 50px 0 0 60px;
+	padding: 46px 0 0 72px;
 	-webkit-transform: perspective(1px) translateZ(0);
 	transform: perspective(1px) translateZ(0);
 	box-shadow: 0 0 1px transparent;
@@ -170,7 +171,7 @@
 	position: absolute;
 	right: 10px;
 	display: inline-block;
-	top: 30%
+	top: 35%
 }
 .carbutton:before {
 	content: "";
@@ -190,10 +191,10 @@
 	margin: 0px;
 	color: #fff;
 	text-decoration: none;
-	font-size: 33px;
+	font-size: 2em;
 	text-align: center;
 	font-weight: normal;
-	padding: 50px 0 0 60px;
+	padding: 46px 0 0 72px;
 	-webkit-transform: perspective(1px) translateZ(0);
 	transform: perspective(1px) translateZ(0);
 	box-shadow: 0 0 1px transparent;
@@ -214,7 +215,7 @@
 	position: absolute;
 	right: 10px;
 	display: inline-block;
-	top: 30%
+	top: 35%
 }
 .bar-assertive {
 	background: #13314d!important;
@@ -594,9 +595,13 @@ a.menuitem:hover {
 	width: 65%;
 	padding-right: 10px
 }
+
+.roomdetail span {font-weight:bold; color: #13314d; font-size:16px;}
+
 .roomprice {
 	text-align: center;
-	color: #13314d
+	color: #13314d;
+	 padding-top:10px;
 }
 .roomprice span {
 	font-size: 140%;
@@ -605,4 +610,20 @@ a.menuitem:hover {
 .hotelconfirmationbg {
 	background: #f5f5f5;
 	margin: 15px 0px;
+}
+
+.divrgtcol{font-weight:normal; color:#13314d;}
+
+.carprice {
+	text-align: center;
+	top: 25%;
+	right: 6%;
+	position: absolute;
+	font-size: 140%;
+	font-weight:normal;
+	color:#13314d;
+}
+.carprice span {
+	font-size: 85%;
+	color: #58c72c;
 }
