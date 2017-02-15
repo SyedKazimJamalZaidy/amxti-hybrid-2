@@ -790,7 +790,7 @@ app.controller('UserDetailsController', function($scope, $ionicSideMenuDelegate,
                 passengerDetail.push(fname, mname, lname, selectedCountryCode, cnumber, email);
                 console.log(passengerDetail);
             var settings = {
-                "async": true,
+                "async": true,  
                 "crossDomain": true,
                 "url": "https://sws-crt.cert.havail.sabre.com/",
                 "method": "POST",
@@ -859,7 +859,7 @@ app.controller('UserDetailsController', function($scope, $ionicSideMenuDelegate,
       }
 
       $scope.toPayment = function(){
-        //Hotels PNR
+                //Hotels PNR
           if ($ionicHistory.backView().stateName == "menu.hotelconfirmation") {
             console.log('Kazim');
             passengerDetail = [];
@@ -904,7 +904,7 @@ app.controller('UserDetailsController', function($scope, $ionicSideMenuDelegate,
                 "cache-control": "no-cache",
                 "postman-token": "28497a24-33bf-a323-c3da-531ff371fe9b"
               },
-              "data": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n        <SOAP-ENV:Header>\r\n            <eb:MessageHeader xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <eb:From>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">999999</eb:PartyId>\r\n                </eb:From>\r\n                <eb:To>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">123123</eb:PartyId>\r\n                </eb:To>\r\n                <eb:CPAId>R7OI</eb:CPAId>\r\n                 <eb:ConversationId>99999</eb:ConversationId>\r\n                <eb:Service eb:type=\"sabreXML\"></eb:Service>\r\n                <eb:Action>OTA_HotelResLLSRQ</eb:Action>\r\n            </eb:MessageHeader> <ns6:Security xmlns:ns6=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <ns6:BinarySecurityToken>"+securityToken+"</ns6:BinarySecurityToken>\r\n            </ns6:Security>\r\n        </SOAP-ENV:Header>\r\n        <SOAP-ENV:Body>\r\n<OTA_HotelResRQ xmlns=\"http://webservices.sabre.com/sabreXML/2011/10\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" Version=\"2.2.0\">\r\n<Hotel>\r\n<BasicPropertyInfo ChainCode=\""+selectedHotel.hotelChainCode+"\" HotelCode=\""+selectedHotel.hotelCode+"\">\r\n<ConfirmationNumber>ABC123</ConfirmationNumber>\r\n</BasicPropertyInfo>\r\n<Guarantee Type=\"GDPST\">\r\n<CC_Info>\r\n<PaymentCard Code=\"AX\" ExpireDate=\"2018-12\" Number=\"1234567890\"/>\r\n<PersonName>\r\n<Surname>"+lname+"</Surname>\r\n</PersonName>\r\n</CC_Info>\r\n</Guarantee>\r\n<GuestCounts Count=\"2\"/>\r\n<RoomType NumberOfUnits=\"1\" RoomTypeCode=\"A2DRAC\"/>\r\n<TimeSpan End=\""+selectedHotel.toStay[0]+"-"+selectedHotel.toStay[1]+"T13:00\" Start=\""+selectedHotel.fromStay[0]+"-"+selectedHotel.fromStay[1]+"T12:00\"/>\r\n</Hotel>\r\n</OTA_HotelResRQ>\r\n      </SOAP-ENV:Body>\r\n    </SOAP-ENV:Envelope>\r\n "
+              "data": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n        <SOAP-ENV:Header>\r\n            <eb:MessageHeader xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <eb:From>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">999999</eb:PartyId>\r\n                </eb:From>\r\n                <eb:To>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">123123</eb:PartyId>\r\n                </eb:To>\r\n                <eb:CPAId>R7OI</eb:CPAId>\r\n                 <eb:ConversationId>99999</eb:ConversationId>\r\n                <eb:Service eb:type=\"sabreXML\"></eb:Service>\r\n                <eb:Action>OTA_HotelResLLSRQ</eb:Action>\r\n            </eb:MessageHeader> <ns6:Security xmlns:ns6=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <ns6:BinarySecurityToken>"+securityToken+"</ns6:BinarySecurityToken>\r\n            </ns6:Security>\r\n        </SOAP-ENV:Header>\r\n        <SOAP-ENV:Body>\r\n<OTA_HotelResRQ xmlns=\"http://webservices.sabre.com/sabreXML/2011/10\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" Version=\"2.2.0\">\r\n<Hotel>\r\n<BasicPropertyInfo ChainCode=\""+selectedHotel.hotelChainCode+"\" HotelCode=\""+selectedHotel.hotelCode+"\">\r\n<ConfirmationNumber>ABC123</ConfirmationNumber>\r\n</BasicPropertyInfo>\r\n<Guarantee Type=\"GDPST\">\r\n<CC_Info>\r\n<PaymentCard Code=\"VI\" ExpireDate=\"2018-12\" Number=\"4111111111111111\"/>\r\n<PersonName>\r\n<Surname>"+lname+"</Surname>\r\n</PersonName>\r\n</CC_Info>\r\n</Guarantee>\r\n<GuestCounts Count=\"2\"/>\r\n<RoomType NumberOfUnits=\"1\" RoomTypeCode=\"A2DRAC\"/>\r\n<TimeSpan End=\""+selectedHotel.toStay[0]+"-"+selectedHotel.toStay[1]+"T13:00\" Start=\""+selectedHotel.fromStay[0]+"-"+selectedHotel.fromStay[1]+"T12:00\"/>\r\n</Hotel>\r\n</OTA_HotelResRQ>\r\n      </SOAP-ENV:Body>\r\n    </SOAP-ENV:Envelope>\r\n "
             }
 
             $.ajax(bookHotel).done(function (response) {
@@ -917,7 +917,100 @@ app.controller('UserDetailsController', function($scope, $ionicSideMenuDelegate,
 
           //Car PNR
           else if ($ionicHistory.backView().stateName == "menu.cardetails") {
-            console.log("Work needed");
+            //car PNR
+        $ionicLoading.show({
+            template: '  <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>',
+            duration: 3000
+          }).then(function(){
+            //Cars PNR
+            console.log('Kazim');
+               passengerDetail = [];
+                var fname = document.getElementById("fname").value;
+                var mname = document.getElementById("mname").value;
+                var lname = document.getElementById("lname").value;
+                var countrycode = document.getElementById("countrycode");
+                var selectedCountryName = countrycode.options[countrycode.selectedIndex].value;
+                var selectedCountryCode;
+                var selectedCountryCode1;
+                var cnumber = document.getElementById("cnumber").value;
+                var email = document.getElementById("email").value;
+                
+                for (var i = 0; i < $scope.countryCodes.length; i++) {
+                  
+                 if($scope.countryCodes[i].name == selectedCountryName){
+                  selectedCountryCode = $scope.countryCodes[i].dial_code;
+                  selectedCountryCode1 = $scope.countryCodes[i].code;
+                 }
+                }
+                passengerDetail.push(fname, mname, lname, selectedCountryCode, cnumber, email);
+                console.log(passengerDetail);
+            var settings = {
+                "async": true,  
+                "crossDomain": true,
+                "url": "https://sws-crt.cert.havail.sabre.com/",
+                "method": "POST",
+                "headers": {
+                  "content-type": "text/xml",
+                  "cache-control": "no-cache",
+                  "postman-token": "8ae2fc0e-6bd7-7157-b730-2202d4c26cf4"
+                },
+                "data": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n        <SOAP-ENV:Header>\r\n            <eb:MessageHeader xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <eb:From>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">999999</eb:PartyId>\r\n                </eb:From>\r\n                <eb:To>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">123123</eb:PartyId>\r\n                </eb:To>\r\n                <eb:CPAId>R7OI</eb:CPAId>\r\n                 <eb:ConversationId>99999</eb:ConversationId>\r\n                <eb:Service eb:type=\"sabreXML\"></eb:Service>\r\n                <eb:Action>PassengerDetailsRQ</eb:Action>\r\n            </eb:MessageHeader> <ns6:Security xmlns:ns6=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <ns6:BinarySecurityToken>"+securityToken+"</ns6:BinarySecurityToken>\r\n            </ns6:Security>\r\n        </SOAP-ENV:Header>\r\n        <SOAP-ENV:Body>\r\n<PassengerDetailsRQ xmlns=\"http://services.sabre.com/sp/pd/v3_3\" version=\"3.3.0\" IgnoreOnError=\"false\" HaltOnError=\"false\">\r\n    <PostProcessing IgnoreAfter=\"false\" RedisplayReservation=\"true\" UnmaskCreditCard=\"true\" />\r\n    <PreProcessing IgnoreBefore=\"true\">\r\n        <UniqueID ID=\"\" />\r\n    </PreProcessing>\r\n    <SpecialReqDetails>\r\n        <SpecialServiceRQ>\r\n            <SpecialServiceInfo>\r\n                <AdvancePassenger SegmentNumber=\"A\">\r\n                    <!-- 2. a legal LLS request -->\r\n                    <Document ExpirationDate='2018-05-26' Number='1234567890' Type='P'>\r\n                        <IssueCountry>"+selectedCountryCode1+"</IssueCountry>\r\n                        <NationalityCountry>"+selectedCountryCode1+"</NationalityCountry>\r\n                    </Document>\r\n                    <PersonName DateOfBirth='1980-12-02' Gender='M' NameNumber='1.1' DocumentHolder='true'>\r\n                        <GivenName>"+fname+"</GivenName>\r\n                        <MiddleName>"+mname+"</MiddleName>\r\n                        <Surname>"+lname+"</Surname>\r\n                    </PersonName>\r\n                    <VendorPrefs>\r\n                        <Airline Hosted='false' />\r\n                    </VendorPrefs>\r\n                </AdvancePassenger>\r\n            </SpecialServiceInfo>\r\n        </SpecialServiceRQ>\r\n    </SpecialReqDetails>\r\n    <TravelItineraryAddInfoRQ>\r\n        <AgencyInfo>\r\n            <Address>\r\n                <AddressLine>SABRE TRAVEL</AddressLine>\r\n                <CityName>SOUTHLAKE</CityName>\r\n                <CountryCode>US</CountryCode>\r\n                <PostalCode>76092</PostalCode>\r\n                <StateCountyProv StateCode=\"TX\" />\r\n                <StreetNmbr>3150 SABRE DRIVE</StreetNmbr>\r\n                <VendorPrefs>\r\n                    <Airline Hosted=\"true\" />\r\n                </VendorPrefs>\r\n            </Address>\r\n        </AgencyInfo>\r\n        <CustomerInfo>\r\n            <ContactNumbers>\r\n                <ContactNumber NameNumber=\"1.1\" Phone=\"817-555-1212\" PhoneUseType=\"Method\" />\r\n            </ContactNumbers>\r\n            <PersonName NameNumber=\"1.1\" NameReference=\"ABC123\" PassengerType=\"ADT\">\r\n                <GivenName>"+fname+"</GivenName>\r\n                <Surname>"+lname+"</Surname>\r\n            </PersonName>\r\n        </CustomerInfo>\r\n    </TravelItineraryAddInfoRQ>\r\n</PassengerDetailsRQ>\r\n      </SOAP-ENV:Body>\r\n    </SOAP-ENV:Envelope>\r\n "
+              }
+
+              $.ajax(settings).done(function (response) {
+                console.log(settings);
+                console.log(response);
+            
+
+                 //Car booking
+              var carBook = {
+                    "async": true,
+                    "crossDomain": true,
+                    "url": "https://sws-crt.cert.havail.sabre.com",
+                    "method": "POST",
+                    "headers": {
+                      "content-type": "text/xml",
+                      "cache-control": "no-cache",
+                      "postman-token": "b724903c-5a01-e0bd-2451-10bef80f4e49"
+                    },
+                    "data": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n        <SOAP-ENV:Header>\r\n            <eb:MessageHeader xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <eb:From>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">999999</eb:PartyId>\r\n                </eb:From>\r\n                <eb:To>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">123123</eb:PartyId>\r\n                </eb:To>\r\n                <eb:CPAId>R7OI</eb:CPAId>\r\n                 <eb:ConversationId>99999</eb:ConversationId>\r\n                <eb:Service eb:type=\"sabreXML\"></eb:Service>\r\n                <eb:Action>OTA_VehResLLSRQ</eb:Action>\r\n            </eb:MessageHeader> <ns6:Security xmlns:ns6=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <ns6:BinarySecurityToken>"+securityToken+"</ns6:BinarySecurityToken>\r\n            </ns6:Security>\r\n        </SOAP-ENV:Header>\r\n        <SOAP-ENV:Body>\r\n\r\n\t<OTA_VehResRQ xmlns=\"http://webservices.sabre.com/sabreXML/2011/10\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" Version=\"2.1.0\">\r\n<VehResRQCore>\r\n<RateQualifier><DropOffCharge Amount=\""+selectedCar[0].amount+"\"/>\r\n</RateQualifier>\r\n<VehPrefs>\r\n<VehPref>\r\n<VehType>"+selectedCar[0].vehTypeXML+"</VehType>\r\n</VehPref>\r\n</VehPrefs>\r\n<VehRentalCore PickUpDateTime=\""+selectedCar[0].pickupDate[0]+"-"+selectedCar[0].pickupDate[1]+"T"+selectedCar[0].pickupTime[0]+":"+selectedCar[0].pickupTime[1]+"\" Quantity=\"1\" ReturnDateTime=\""+selectedCar[0].dropoffDate[0]+"-"+selectedCar[0].dropoffDate[1]+"T"+selectedCar[0].dropoffTime[0]+":"+selectedCar[0].dropoffTime[1]+"\">\r\n<PickUpLocation LocationCode=\""+selectedCar[0].destinationNameCarsIATA+"\"/>\r\n</VehRentalCore>\r\n<VendorPrefs>\r\n<VendorPref Code=\"ZE\"/>\r\n</VendorPrefs>\r\n</VehResRQCore>\r\n</OTA_VehResRQ>\r\n\t\r\n\t    </SOAP-ENV:Body>\r\n    </SOAP-ENV:Envelope>\r\n "
+                  }
+
+                  $.ajax(carBook).done(function (result) {
+                    console.log(carBook);
+                    console.log(result);
+
+                      var endTransactionCars = {
+                        "async": true,
+                        "crossDomain": true,
+                        "url": "https://sws-crt.cert.havail.sabre.com",
+                        "method": "POST",
+                        "headers": {
+                          "content-type": "text/xml",
+                          "cache-control": "no-cache",
+                          "postman-token": "3205ffb4-f3b2-4b84-d6b7-5a52351440b5"
+                        },
+                        "data": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n        <SOAP-ENV:Header>\r\n            <eb:MessageHeader xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <eb:From>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">999999</eb:PartyId>\r\n                </eb:From>\r\n                <eb:To>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">123123</eb:PartyId>\r\n                </eb:To>\r\n                <eb:CPAId>R7OI</eb:CPAId>\r\n                 <eb:ConversationId>99999</eb:ConversationId>\r\n                <eb:Service eb:type=\"sabreXML\"></eb:Service>\r\n                <eb:Action>EndTransactionLLSRQ</eb:Action>\r\n            </eb:MessageHeader> <ns6:Security xmlns:ns6=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <ns6:BinarySecurityToken>"+securityToken+"</ns6:BinarySecurityToken>\r\n            </ns6:Security>\r\n        </SOAP-ENV:Header>\r\n        <SOAP-ENV:Body>\r\n\r\n  <EndTransactionRQ xmlns=\"http://webservices.sabre.com/sabreXML/2011/10\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" ReturnHostCommand=\"false\" TimeStamp=\"2016-06-22T11:00:00-06:00\" Version=\"2.0.6\">\r\n<EndTransaction Ind=\"true\"/>\r\n<Source ReceivedFrom=\"SWS TESTS\"/>\r\n</EndTransactionRQ>\r\n  \r\n      </SOAP-ENV:Body>\r\n    </SOAP-ENV:Envelope>\r\n "
+                      }
+
+                      $.ajax(endTransactionCars).done(function (response) {
+                        console.log(response);
+                        console.log(response.getElementsByTagName("ItineraryRef").length);
+                        console.log(response.getElementsByTagName("ItineraryRef")[0].getAttribute("ID"));
+                        var itineraryRefId = response.getElementsByTagName("ItineraryRef")[0].getAttribute("ID");
+                        if(response.getElementsByTagName("ItineraryRef").length == 1){
+                          var alertPopup = $ionicPopup.alert({
+                            title: 'Your booking is successful',
+                            template: "Your itinerary reference ID: " +    itineraryRefId
+                          })
+                        }
+                      });
+                  });
+              });
+
+             
+          
+          });
           }
           //Cars PNR End
 
@@ -952,11 +1045,12 @@ app.controller('UserDetailsController', function($scope, $ionicSideMenuDelegate,
               "content-type": "text/xml",
               "cache-control": "no-cache",
             },
-            "data": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n   <soapenv:Header>\r\n      <MessageHeader xmlns=\"http://www.ebxml.org/namespaces/messageHeader\">\r\n         <From>\r\n            <PartyId type=\"urn:x12.org:IO5:01\">CRS</PartyId>\r\n         </From>\r\n         <To>\r\n            <PartyId type=\"urn:x12.org:IO5:01\">Sabre</PartyId>\r\n         </To>\r\n         <CPAId>R7OI</CPAId>\r\n         <ConversationId>9999</ConversationId>\r\n         <Service type=\"string\">Cruise</Service>\r\n         <Action>PassengerDetailsRQ</Action>\r\n         <MessageData>\r\n            <MessageId>1426190858</MessageId>\r\n            <Timestamp>2015-03-12T02:07:38-06:00</Timestamp>\r\n            <TimeToLive>2015-03-12T03:07:38-06:00</TimeToLive>\r\n         </MessageData>\r\n      </MessageHeader>\r\n      <wsse:Security xmlns:wsse=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns:wsu=\"http://schemas.xmlsoap.org/ws/2002/12/utility\">\r\n           <wsse:BinarySecurityToken  valueType=\"String\" EncodingType=\"wsse:Base64Binary\">"+securityToken+"</wsse:BinarySecurityToken>\r\n      </wsse:Security>\r\n   </soapenv:Header>\r\n   <soapenv:Body>\r\n   \r\n   <PassengerDetailsRQ xmlns=\"http://services.sabre.com/sp/pd/v3_3\" version=\"3.3.0\" IgnoreOnError=\"false\" HaltOnError=\"false\">\r\n\t<MiscSegmentSellRQ>\r\n\t\t<MiscSegment DepartureDateTime=\"01-24\" InsertAfter=\"0\" NumberInParty=\"1\" Status=\"GK\" Type=\"OTH\">\r\n\t\t\t<OriginLocation LocationCode=\""+selectedFlight[0].departureAirport+"\"/>\r\n\t\t\t<Text>RETENTION SEGMENT</Text>\r\n\t\t\t<VendorPrefs>\r\n\t\t\t\t<Airline Code=\""+airlineCodeFinal+"\"/>\r\n\t\t\t</VendorPrefs>\r\n\t\t</MiscSegment>\r\n\t</MiscSegmentSellRQ>\r\n\t<PostProcessing IgnoreAfter=\"false\" RedisplayReservation=\"true\">\r\n\t\t<EndTransactionRQ>\r\n\t\t\t<EndTransaction Ind=\"true\">\r\n\t\t\t</EndTransaction>\r\n\t\t\t<Source ReceivedFrom=\"AMXTI\"/>\r\n\t\t</EndTransactionRQ>\r\n\t</PostProcessing>\r\n\t\r\n\t\r\n\t\t<TravelItineraryAddInfoRQ>\r\n\t\t\t<AgencyInfo>\r\n\t\t\t\t<Ticketing TicketType=\"7TAW/\"/>\r\n\t\t\t</AgencyInfo>\r\n\t\t\t<CustomerInfo>\r\n\t\t\t\t<ContactNumbers>\r\n\t\t\t\t\t  <ContactNumber NameNumber=\"1.1\" Phone=\""+selectedCountryCode+cnumber+"\" PhoneUseType=\"M\" />\r\n\t\t\t\t</ContactNumbers>\r\n\t\t\t\t<PersonName NameNumber=\"1.1\" PassengerType=\"ADT\">\r\n\t\t\t\t\t     <GivenName>"+fname + mname+"</GivenName>\r\n                <Surname>"+lname+"</Surname>\r\n\t\t\t\t</PersonName>\r\n\t\t\t</CustomerInfo>\r\n\t\t</TravelItineraryAddInfoRQ>\r\n\t    \r\n\t</PassengerDetailsRQ>\r\n\t\r\n\t\r\n\r\n    </soapenv:Body>\r\n</soapenv:Envelope>"
+            "data": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n   <soapenv:Header>\r\n      <MessageHeader xmlns=\"http://www.ebxml.org/namespaces/messageHeader\">\r\n         <From>\r\n            <PartyId type=\"urn:x12.org:IO5:01\">CRS</PartyId>\r\n         </From>\r\n         <To>\r\n            <PartyId type=\"urn:x12.org:IO5:01\">Sabre</PartyId>\r\n         </To>\r\n         <CPAId>R7OI</CPAId>\r\n         <ConversationId>9999</ConversationId>\r\n         <Service type=\"string\">Cruise</Service>\r\n         <Action>PassengerDetailsRQ</Action>\r\n         <MessageData>\r\n            <MessageId>1426190858</MessageId>\r\n            <Timestamp>2015-03-12T02:07:38-06:00</Timestamp>\r\n            <TimeToLive>2015-03-12T03:07:38-06:00</TimeToLive>\r\n         </MessageData>\r\n      </MessageHeader>\r\n      <wsse:Security xmlns:wsse=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns:wsu=\"http://schemas.xmlsoap.org/ws/2002/12/utility\">\r\n           <wsse:BinarySecurityToken  valueType=\"String\" EncodingType=\"wsse:Base64Binary\">"+securityToken+"</wsse:BinarySecurityToken>\r\n      </wsse:Security>\r\n   </soapenv:Header>\r\n   <soapenv:Body>\r\n   \r\n   <PassengerDetailsRQ xmlns=\"http://services.sabre.com/sp/pd/v3_3\" version=\"3.3.0\" IgnoreOnError=\"false\" HaltOnError=\"false\">\r\n\t<MiscSegmentSellRQ>\r\n\t\t<MiscSegment DepartureDateTime=\"01-24\" InsertAfter=\"0\" NumberInParty=\"1\" Status=\"GK\" Type=\"OTH\">\r\n\t\t\t<OriginLocation LocationCode=\""+selectedFlight[0].departureAirport+"\"/>\r\n\t\t\t<Text>RETENTION SEGMENT</Text>\r\n\t\t\t<VendorPrefs>\r\n\t\t\t\t<Airline Code=\""+airlineCodeFinal+"\"/>\r\n\t\t\t</VendorPrefs>\r\n\t\t</MiscSegment>\r\n\t</MiscSegmentSellRQ>\r\n\t<PostProcessing IgnoreAfter=\"false\" RedisplayReservation=\"true\">\r\n\t\t<EndTransactionRQ>\r\n\t\t\t<EndTransaction Ind=\"true\">\r\n\t\t\t</EndTransaction>\r\n\t\t\t<Source ReceivedFrom=\"AMXTI\"/>\r\n\t\t</EndTransactionRQ>\r\n\t</PostProcessing>\r\n\t\r\n\t\r\n\t\t<TravelItineraryAddInfoRQ>\r\n\t\t\t<AgencyInfo>\r\n\t\t\t\t<Ticketing TicketType=\"7TAW/\"/>\r\n\t\t\t</AgencyInfo>\r\n\t\t\t<CustomerInfo>\r\n\t\t\t\t<ContactNumbers>\r\n\t\t\t\t\t  <ContactNumber NameNumber=\"1.1\" Phone=\"817-555-1212\" PhoneUseType=\"M\" />\r\n\t\t\t\t</ContactNumbers>\r\n\t\t\t\t<PersonName NameNumber=\"1.1\" PassengerType=\"ADT\">\r\n\t\t\t\t\t     <GivenName>"+fname + mname+"</GivenName>\r\n                <Surname>"+lname+"</Surname>\r\n\t\t\t\t</PersonName>\r\n\t\t\t</CustomerInfo>\r\n\t\t</TravelItineraryAddInfoRQ>\r\n\t    \r\n\t</PassengerDetailsRQ>\r\n\t\r\n\t\r\n\r\n    </soapenv:Body>\r\n</soapenv:Envelope>"
           }
 
           $.ajax(getUserData).done(function(response){
             console.log(getUserData);
+            console.log(response);
             passengerUniqueId = response.getElementsByTagName("ItineraryRef")[0].getAttribute("ID");
             
             var flightSegment = [];
@@ -1020,7 +1114,7 @@ app.controller('UserDetailsController', function($scope, $ionicSideMenuDelegate,
 
               $.ajax(flightBooking).done(function(response){
                 console.log(flightBooking);
-                console.log(response)
+                console.log(response);
                 $state.go('menu.paymentmethod');
               })
           })
@@ -1044,64 +1138,101 @@ app.controller('PaymentMethodController', function($scope, $ionicSideMenuDelegat
         $scope.countryCodes = response.data;
         
       });
-      //Travel Itinerary read
-      var getPassengerDetail = {
-        "async": true,
-        "crossDomain": true,
-        "url": "https://sws-crt.cert.havail.sabre.com",
-        "method": "POST",
-        "headers": {
-          "content-type": "text/xml",
-          "cache-control": "no-cache",
-          "postman-token": "bac8cff4-4bb3-fe06-1673-ef9ba82a861f"
-        },
-        "data": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n        <SOAP-ENV:Header>\r\n            <eb:MessageHeader xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <eb:From>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">999999</eb:PartyId>\r\n                </eb:From>\r\n                <eb:To>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">123123</eb:PartyId>\r\n                </eb:To>\r\n                <eb:CPAId>R7OI</eb:CPAId>\r\n                 <eb:ConversationId>99999</eb:ConversationId>\r\n                <eb:Service eb:type=\"sabreXML\"></eb:Service>\r\n                <eb:Action>TravelItineraryReadRQ</eb:Action>\r\n            </eb:MessageHeader> <ns6:Security xmlns:ns6=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <ns6:BinarySecurityToken>"+securityToken+"</ns6:BinarySecurityToken>\r\n            </ns6:Security>\r\n        </SOAP-ENV:Header>\r\n        <SOAP-ENV:Body>\r\n\r\n  <TravelItineraryReadRQ Version=\"3.8.0\" TimeStamp=\"2012-09-19T10:00:00-06:00\" xmlns=\"http://services.sabre.com/res/tir/v3_8\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:dd=\"http://webservices.sabre.com/dd2\">\r\n    <MessagingDetails>\r\n        <SubjectAreas>\r\n            <SubjectArea>FULL</SubjectArea>\r\n        </SubjectAreas>\r\n    </MessagingDetails>\r\n    <UniqueID ID=\""+passengerUniqueId+"\" />\r\n    <EchoToken/>\r\n</TravelItineraryReadRQ>\r\n  \r\n      </SOAP-ENV:Body>\r\n    </SOAP-ENV:Envelope>\r\n "
-      }
+             //Printer designate
+        // var settings = {
+        //   "async": true,
+        //   "crossDomain": true,
+        //   "url": "https://sws-crt.cert.havail.sabre.com",
+        //   "method": "POST",
+        //   "headers": {
+        //     "content-type": "text/xml",
+        //     "cache-control": "no-cache",
+        //     "postman-token": "96fb0a3c-abcd-f3f2-f8cb-19d18659750c"
+        //   },
+        //   "data": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n        <SOAP-ENV:Header>\r\n            <eb:MessageHeader xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <eb:From>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">999999</eb:PartyId>\r\n                </eb:From>\r\n                <eb:To>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">123123</eb:PartyId>\r\n                </eb:To>\r\n                <eb:CPAId>R7OI</eb:CPAId>\r\n                 <eb:ConversationId>99999</eb:ConversationId>\r\n                <eb:Service eb:type=\"sabreXML\"></eb:Service>\r\n                <eb:Action>DesignatePrinterLLSRQ</eb:Action>\r\n            </eb:MessageHeader> <ns6:Security xmlns:ns6=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <ns6:BinarySecurityToken>"+securityToken+"</ns6:BinarySecurityToken>\r\n            </ns6:Security>\r\n        </SOAP-ENV:Header>\r\n        <SOAP-ENV:Body>\r\n<DesignatePrinterRQ xmlns=\"http://webservices.sabre.com/sabreXML/2011/10\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" Version=\"2.0.1\">\r\n<Printers>\r\n<BagTag LNIATA=\"\"/>\r\n</Printers>\r\n</DesignatePrinterRQ>\r\n  \r\n      </SOAP-ENV:Body>\r\n    </SOAP-ENV:Envelope>\r\n "
+        // }
 
-      $.ajax(getPassengerDetail).done(function (response) {
-        console.log(response);
-        console.log(selectedFlight[0]);
-        console.log(selectedFlight[0].flightCode);
-
-        //Printer designate
-        var settings = {
-          "async": true,
-          "crossDomain": true,
-          "url": "https://sws-crt.cert.havail.sabre.com",
-          "method": "POST",
-          "headers": {
-            "content-type": "text/xml",
-            "cache-control": "no-cache",
-            "postman-token": "96fb0a3c-abcd-f3f2-f8cb-19d18659750c"
-          },
-          "data": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n        <SOAP-ENV:Header>\r\n            <eb:MessageHeader xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <eb:From>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">999999</eb:PartyId>\r\n                </eb:From>\r\n                <eb:To>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">123123</eb:PartyId>\r\n                </eb:To>\r\n                <eb:CPAId>R7OI</eb:CPAId>\r\n                 <eb:ConversationId>99999</eb:ConversationId>\r\n                <eb:Service eb:type=\"sabreXML\"></eb:Service>\r\n                <eb:Action>DesignatePrinterLLSRQ</eb:Action>\r\n            </eb:MessageHeader> <ns6:Security xmlns:ns6=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <ns6:BinarySecurityToken>"+securityToken+"</ns6:BinarySecurityToken>\r\n            </ns6:Security>\r\n        </SOAP-ENV:Header>\r\n        <SOAP-ENV:Body>\r\n<DesignatePrinterRQ xmlns=\"http://webservices.sabre.com/sabreXML/2011/10\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" Version=\"2.0.1\">\r\n<Printers>\r\n<BagTag LNIATA=\"\"/>\r\n</Printers>\r\n</DesignatePrinterRQ>\r\n  \r\n      </SOAP-ENV:Body>\r\n    </SOAP-ENV:Envelope>\r\n "
-        }
-
-        $.ajax(settings).done(function (response) {
-          console.log(response);
-        }); 
+        // $.ajax(settings).done(function (response) {
+        //   console.log(response);
+        // }); 
         //Printer designate end
-      });
       //Travel Itinerary Read End
 
       //Button click
       $scope.toPayment = function(){
-        var airBook = {
+        // var airBook = {
+        //   "async": true,
+        //   "crossDomain": true,
+        //   "url": "https://sws-crt.cert.havail.sabre.com",
+        //   "method": "POST",
+        //   "headers": {
+        //     "content-type": "text/xml",
+        //     "cache-control": "no-cache",
+        //     "postman-token": "b0975296-9d4f-c625-c9a1-cd7263f565fc"
+        //   },
+        //   "data": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n        <SOAP-ENV:Header>\r\n            <eb:MessageHeader xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <eb:From>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">999999</eb:PartyId>\r\n                </eb:From>\r\n                <eb:To>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">123123</eb:PartyId>\r\n                </eb:To>\r\n                <eb:CPAId>R7OI</eb:CPAId>\r\n                 <eb:ConversationId>99999</eb:ConversationId>\r\n                <eb:Service eb:type=\"sabreXML\"></eb:Service>\r\n                <eb:Action>AirTicketLLSRQ</eb:Action>\r\n            </eb:MessageHeader> <ns6:Security xmlns:ns6=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <ns6:BinarySecurityToken>"+securityToken+"</ns6:BinarySecurityToken>\r\n            </ns6:Security>\r\n        </SOAP-ENV:Header>\r\n        <SOAP-ENV:Body>\r\n<AirTicketRQ xmlns=\"http://webservices.sabre.com/sabreXML/2011/10\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" NumResponses=\"1\" Version=\"2.9.0\">\r\n<OptionalQualifiers>\r\n<FlightQualifiers>\r\n<VendorPrefs>\r\n<Airline Code=\""+selectedFlight[0].flightCode+"\"/>\r\n</VendorPrefs>\r\n</FlightQualifiers>\r\n<FOP_Qualifiers>\r\n<BasicFOP Type=\"CA\"/>\r\n</FOP_Qualifiers>\r\n<MiscQualifiers>\r\n<Ticket Type=\"ETR\"/>\r\n</MiscQualifiers>\r\n<PricingQualifiers>\r\n<PriceQuote>\r\n<Record Number=\"1\"/>\r\n</PriceQuote>\r\n</PricingQualifiers>\r\n</OptionalQualifiers>\r\n</AirTicketRQ>\r\n  \r\n      </SOAP-ENV:Body>\r\n    </SOAP-ENV:Envelope>\r\n "
+        // }
+
+        // $.ajax(airBook).done(function (response) {
+        //   console.log(response);
+        // });
+
+        //Verify credit card
+       var creditCardVerify = {
           "async": true,
           "crossDomain": true,
-          "url": "https://sws-crt.cert.havail.sabre.com",
+          "url": "https://sws-crt.cert.havail.sabre.com/",
           "method": "POST",
           "headers": {
             "content-type": "text/xml",
             "cache-control": "no-cache",
-            "postman-token": "b0975296-9d4f-c625-c9a1-cd7263f565fc"
+            "postman-token": "54d8cb73-f35a-f5b4-c088-fdce5cfafc51"
           },
-          "data": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n        <SOAP-ENV:Header>\r\n            <eb:MessageHeader xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <eb:From>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">999999</eb:PartyId>\r\n                </eb:From>\r\n                <eb:To>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">123123</eb:PartyId>\r\n                </eb:To>\r\n                <eb:CPAId>R7OI</eb:CPAId>\r\n                 <eb:ConversationId>99999</eb:ConversationId>\r\n                <eb:Service eb:type=\"sabreXML\"></eb:Service>\r\n                <eb:Action>AirTicketLLSRQ</eb:Action>\r\n            </eb:MessageHeader> <ns6:Security xmlns:ns6=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <ns6:BinarySecurityToken>"+securityToken+"</ns6:BinarySecurityToken>\r\n            </ns6:Security>\r\n        </SOAP-ENV:Header>\r\n        <SOAP-ENV:Body>\r\n<AirTicketRQ xmlns=\"http://webservices.sabre.com/sabreXML/2011/10\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" NumResponses=\"1\" Version=\"2.9.0\">\r\n<OptionalQualifiers>\r\n<FlightQualifiers>\r\n<VendorPrefs>\r\n<Airline Code=\""+selectedFlight[0].flightCode+"\"/>\r\n</VendorPrefs>\r\n</FlightQualifiers>\r\n<FOP_Qualifiers>\r\n<BasicFOP Type=\"CA\"/>\r\n</FOP_Qualifiers>\r\n<MiscQualifiers>\r\n<Ticket Type=\"ETR\"/>\r\n</MiscQualifiers>\r\n<PricingQualifiers>\r\n<PriceQuote>\r\n<Record Number=\"1\"/>\r\n</PriceQuote>\r\n</PricingQualifiers>\r\n</OptionalQualifiers>\r\n</AirTicketRQ>\r\n  \r\n      </SOAP-ENV:Body>\r\n    </SOAP-ENV:Envelope>\r\n "
+          "data": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n        <SOAP-ENV:Header>\r\n            <eb:MessageHeader xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <eb:From>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">999999</eb:PartyId>\r\n                </eb:From>\r\n                <eb:To>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">123123</eb:PartyId>\r\n                </eb:To>\r\n                <eb:CPAId>R7OI</eb:CPAId>\r\n                 <eb:ConversationId>99999</eb:ConversationId>\r\n                <eb:Service eb:type=\"sabreXML\"></eb:Service>\r\n                <eb:Action>CreditVerificationLLSRQ</eb:Action>\r\n            </eb:MessageHeader> <ns6:Security xmlns:ns6=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <ns6:BinarySecurityToken>"+securityToken+"</ns6:BinarySecurityToken>\r\n            </ns6:Security>\r\n        </SOAP-ENV:Header>\r\n        <SOAP-ENV:Body>\r\n<CreditVerificationRQ xmlns=\"http://webservices.sabre.com/sabreXML/2011/10\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" Version=\"2.2.0\">\r\n    <Credit>\r\n        <CC_Info>\r\n            <PaymentCard AirlineCode=\"PK\" Code=\"VI\" ExpireDate=\"2018-05\" Number=\"4111111111111111\" />\r\n        </CC_Info>\r\n        <ItinTotalFare>\r\n            <TotalFare Amount=\"300\" CurrencyCode=\"USD\" />\r\n        </ItinTotalFare>\r\n    </Credit>\r\n</CreditVerificationRQ>\r\n      </SOAP-ENV:Body>\r\n    </SOAP-ENV:Envelope>\r\n "
         }
 
-        $.ajax(airBook).done(function (response) {
+        $.ajax(creditCardVerify).done(function (response) {
           console.log(response);
+
+           //Travel Itinerary read
+            var getPassengerDetail = {
+              "async": true,
+              "crossDomain": true,
+              "url": "https://sws-crt.cert.havail.sabre.com",
+              "method": "POST",
+              "headers": {
+                "content-type": "text/xml",
+                "cache-control": "no-cache",
+                "postman-token": "bac8cff4-4bb3-fe06-1673-ef9ba82a861f"
+              },
+              "data": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n        <SOAP-ENV:Header>\r\n            <eb:MessageHeader xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <eb:From>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">999999</eb:PartyId>\r\n                </eb:From>\r\n                <eb:To>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">123123</eb:PartyId>\r\n                </eb:To>\r\n                <eb:CPAId>R7OI</eb:CPAId>\r\n                 <eb:ConversationId>99999</eb:ConversationId>\r\n                <eb:Service eb:type=\"sabreXML\"></eb:Service>\r\n                <eb:Action>TravelItineraryReadRQ</eb:Action>\r\n            </eb:MessageHeader> <ns6:Security xmlns:ns6=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <ns6:BinarySecurityToken>"+securityToken+"</ns6:BinarySecurityToken>\r\n            </ns6:Security>\r\n        </SOAP-ENV:Header>\r\n        <SOAP-ENV:Body>\r\n\r\n  <TravelItineraryReadRQ Version=\"3.8.0\" TimeStamp=\"2012-09-19T10:00:00-06:00\" xmlns=\"http://services.sabre.com/res/tir/v3_8\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:dd=\"http://webservices.sabre.com/dd2\">\r\n    <MessagingDetails>\r\n        <SubjectAreas>\r\n            <SubjectArea>FULL</SubjectArea>\r\n        </SubjectAreas>\r\n    </MessagingDetails>\r\n    <UniqueID ID=\""+passengerUniqueId+"\" />\r\n    <EchoToken/>\r\n</TravelItineraryReadRQ>\r\n  \r\n      </SOAP-ENV:Body>\r\n    </SOAP-ENV:Envelope>\r\n "
+            }
+
+            $.ajax(getPassengerDetail).done(function (response) {
+              console.log(response);
+
+              var printerDesignate = {
+                "async": true,
+                "crossDomain": true,
+                "url": "https://sws-crt.cert.havail.sabre.com/",
+                "method": "POST",
+                "headers": {
+                  "content-type": "text/xml",
+                  "cache-control": "no-cache",
+                  "postman-token": "db0295e5-fd63-f574-2462-8034060d7a2b"
+                },
+                "data": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n        <SOAP-ENV:Header>\r\n            <eb:MessageHeader xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <eb:From>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">999999</eb:PartyId>\r\n                </eb:From>\r\n                <eb:To>\r\n                    <eb:PartyId eb:type=\"urn:x12.org:IO5:01\">123123</eb:PartyId>\r\n                </eb:To>\r\n                <eb:CPAId>R7OI</eb:CPAId>\r\n                 <eb:ConversationId>99999</eb:ConversationId>\r\n                <eb:Service eb:type=\"sabreXML\"></eb:Service>\r\n                <eb:Action>DesignatePrinterLLSRQ</eb:Action>\r\n            </eb:MessageHeader> <ns6:Security xmlns:ns6=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" SOAP-ENV:mustUnderstand=\"0\">\r\n                <ns6:BinarySecurityToken>"+securityToken+"</ns6:BinarySecurityToken>\r\n            </ns6:Security>\r\n        </SOAP-ENV:Header>\r\n        <SOAP-ENV:Body>\r\n<!-- Designate a ticket printer. -->\r\n<!-- Equivalent Sabre host command: W*ABXXXXX1 -->\r\n<DesignatePrinterRQ xmlns=\"http://webservices.sabre.com/sabreXML/2011/10\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" Version=\"2.0.1\">\r\n<Printers>\r\n<Ticket CountryCode=\"PK\" LNIATA=\"\"/>\r\n</Printers>\r\n</DesignatePrinterRQ>\r\n<!-- Undesignate a ticket printer. -->\r\n<!-- Equivalent Sabre host command: W*NO -->\r\n<DesignatePrinterRQ xmlns=\"http://webservices.sabre.com/sabreXML/2011/10\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" Version=\"2.0.1\">\r\n<Printers>\r\n<Ticket Undesignate=\"true\"/>\r\n</Printers>\r\n</DesignatePrinterRQ>\r\n      </SOAP-ENV:Body>\r\n    </SOAP-ENV:Envelope>\r\n "
+              }
+
+              $.ajax(printerDesignate).done(function (response) {
+                console.log(response);
+              });
+            });
         });
+        //Verify credit card end
+
+
+
       }
       //button click end
     })
