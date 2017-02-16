@@ -2,6 +2,7 @@
 <ion-view view-title="Car Details">
 <div class="bar bar-subheader">
   <h2 class="title">Showing {{resultLength}} results in total</h2>
+  <button class="button button-icon ion-funnel" ng-click="modal.show()">
   </div>
             <ion-content has-subheader="true" class="has-subheader">
             <div class="list" ng-repeat="data in carsData track by $index">
@@ -25,3 +26,61 @@
               
             </ion-content>
           </ion-view>
+
+           <script id="my-modalcar.html" type="text/ng-template">
+          <ion-modal-view>
+            <ion-header-bar class=" bar bar-header bar-dark menubg">
+              <h1 class="title">Filter</h1>
+              <button class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button>
+              <button class="button button-clear button-primary" ng-click="">Apply</button>
+            </ion-header-bar>
+            <ion-content>
+              <div class="list">
+
+                <div class="item item-divider">
+                  Vehicle Category
+                </div>
+                  <ion-checkbox>All</ion-checkbox>
+                  <ion-checkbox>Mini</ion-checkbox>
+                  <ion-checkbox>Economy</ion-checkbox>
+                  <ion-checkbox>Compact</ion-checkbox>
+                  <ion-checkbox>Lower Middle Range</ion-checkbox>
+                  <ion-checkbox>Mid-Range</ion-checkbox>
+                  <ion-checkbox>Upper Mid-Range</ion-checkbox>
+                  <ion-checkbox>Luxury</ion-checkbox>
+                  <ion-checkbox>Top Luxury</ion-checkbox>
+                  <ion-checkbox>Special Car</ion-checkbox>
+
+              </div>
+              <div class="item item-divider">
+                  Vehicle Type
+                </div>
+                  <ion-checkbox>2 Door</ion-checkbox>
+                  <ion-checkbox>3 Door</ion-checkbox>
+                  <ion-checkbox>4 Door</ion-checkbox>
+                  <ion-checkbox>Estate</ion-checkbox>
+                  <ion-checkbox>Van/MiniBus</ion-checkbox>
+                  <ion-checkbox>Saloon</ion-checkbox>
+                  <ion-checkbox>Sport</ion-checkbox>
+                  <ion-checkbox>Cabriolet</ion-checkbox>
+                  <ion-checkbox>4x4</ion-checkbox>
+                  <ion-checkbox>Pick Up</ion-checkbox>
+                  <ion-checkbox>Off-Road</ion-checkbox>
+                  <ion-checkbox>Special</ion-checkbox>
+
+              </div>
+              <div class="item item-divider">
+                  Transmission Type
+                </div>
+                  <ion-checkbox>Manual</ion-checkbox>
+                  <ion-checkbox>Automatic</ion-checkbox>
+              </div>
+              <div class="item item-divider">
+                  Climate Control
+                </div>
+                  <ion-checkbox>With Climate Control</ion-checkbox>
+                  <ion-checkbox>Without Climate Control</ion-checkbox>
+              </div>
+            </ion-content>
+          </ion-modal-view>
+        </script>

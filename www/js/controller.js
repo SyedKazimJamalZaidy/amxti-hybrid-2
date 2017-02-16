@@ -1986,7 +1986,21 @@ $.ajax(getHotelDetail).done(function (response) {
 });
 //Hotel controller starts
 
-app.controller('HotelDetailsController', function($scope, $ionicSideMenuDelegate, $state, $ionicLoading) {
+app.controller('HotelDetailsController', function($scope, $ionicSideMenuDelegate, $state, $ionicLoading, $ionicModal) {
+  //Modal starts
+  $ionicModal.fromTemplateUrl('my-modal.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+  $scope.openModal = function() {
+    $scope.modal.show();
+  };
+  $scope.closeModal = function() {
+    $scope.modal.hide();
+  };
+  //Modal ends
   console.log(resultDataHotels[0]);
   $scope.hotelData = resultDataHotels[0];
   $scope.resultLength = resultDataHotels[0].length;
@@ -2072,7 +2086,7 @@ app.controller('HotelDetailsController', function($scope, $ionicSideMenuDelegate
       $ionicLoading.hide();
       });
       //Hotel Full Details End
-    }) 
+    })
   }
 
     });
@@ -2294,7 +2308,23 @@ var getCarDetails = {
 //controller ends
 
 //Car details controller
-app.controller('CarDetailsController', function($scope, $ionicSideMenuDelegate, $state) {
+app.controller('CarDetailsController', function($scope, $ionicSideMenuDelegate, $state, $ionicModal) {
+
+    //Modal starts
+  $ionicModal.fromTemplateUrl('my-modalcar.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+  $scope.openModal = function() {
+    $scope.modal.show();
+  };
+  $scope.closeModal = function() {
+    $scope.modal.hide();
+  };
+  //Modal ends
+
   selectedCar = [];
   $scope.resultLength = resultDataCars.length;
   $scope.carsData = resultDataCars;

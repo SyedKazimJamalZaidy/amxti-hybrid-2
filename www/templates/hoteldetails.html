@@ -1,7 +1,10 @@
 <!-- Hotel Details Page -->
 <ion-view view-title="Hotel Details">
+
 <div class="bar bar-subheader">
   <h2 class="title">Showing {{resultLength}} results in total</h2>
+  <button class="button button-icon ion-funnel" ng-click="modal.show()">
+      </div>
   </div>
             <ion-content has-subheader="true" class="has-subheader">
              <section>
@@ -36,8 +39,18 @@
                 </button>     
                   </a>
                                
-              </div>
-              
-              
+              </div>  
             </ion-content>
           </ion-view>
+
+        <script id="my-modal.html" type="text/ng-template">
+          <ion-modal-view>
+            <ion-header-bar class=" bar bar-header bar-dark menubg">
+              <h1 class="title">Filter</h1>
+              <button class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button>
+            </ion-header-bar>
+            <ion-content>
+              Hello!
+            </ion-content>
+          </ion-modal-view>
+        </script>
