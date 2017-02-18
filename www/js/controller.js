@@ -42,6 +42,7 @@ app.controller('HomePageController', function($scope, $ionicSideMenuDelegate, $i
 };
 
 $.ajax(auth).done(function(response){
+  console.log(response);
   securityToken = response.getElementsByTagName("BinarySecurityToken")[0].childNodes[0].nodeValue;
   console.log(securityToken);
   });
@@ -2030,6 +2031,7 @@ app.controller('HotelDetailsController', function($scope, $ionicSideMenuDelegate
         var hotelImageDetail;
         var hotelDescription = [];
         roomDetails = [];
+        
         var roomList = response.getElementsByTagName("RoomRates")[0].children;
         
         var descriptionLength = response.getElementsByTagName("Description")[0].childNodes.length;
@@ -2315,6 +2317,7 @@ app.controller('CarDetailsController', function($scope, $ionicSideMenuDelegate, 
     scope: $scope,
     animation: 'slide-in-up'
   }).then(function(modal) {
+
     $scope.modal = modal;
   });
   $scope.openModal = function() {
@@ -2326,6 +2329,7 @@ app.controller('CarDetailsController', function($scope, $ionicSideMenuDelegate, 
   //Modal ends
 
   selectedCar = [];
+  console.log(selectedCar);
   $scope.resultLength = resultDataCars.length;
   $scope.carsData = resultDataCars;
   console.log(resultDataCars);
