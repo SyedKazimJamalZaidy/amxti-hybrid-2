@@ -846,7 +846,7 @@ app.controller('UserDetailsController', function($scope, $ionicSideMenuDelegate,
                         if(response.getElementsByTagName("ItineraryRef").length == 1){
                           var alertPopup = $ionicPopup.alert({
                             title: 'Your booking is successful',
-                            template: "Your itinerary reference ID: " +    itineraryRefId
+                            template: "Your itinerary reference ID: " +   itineraryRefId
                           })
                         }
                       });

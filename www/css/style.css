@@ -627,3 +627,8 @@ a.menuitem:hover {
 	font-size: 85%;
 	color: #58c72c;
 }
+
+.popup{text-align:center; border-radius:8px!important; box-shadow: 0 0 1px transparent;}
+.popup-title{font-weight:bold!important; font-size:20px!important;}
+.button.button-positive{background:#e52029; border-radius:8px; box-shadow: 0 0 1px transparent;}
+.popup-body{font-size:17px;}
